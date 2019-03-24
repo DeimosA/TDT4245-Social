@@ -21,7 +21,7 @@ public class NetworkPlayer : NetworkBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		//controller.OnPlayerInput += OnPlayerInput;
+		//controller.OnPlayerInput += OnPlayerInput; // what
 	}
 
 	// Update is called once per frame

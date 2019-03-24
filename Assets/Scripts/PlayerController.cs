@@ -4,12 +4,20 @@ using UnityEngine;
 
 public enum PlayerAction
 {
-	SHOOT,
-	JUMP
+	//SHOOT,
+	//JUMP
 }
+
+
+
 
 public class PlayerController : MonoBehaviour
 {
+
+
+	public int playerID;
+	public int[] turnData;
+
 	public delegate void PlayerInputCallback(PlayerAction action, float deg);
 	public event PlayerInputCallback OnPlayerInput;
 	bool isLocalPlayer = false;
@@ -17,6 +25,7 @@ public class PlayerController : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		// assign unique player ID?
 	}
 
 	// Update is called once per frame
@@ -40,7 +49,13 @@ public class PlayerController : MonoBehaviour
 	{
 		if (isLocalPlayer)
 		{
+			//receive other player's turn data from server and update values
+
+			// update newsfeed
+
 			//spawn or enable player
+			turnData = new int[4];
+			turnData[0] = this.playerID;
 		}
 	}
 
@@ -49,8 +64,16 @@ public class PlayerController : MonoBehaviour
 		if (isLocalPlayer)
 		{
 			// unspawn or disable player
+
+			// send turn data to server
 		}
 	}
+
+	// methods needed to change turndata array, these happen based on what cards the player plays during their turn. For example playing a card which gives them x more money will modify the corresponding
+	// money index in the array by x.
+
+	// these are probably being written by someone else right now and will be merged later.
+
 	/*
 	public void Shoot()
 	{

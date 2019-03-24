@@ -56,12 +56,12 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 		foreach (var player in players)
 		{
 			//playersReady &= player.ready;
-			// legg inn en bool "ready" etter en spiller har satt opp bedriften sin
+			// add a bool "ready" which is set after a player is done setting up their business
 		}
 
 		if (playersReady)
 		{
-			//players[iActivePlayer].StartGame();			skrives om, nå startes spillet
+			//players[iActivePlayer].StartGame();			rewrite, this is when game starts
 		}
 
 		return playersReady;
@@ -82,7 +82,7 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 		players[iActivePlayer].TurnStart();
 	}
 	*/
-	// fungerer ikke slik vi vil ha det, rulerer mellom personer som tar sin tur. Skrives om.
+	// Doesn't work as intended for our project, goes on a rotating basis and has to be rewritten (but how)
 	public void UpdateScore(int score)
 	{
 		//players [ActivePlayer].UpdateScore (score);
@@ -173,3 +173,5 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 		}
 	}
 }
+
+// possible a lot of these methods shouldn't be touched at all.
