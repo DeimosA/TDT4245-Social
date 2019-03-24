@@ -17,6 +17,7 @@ public class CompanyCreationController : MonoBehaviour
     {
         playerData = GameObject.Find("PlayerData").GetComponent<PersistentPlayerData>();
         testText = GameObject.Find("CompanyNameTest").GetComponent<TextMeshProUGUI>();
+        GameObject.Find("CompanyNameInput").GetComponent<TMP_InputField>().ActivateInputField();
     }
 
     public void SetCompanyName(string companyName)
@@ -24,6 +25,7 @@ public class CompanyCreationController : MonoBehaviour
         playerData.SetCompanyName(companyName);
         testText.SetText(companyName);
 
+        // Game is startable if company name is not empty
         startable = companyName != "" ? true : false;
     }
 
