@@ -11,5 +11,11 @@ using UnityEngine;
 [Serializable]
 public class CardChoiceDictionary : SerializableDictionary<ActivityCard, ActivityChoice> { }
 
+[Serializable]
+public class StringBoolDictionary : SerializableDictionary<string, bool> { }
+
+[Serializable]
+public class PlayerStatIntDictionary : SerializableDictionary<PlayerStat, int> { }
+
 
 

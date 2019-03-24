@@ -15,8 +15,8 @@ public struct StatPrerequisite
 {
     public PlayerStat stat;
     public int targetValue;
-    [Tooltip("True if player's stat must exceed, false is stat must be lesser than")]
-    public bool statMustExceedValue;
+    [Tooltip("True if player's stat must match or exceed, false is stat must be lesser than")]
+    public bool statMustBeEqualOrGreater;
 }
 
 [Serializable]
