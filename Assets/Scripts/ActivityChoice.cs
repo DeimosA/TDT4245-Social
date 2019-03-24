@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ActivityChoice", menuName = "Custom/ActivityChoice", order = 1)]
 public class ActivityChoice : ScriptableObject
 {
+    //TODO: method for applying choice
     [TextArea]
     public string description;
     [Tooltip("Contains all features that must have been reached for choice to appear")]
@@ -13,6 +14,14 @@ public class ActivityChoice : ScriptableObject
     public List<StatPrerequisite> statPrerequisites;
     [Tooltip("Contains all stat changes that will be applied to player's stats upon activation")]
     public List<StatChange> statChanges;
+
+    //returns whether all prerequisites are met
+    public bool ValidateChoice(List<string> features, PlayerStatIntDictionary playerStats)
+    {
+        return (ValidateFeaturePrerequisites(features)
+            && ValidateStatPrerequisites(playerStats));
+    }
+
 
     //Input: List of player's unlocked features
     //Checks if featurePrerequisites match player's features

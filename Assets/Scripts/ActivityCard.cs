@@ -18,9 +18,16 @@ public class ActivityCard : ScriptableObject
     public CardChoiceDictionary choicePrerequisites;
 
     //returns whether all prerequisites are met
-    public bool ValidateCard(List<string> features, PlayerStatIntDictionary playerStats, CardChoiceDictionary choices)
+    public bool ValidateCard(int currentTurn, List<string> features, PlayerStatIntDictionary playerStats, CardChoiceDictionary choices)
     {
-        return (ValidateFeaturePrerequisites(features) && ValidateStatPrerequisites(playerStats) && ValidateChoicePrerequisites(choices));
+        return (ValidateTurn(currentTurn) && ValidateFeaturePrerequisites(features)
+            && ValidateStatPrerequisites(playerStats) && ValidateChoicePrerequisites(choices));
+    }
+
+    //check if turn requirement has been met
+    private bool ValidateTurn(int currentTurn)
+    {
+        return (currentTurn >= minimumTurn);
     }
 
     //Input: List of player's unlocked features
