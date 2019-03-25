@@ -11,7 +11,7 @@ public enum PlayerStat
 }
 
 [Serializable]
-public struct StatPrerequisite
+public class StatPrerequisite
 {
     public PlayerStat stat;
     public int targetValue;
@@ -20,7 +20,7 @@ public struct StatPrerequisite
 }
 
 [Serializable]
-public struct StatChange
+public class StatChange
 {
     public PlayerStat stat;
     public int statChange;

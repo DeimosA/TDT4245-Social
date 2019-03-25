@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76e6011b15cc15a499b9ce18b3bb2696, type: 3}
-  m_Name: Test
+  m_Name: ActivityCard
   m_EditorClassIdentifier: 
-  description: 
-  choices: []
+  description: Fefef
+  choices:
+  - title: Choice0
+    description: 
+    featurePrerequisites: []
+    statPrerequisites: []
+    statChanges: []
   minimumTurn: 0
   featurePrerequisites: []
   statPrerequisites: []
-  choicePrerequisites:
-    m_keys:
-    - {fileID: 11400000, guid: 38d80a8cce830eb44873c6de66887d49, type: 2}
-    m_values:
-    - {fileID: 11400000, guid: 7f4cc7b1667c3d943994976285432abd, type: 2}
+  choicePrerequisites: []

@@ -2,23 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class ChoicePrerequisite
+{
+    public ActivityCard card;
+    public int choiceIndex;
+
+}
+
+[System.Serializable]
+public class FeaturePrerequisiste
+{
+    public string feature;
+    public bool value;
+}
+
 [CreateAssetMenu(fileName = "ActivityCard", menuName = "Custom/ActivityCard", order = 1)]
 public class ActivityCard : ScriptableObject
 {
-    [TextArea]
     public string description;
-    public List<ActivityChoice> choices;
+    public List<ActivityChoice> choices = new List<ActivityChoice>();
     [Tooltip("Game must have reached this turn for this card to be added to a deck")]
     public int minimumTurn;
     [Tooltip("Contains all features that must have been reached for card to be added to deck")]
-    public StringBoolDictionary featurePrerequisites;
+    public List<FeaturePrerequisiste> featurePrerequisites = new List<FeaturePrerequisiste>();
     [Tooltip("Contains stat prerequisites that must be met for card to be added to deck")]
-    public List<StatPrerequisite> statPrerequisites;
+    public List<StatPrerequisite> statPrerequisites = new List<StatPrerequisite>();
     [Tooltip("Contains any Event/Choice pairs that must have been met for card to be added to deck")]
-    public CardChoiceDictionary choicePrerequisites;
+    public List<ChoicePrerequisite> choicePrerequisites = new List<ChoicePrerequisite>();
 
     //returns whether all prerequisites are met
-    public bool ValidateCard(int currentTurn, List<string> features, PlayerStatIntDictionary playerStats, CardChoiceDictionary choices)
+    public bool ValidateCard(int currentTurn, List<string> features, PlayerStatIntDictionary playerStats, CardIntDictionary choices)
     {
         return (ValidateTurn(currentTurn) && ValidateFeaturePrerequisites(features)
             && ValidateStatPrerequisites(playerStats) && ValidateChoicePrerequisites(choices));
@@ -32,19 +46,19 @@ public class ActivityCard : ScriptableObject
 
     //Input: List of player's unlocked features
     //Checks if featurePrerequisites match player's features
-    private bool ValidateFeaturePrerequisites(List<string> features)
+    private bool ValidateFeaturePrerequisites(List<string> playerFeatures)
     {
         //iterate over all feature prerequisites, return false if any does not match input
-        foreach(string key in featurePrerequisites.Keys)
+        foreach(FeaturePrerequisiste prerequisite in featurePrerequisites)
         {
             //if the card requires the feature to be activated, return false if it is not held by player
-            if(featurePrerequisites[key] == true)
+            if(prerequisite.value == true)
             {
-                if (!features.Contains(key)) return false;
+                if (!playerFeatures.Contains(prerequisite.feature)) return false;
             }
             else //card requires feature to not be activated, return false if it is held by player
             {
-                if (features.Contains(key)) return false;
+                if (playerFeatures.Contains(prerequisite.feature)) return false;
             }
         }
         //no mismatches, card's feature prerequisites have been met
@@ -71,16 +85,16 @@ public class ActivityCard : ScriptableObject
     }
 
     //input: dictionary containing all Card+Choice pairs player has played currently
-    private bool ValidateChoicePrerequisites(CardChoiceDictionary playerCardChoiceHistory)
+    private bool ValidateChoicePrerequisites(CardIntDictionary playerCardChoiceHistory)
     {
         //iterate over every prerequisite, validate that player has played the card and made the required choice
-        foreach(ActivityCard key in choicePrerequisites.Keys)
+        foreach(ChoicePrerequisite prerequisite in choicePrerequisites)
         {
             //check if player has played card
-            if (playerCardChoiceHistory.ContainsKey(key))
+            if (playerCardChoiceHistory.ContainsKey(prerequisite.card))
             {
                 //check if player has made the required choice
-                if (!(playerCardChoiceHistory[key].Equals(choicePrerequisites[key])))
+                if (playerCardChoiceHistory[prerequisite.card] != prerequisite.choiceIndex)
                 {
                     return false;
                 }
@@ -92,5 +106,32 @@ public class ActivityCard : ScriptableObject
         }
         //No mismatches found, card's prerequisites are met
         return true;
+    }
+
+    public int GetNumberOfChoices()
+    {
+        return choices.Count;
+    }
+
+    public ActivityChoice GetChoiceByIndex(int index)
+    {
+        return choices[index];
+    }
+
+    public string GetChoiceTitleByIndex(int index)
+    {
+        return choices[index].title;
+    }
+
+    public string[] GetChoiceTitlesArray()
+    {
+        string[] result = new string[choices.Count];
+
+        for(int i = 0; i < choices.Count; i++)
+        {
+            result[i] = GetChoiceTitleByIndex(i);
+        }
+
+        return result;
     }
 }

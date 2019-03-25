@@ -8,7 +8,9 @@ using UnityEditor;
 [CustomPropertyDrawer(typeof(CardChoiceDictionary))]
 [CustomPropertyDrawer(typeof(StringBoolDictionary))]
 [CustomPropertyDrawer(typeof(PlayerStatIntDictionary))]
+[CustomPropertyDrawer(typeof(CardIntDictionary))]
 public class AnySerializableDictionaryPropertyDrawer : SerializableDictionaryPropertyDrawer {}
 
 //[CustomPropertyDrawer(typeof(ColorArrayStorage))]
 //public class AnySerializableDictionaryStoragePropertyDrawer: SerializableDictionaryStoragePropertyDrawer {}
+

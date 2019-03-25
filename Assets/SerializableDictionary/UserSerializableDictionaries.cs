@@ -17,5 +17,7 @@ public class StringBoolDictionary : SerializableDictionary<string, bool> { }
 [Serializable]
 public class PlayerStatIntDictionary : SerializableDictionary<PlayerStat, int> { }
 
+[Serializable]
+public class CardIntDictionary : SerializableDictionary<ActivityCard, int> { }
 
 
