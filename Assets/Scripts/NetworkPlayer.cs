@@ -4,8 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
+public class SendMessage : MessageBase
+{
+	public string messageContent;
+}
+
+
 public class NetworkPlayer : NetworkBehaviour
 {
+
+	public SendMessage m_Message;
 
 	[SyncVar(hook = "OnTurnChange")]
 	public bool isTurn = false;
@@ -17,6 +25,9 @@ public class NetworkPlayer : NetworkBehaviour
 
 	[SyncVar]
 	public bool ready = false;
+
+	[SyncVar]
+	public int playerID;
 
 	// Use this for initialization
 	void Start()
@@ -93,13 +104,37 @@ public class NetworkPlayer : NetworkBehaviour
 		controller.TurnEnd();
 	}
 
+	[Command]
+	void CmdSendInstantMessage(int receiverID, string msg){
+		// send msg to Receiver
+	}
+
+	[ClientRpc]
+	void RpcReceiveInstantMessage(int senderID, string msg){
+		Debug.Log("received a message from " + senderID + ": " + msg);
+	}
+
+	[Command]
+	void CmdRequestCooperation(int receiverID, int cardID){
+		// send request for cooperating on a certain card to a receiver
+		m_Message = new SendMessage();
+		m_Message.messageContent = cardID.ToString();
+		//m_Message = cardID.ToString();
+		NetworkServer.SendToClient(receiverID, MsgType.Highest + 1, m_Message);
+	}
+
+	[ClientRpc]
+	void RpcReceiveCooperationRequest(int senderID, int cardID){
+		Debug.Log("received a request from " + senderID + " to work on card " + cardID);
+	}
+
 	public override void OnNetworkDestroy()
 	{
 		base.OnNetworkDestroy();
 		NetworkManager.Instance.DeregisterNetworkPlayer(this);
 	}
 
-	public void OnTurnChange(bool turn)
+	public void OnTurnChange(bool turn) //what does this do
 	{
 		if (isLocalPlayer)
 		{
@@ -109,7 +144,7 @@ public class NetworkPlayer : NetworkBehaviour
 
 	public void UpdateScore(int score)
 	{
-		Debug.Log ("score:"+score);
+		Debug.Log ("score:"+score);	//update statistics
 	}
 
 	/*
@@ -137,3 +172,4 @@ public class NetworkPlayer : NetworkBehaviour
 		timer.text = Mathf.Round(curtime).ToString();
 	}
 }
+

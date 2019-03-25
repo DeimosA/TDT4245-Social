@@ -13,9 +13,9 @@ public enum PlayerAction
 
 public class PlayerController : MonoBehaviour
 {
-
-
 	public int playerID;
+	// same as SyncVar declared in NetworkPlayer, gotta be synced
+
 	public int[] turnData;
 
 	public delegate void PlayerInputCallback(PlayerAction action, float deg);
@@ -50,8 +50,14 @@ public class PlayerController : MonoBehaviour
 		if (isLocalPlayer)
 		{
 			//receive other player's turn data from server and update values
+			/*
+			for (player in playerList){
+				update their statistics with data retrieved from server
+			}
+			*/
 
 			// update newsfeed
+			// newsfeed probably a gameobject, should have methods to do this
 
 			//spawn or enable player
 			turnData = new int[4];
@@ -63,7 +69,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (isLocalPlayer)
 		{
-			// unspawn or disable player
+			// disable actions/player input
 
 			// send turn data to server
 		}
