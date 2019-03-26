@@ -8,25 +8,49 @@ using TMPro;
 public class CompanyCreationController : MonoBehaviour
 {
 
+    public int maxNameLength;
+
     private PersistentPlayerData playerData;
-    private TextMeshProUGUI testText;
+    private TextMeshProUGUI nameFeedback;
     private bool startable = false;
 
     // Start is called before the first frame update
     void Start()
     {
         playerData = GameObject.Find("PlayerData").GetComponent<PersistentPlayerData>();
-        testText = GameObject.Find("CompanyNameTest").GetComponent<TextMeshProUGUI>();
+        nameFeedback = GameObject.Find("CompanyNameFeedback").GetComponent<TextMeshProUGUI>();
         GameObject.Find("CompanyNameInput").GetComponent<TMP_InputField>().ActivateInputField();
+    }
+
+    void OnGUI()
+    {
+        if (Input.GetKey(KeyCode.Return))
+        {
+            this.StartGame();
+        }
     }
 
     public void SetCompanyName(string companyName)
     {
-        playerData.SetCompanyName(companyName);
-        testText.SetText(companyName);
+        companyName = companyName.Trim();
 
-        // Game is startable if company name is not empty
-        startable = companyName != "" ? true : false;
+        if (companyName.Length <= 0)
+        {
+            nameFeedback.SetText("* Required");
+            startable = false;
+        }
+        else if (companyName.Length > maxNameLength)
+        {
+            nameFeedback.SetText("* Must be less than " + maxNameLength + " characters");
+            startable = false;
+        }
+        else
+        {
+            nameFeedback.SetText("* OK");
+            playerData.SetCompanyName(companyName);
+            startable = true;
+        }
+
     }
 
     public void StartGame()

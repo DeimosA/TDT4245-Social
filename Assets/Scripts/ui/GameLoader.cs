@@ -11,6 +11,7 @@ public class GameLoader : MonoBehaviour
     public GameObject companyPrefab;
 
     private PersistentPlayerData playerData;
+    private UICompanyController companyStatus;
 
 
     // Start is called before the first frame update
@@ -27,8 +28,6 @@ public class GameLoader : MonoBehaviour
                 this.RestartGame();
                 return;
             }
-            GameObject.Find("CompanyNameText").GetComponent<TextMeshProUGUI>().SetText(playerData.GetCompanyName());
-
         }
         catch (NullReferenceException)
         {
@@ -36,6 +35,9 @@ public class GameLoader : MonoBehaviour
             this.RestartGame();
             return;
         }
+        //GameObject.Find("CompanyNameText").GetComponent<TextMeshProUGUI>().SetText(playerData.GetCompanyName());
+        companyStatus = GameObject.Find("CompanyStatusPanel").GetComponent<UICompanyController>();
+        companyStatus.SetCompanyName(playerData.GetCompanyName());
 
 
         /* Load game logic scenes */
@@ -49,7 +51,7 @@ public class GameLoader : MonoBehaviour
         {
             GameObject newInstance = Instantiate(companyPrefab, companyContainer.transform, false);
             newInstance.transform.SetParent(companyContainer.transform, false);
-            newInstance.GetComponent<OtherCompanyController>().SetCompanyName("Kompani " + i);
+            newInstance.GetComponent<UICompanyController>().SetCompanyName("Kompani " + i);
         }
 
     }
