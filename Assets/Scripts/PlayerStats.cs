@@ -29,4 +29,9 @@ public class PlayerStats : MonoBehaviour
     {
         
     }
+
+    public void AddToStat(StatChange statChange)
+    {
+        stats[statChange.stat] += statChange.valueChange;
+    }
 }

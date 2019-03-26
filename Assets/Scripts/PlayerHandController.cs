@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerHandController : MonoBehaviour
 {
+    public TempPlayerController playerController;
     public CardDeckController deck;
     //public List<GameObject> hand;
     //public List<GameObject> playSlots;
@@ -25,6 +26,16 @@ public class PlayerHandController : MonoBehaviour
     void Start()
     {
         
+    }
+
+    public List<GameObject> GetCardsInPlaySlots()
+    {
+        List<GameObject> result = new List<GameObject>();
+        for(int i = 0; i < playSlotsTransform.childCount; i++)
+        {
+            result.Add(playSlotsTransform.GetChild(i).gameObject);
+        }
+        return result;
     }
 
     public void MoveCardToPlaySlot(GameObject card)

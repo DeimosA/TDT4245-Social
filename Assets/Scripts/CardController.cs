@@ -8,17 +8,35 @@ public class CardController : MonoBehaviour
     public ActivityCard cardData;
     public PlayerHandController playerHandController;
 
+    private Dropdown dropdown;
+
 
     // Start is called before the first frame update
     void Start()
     {
         transform.Find("Text").GetComponent<Text>().text = cardData.description;
+
+        dropdown = transform.Find("Dropdown").GetComponent<Dropdown>();
+
+        //Temporary way of displaying valid choices
+        for(int i = 0; i < cardData.choices.Count; i++)
+        {
+            if (playerHandController.playerController.ValidateChoice(cardData.choices[i]))
+            {
+                dropdown.options.Add(new Dropdown.OptionData(cardData.choices[i].title));
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    //Temporary way of getting which choice is currently chosen
+    public int GetIndexOfHighlightedChoice()
     {
-        
+        return dropdown.value;
+    }
+
+    public ActivityChoice GetHighlightedChoice()
+    {
+        return cardData.GetChoiceByIndex(GetIndexOfHighlightedChoice());
     }
 
     public void MoveToPlaySlot()

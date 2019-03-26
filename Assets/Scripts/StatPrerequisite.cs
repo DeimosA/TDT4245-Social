@@ -16,5 +16,5 @@ public class StatPrerequisite
 public class StatChange
 {
     public PlayerStat stat;
-    public int statChange;
+    public int valueChange;
 }

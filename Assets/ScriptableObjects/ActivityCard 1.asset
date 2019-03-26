@@ -13,7 +13,13 @@ MonoBehaviour:
   m_Name: ActivityCard 1
   m_EditorClassIdentifier: 
   description: This is card 2
-  choices: []
+  choices:
+  - title: Choice0
+    description: 
+    priorityCardToTrigger: {fileID: 0}
+    featurePrerequisites: []
+    statPrerequisites: []
+    statChanges: []
   minimumTurn: 0
   featurePrerequisites: []
   statPrerequisites:

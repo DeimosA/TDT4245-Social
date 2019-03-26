@@ -10,6 +10,8 @@ public class ActivityChoice
     public string title;
     [TextArea]
     public string description;
+    [Tooltip("Reference a card here if this choice should guarantee this card to trigger")]
+    public ActivityCard priorityCardToTrigger;
     [Tooltip("Contains all features that must have been reached for choice to appear")]
     public List<FeaturePrerequisiste> featurePrerequisites;
     [Tooltip("Contains all stat prerequisites that must be met for choice to appear")]
@@ -27,6 +29,12 @@ public class ActivityChoice
     {
         return (ValidateFeaturePrerequisites(features)
             && ValidateStatPrerequisites(playerStats));
+    }
+
+    //Return whether this card has a priority card to trigger
+    public bool HasPriorityCard()
+    {
+        return (priorityCardToTrigger != null);
     }
 
 

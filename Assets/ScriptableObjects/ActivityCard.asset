@@ -16,6 +16,16 @@ MonoBehaviour:
   choices:
   - title: Choice0
     description: 
+    priorityCardToTrigger: {fileID: 11400000, guid: 7b8eb29e2c7ea524c8dab83dce98973a,
+      type: 2}
+    featurePrerequisites: []
+    statPrerequisites: []
+    statChanges:
+    - stat: 1
+      valueChange: -50
+  - title: Choice1
+    description: 
+    priorityCardToTrigger: {fileID: 0}
     featurePrerequisites: []
     statPrerequisites: []
     statChanges: []

@@ -113,6 +113,11 @@ public class ActivityCard : ScriptableObject
         return choices.Count;
     }
 
+    public int GetChoiceIndex(ActivityChoice c)
+    {
+        return choices.IndexOf(c);
+    }
+
     public ActivityChoice GetChoiceByIndex(int index)
     {
         return choices[index];

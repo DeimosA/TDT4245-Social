@@ -13,8 +13,16 @@ MonoBehaviour:
   m_Name: Card4
   m_EditorClassIdentifier: 
   description: This is card 4
-  choices: []
+  choices:
+  - title: Choice0
+    description: 
+    priorityCardToTrigger: {fileID: 0}
+    featurePrerequisites: []
+    statPrerequisites: []
+    statChanges: []
   minimumTurn: 0
   featurePrerequisites: []
   statPrerequisites: []
-  choicePrerequisites: []
+  choicePrerequisites:
+  - card: {fileID: 11400000, guid: 6c6661b4e3760ab429c392b0b415b3c0, type: 2}
+    choiceIndex: 1
