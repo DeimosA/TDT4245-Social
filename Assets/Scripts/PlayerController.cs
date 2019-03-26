@@ -17,14 +17,21 @@ public class PlayerController : MonoBehaviour
 	// same as SyncVar declared in NetworkPlayer, gotta be synced
 
 	public int[] turnData;
+	public int userbase;
+	public int capital;
+	public int publicOpinion;
+	public string name;
 
 	public delegate void PlayerInputCallback(PlayerAction action, float deg);
 	public event PlayerInputCallback OnPlayerInput;
 	bool isLocalPlayer = false;
 
+	//bool ready = false;
+
 	// Use this for initialization
 	void Start()
 	{
+		//name = gameobject.PersistentPlayerData.getCompanyName();
 		// assign unique player ID?
 	}
 
@@ -35,7 +42,7 @@ public class PlayerController : MonoBehaviour
 		{
 			return;
 		}
-
+		// call whatever methods are needed for inputs
 		//Shoot ();
 	}
 
@@ -43,6 +50,7 @@ public class PlayerController : MonoBehaviour
 	{
 		//add color to your player
 		isLocalPlayer = true;
+		//instansiate values for each player here I thinK??
 	}
 
 	public void TurnStart()
@@ -58,6 +66,8 @@ public class PlayerController : MonoBehaviour
 
 			// update newsfeed
 			// newsfeed probably a gameobject, should have methods to do this
+			// newsfeed<String> += new messages or something
+			// newsfeed.update(message) 
 
 			//spawn or enable player
 			turnData = new int[4];

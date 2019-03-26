@@ -55,7 +55,7 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 		bool playersReady = true;
 		foreach (var player in players)
 		{
-			//playersReady &= player.ready;
+			playersReady &= player.ready;
 			// add a bool "ready" which is set after a player is done setting up their business
 		}
 
@@ -67,7 +67,7 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 		return playersReady;
 	}
 
-	public void ReTurn()
+	public void ReTurn()		// terrible naming
 	{
 		Debug.Log ("turn::"+iActivePlayer);		//
 		players[iActivePlayer].TurnStart();
@@ -89,9 +89,13 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 		//endres til update statistics
 	}
 
+	public void UpdateStatistics(int[] newData){
+		players[ActivePlayer].UpdateStatistics(newData);
+	}
+
 	public void RegisterNetworkPlayer(NetworkPlayer player)
 	{
-		if (players.Count <= 2)
+		if (players.Count <= 4)
 		{
 			players.Add(player);
 		}
