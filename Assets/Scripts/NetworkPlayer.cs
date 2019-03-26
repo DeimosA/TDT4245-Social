@@ -13,6 +13,7 @@ public class SendMessage : MessageBase
 public class NetworkPlayer : NetworkBehaviour
 {
 
+
 	public SendMessage m_Message;
 
 	[SyncVar(hook = "OnTurnChange")]
@@ -23,16 +24,31 @@ public class NetworkPlayer : NetworkBehaviour
 
 	public PlayerController controller;
 
+	private int[] turnData;
+
 	[SyncVar]
 	public bool ready = false;
 
 	[SyncVar]
-	public int playerID;
+	public uint playerID;
+
+	[SyncVar]
+	public int userbase;
+
+	[SyncVar]
+	public int capital;
+
+	[SyncVar]
+	public int publicOpinion;
+
+
 
 	// Use this for initialization
-	void Start()
+	void Start()		//may need a custom method that runs when game "starts"
 	{
 		//controller.OnPlayerInput += OnPlayerInput; // what
+		//playerID = gameObject.GetComponent<NetworkInstanceId>().Value;
+
 	}
 
 	// Update is called once per frame
@@ -45,11 +61,12 @@ public class NetworkPlayer : NetworkBehaviour
 			if (time <= 0)
 			{
 				//NetworkManager.Instance.AlterTurns();
+				// server starts handling new data
 			}
 		}
 	}
 
-	public override void OnStartClient()
+	public override void OnStartClient() //this one should maybe be called when a player is ready setting up their business
 	{
 		DontDestroyOnLoad(this);
 
@@ -120,12 +137,29 @@ public class NetworkPlayer : NetworkBehaviour
 		m_Message = new SendMessage();
 		m_Message.messageContent = cardID.ToString();
 		//m_Message = cardID.ToString();
-		NetworkServer.SendToClient(receiverID, MsgType.Highest + 1, m_Message);
+		NetworkServer.SendToClient(receiverID, 54, m_Message);
 	}
 
 	[ClientRpc]
 	void RpcReceiveCooperationRequest(int senderID, int cardID){
 		Debug.Log("received a request from " + senderID + " to work on card " + cardID);
+	}
+
+	[Command]
+	void CmdSendTurnData(int[] turnData){
+		//
+	}
+
+	[ClientRpc]
+	void RpcReceiveTurnData(int[] turnData){
+		
+	}
+
+	[Server]
+	public void DistributeTurnChanges(){
+		
+		//RpcReceiveTurnData();		for every other player, subsequently update them
+		// how are other players handled in your client?
 	}
 
 	public override void OnNetworkDestroy()
@@ -134,17 +168,24 @@ public class NetworkPlayer : NetworkBehaviour
 		NetworkManager.Instance.DeregisterNetworkPlayer(this);
 	}
 
-	public void OnTurnChange(bool turn) //what does this do
+	public void OnTurnChange(bool turn) //
 	{
-		if (isLocalPlayer)
+		if (isLocalPlayer)	// && turn, can be used to do different things on turn start/end
 		{
-			//play turn sound 
+			//play turn sound, display some "new turn" effect i guess
+			NetworkManager.Instance.UpdateStatistics(turnData);
 		}
 	}
 
-	public void UpdateScore(int score)
+	public void UpdateStatistics(int[] newData)
 	{
-		Debug.Log ("score:"+score);	//update statistics
+		Debug.Log ("score: "+newData[1]);	//update statistics
+		// get UI gameobject, shove new values in their fields
+		userbase += newData[1];
+		capital += newData[2];
+		publicOpinion += newData[3];
+
+		// temporary setup/sketch, newData[0] is some unique identifier
 	}
 
 	/*
