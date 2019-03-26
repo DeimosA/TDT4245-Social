@@ -54,7 +54,7 @@ public class PlayerHandController : MonoBehaviour
     {
         if (handTransform.childCount < maxCardsInHand)
         {
-            card.transform.parent = handTransform;
+            card.transform.SetParent(handTransform);
         }
         else
         {

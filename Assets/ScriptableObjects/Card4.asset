@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e6011b15cc15a499b9ce18b3bb2696, type: 3}
   m_Name: Card4
   m_EditorClassIdentifier: 
-  description: This is card 4
+  cardCategory: 0
+  description: If you took choice 1 in card 1 this shows up (but it's not guaranteed
+    to!!)
   choices:
   - title: Choice0
     description: 
@@ -24,5 +26,5 @@ MonoBehaviour:
   featurePrerequisites: []
   statPrerequisites: []
   choicePrerequisites:
-  - card: {fileID: 11400000, guid: 6c6661b4e3760ab429c392b0b415b3c0, type: 2}
+  - card: {fileID: 11400000, guid: ead5652aa97fb784cbe3f0445f3159cd, type: 2}
     choiceIndex: 1

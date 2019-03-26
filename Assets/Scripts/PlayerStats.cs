@@ -4,18 +4,18 @@ using UnityEngine;
 
 public enum PlayerStat
 {
-    USERBASE,
-    CAPITAL,
-    REPUTATION
+    userbase,
+    capital,
+    reputation
 }
 
 public class PlayerStats : MonoBehaviour
 {
     public PlayerStatIntDictionary stats = new PlayerStatIntDictionary()
     {
-        {PlayerStat.CAPITAL, 0 },
-        {PlayerStat.REPUTATION, 0 },
-        {PlayerStat.USERBASE, 0 }
+        {PlayerStat.capital, 0 },
+        {PlayerStat.reputation, 0 },
+        {PlayerStat.userbase, 0 }
     };
 
     // Start is called before the first frame update

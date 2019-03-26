@@ -750,13 +750,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deck:
-  - {fileID: 11400000, guid: e5c12a23a9145f349b3b1617384c4c65, type: 2}
-  - {fileID: 11400000, guid: 6498842f34144874b93dffed9727a12e, type: 2}
-  - {fileID: 11400000, guid: e734e53348dcfa14794f0b8ef9d9fc03, type: 2}
+  - {fileID: 11400000, guid: ead5652aa97fb784cbe3f0445f3159cd, type: 2}
+  - {fileID: 11400000, guid: ffbb9826f5b25c746b121b00f7b8d093, type: 2}
+  - {fileID: 11400000, guid: 6f9ec6d1406ab264f8c7e94e0f0443b6, type: 2}
   - {fileID: 11400000, guid: b0f9eca37cce121418db1a4de5fcacdf, type: 2}
-  - {fileID: 11400000, guid: 6c6661b4e3760ab429c392b0b415b3c0, type: 2}
-  - {fileID: 11400000, guid: b3b1eae8c53be0840bf421a9b241d6ff, type: 2}
-  - {fileID: 11400000, guid: 18b244b5739a87c4c93e805019702a38, type: 2}
 --- !u!1 &893921645
 GameObject:
   m_ObjectHideFlags: 0
@@ -1385,7 +1382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     m_keys: 010000000200000000000000
-    m_values: 000000000000000000000000
+    m_values: 640000006400000064000000
 --- !u!4 &1396977988
 Transform:
   m_ObjectHideFlags: 0

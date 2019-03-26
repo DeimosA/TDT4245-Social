@@ -29,11 +29,6 @@ public class ActivityCardEditor : EditorWindow
 
         //init editor values
         window.activityCard = activityCard;
-        window.description = activityCard.description;
-        window.minimumTurn = activityCard.minimumTurn;
-        window.featurePrerequisites = activityCard.featurePrerequisites;
-        window.statPrerequisites = activityCard.statPrerequisites;
-        window.choicePrerequisites = activityCard.choicePrerequisites;
 
         //set up choicePrerequisites indices to point to the correct choice index in the card
         window.choicePrerequisitesIndices = new List<int>();
@@ -56,6 +51,12 @@ public class ActivityCardEditor : EditorWindow
     {
         //make window scrollable
         scrollBarPosition = GUILayout.BeginScrollView(scrollBarPosition);
+
+        //CATEGORY
+        GUILayout.Label("Category", EditorStyles.boldLabel);
+        GUILayout.Space(10);
+        activityCard.cardCategory = (CardCategory)EditorGUILayout.EnumPopup("Category", activityCard.cardCategory);
+        GUILayout.Space(10);
 
         //AREA FOR EDITING DESCRIPTION
         GUILayout.Label("Description", EditorStyles.boldLabel);
