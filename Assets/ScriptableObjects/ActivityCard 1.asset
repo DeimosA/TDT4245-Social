@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e6011b15cc15a499b9ce18b3bb2696, type: 3}
   m_Name: ActivityCard 1
   m_EditorClassIdentifier: 
-  description: 
+  description: This is card 2
   choices: []
   minimumTurn: 0
   featurePrerequisites: []
-  statPrerequisites: []
+  statPrerequisites:
+  - stat: 1
+    targetValue: 9999
+    statMustBeEqualOrGreater: 1
   choicePrerequisites: []
