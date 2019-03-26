@@ -24,7 +24,6 @@ public class TempPlayerController : MonoBehaviour
     }
 
     //Commit all cards in player's play slots
-    //TODO: actually handle choices, not just add to history
     public void EndTurn()
     {
         List<GameObject> cardsInPlaySlots = playerHandController.GetCardsInPlaySlots();
