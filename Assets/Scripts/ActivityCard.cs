@@ -29,6 +29,7 @@ public enum CardCategory
 [CreateAssetMenu(fileName = "ActivityCard", menuName = "Custom/ActivityCard", order = 1)]
 public class ActivityCard : ScriptableObject
 {
+    public bool cooperative;
     public CardCategory cardCategory = CardCategory.Default;
     public string description;
     public List<ActivityChoice> choices = new List<ActivityChoice>();

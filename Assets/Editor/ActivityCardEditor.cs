@@ -58,6 +58,13 @@ public class ActivityCardEditor : EditorWindow
         activityCard.cardCategory = (CardCategory)EditorGUILayout.EnumPopup("Category", activityCard.cardCategory);
         GUILayout.Space(10);
 
+        //CATEGORY
+        GUILayout.Label("Cooperative?", EditorStyles.boldLabel);
+        GUILayout.Space(10);
+        activityCard.cooperative = EditorGUILayout.Toggle("Cooperative: ", activityCard.cooperative);
+        GUILayout.Space(10);
+
+
         //AREA FOR EDITING DESCRIPTION
         GUILayout.Label("Description", EditorStyles.boldLabel);
         GUILayout.Space(10);
