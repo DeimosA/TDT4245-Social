@@ -18,9 +18,12 @@ public class GameLoader : MonoBehaviour
     {
         try
         {
+            // Load player data from company creation
             playerData = GameObject.Find("PlayerData").GetComponent<PersistentPlayerData>();
             if (playerData.GetCompanyName() == null)
             {
+                // If company creation scene is loaded when running main scene, restart
+                // TODO set a test company instead for quicker loading
                 this.RestartGame();
                 return;
             }
@@ -34,6 +37,12 @@ public class GameLoader : MonoBehaviour
             return;
         }
 
+
+        /* Load game logic scenes */
+        SceneManager.LoadScene("GameLogicScene", LoadSceneMode.Additive);
+
+
+        /* Instantiate other company info cards */
         int companyCount = 5;
         GameObject companyContainer = GameObject.Find("OtherCompaniesPanel");
         for (int i = 0; i < companyCount; i++)
