@@ -24,7 +24,7 @@ public class CompanyCreationController : MonoBehaviour
 
     void OnGUI()
     {
-        if (Input.GetKey(KeyCode.Return))
+        if (Input.GetKeyUp(KeyCode.Return))
         {
             this.StartGame();
         }
