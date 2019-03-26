@@ -17,9 +17,20 @@ public class FeaturePrerequisiste
     public bool value;
 }
 
+public enum CardCategory
+{
+    Default,
+    BusinessDeal,
+    Lobby,
+    PressRelease,
+    Philanthropy
+}
+
 [CreateAssetMenu(fileName = "ActivityCard", menuName = "Custom/ActivityCard", order = 1)]
 public class ActivityCard : ScriptableObject
 {
+    public bool cooperative;
+    public CardCategory cardCategory = CardCategory.Default;
     public string description;
     public List<ActivityChoice> choices = new List<ActivityChoice>();
     [Tooltip("Game must have reached this turn for this card to be added to a deck")]
@@ -111,6 +122,11 @@ public class ActivityCard : ScriptableObject
     public int GetNumberOfChoices()
     {
         return choices.Count;
+    }
+
+    public int GetChoiceIndex(ActivityChoice c)
+    {
+        return choices.IndexOf(c);
     }
 
     public ActivityChoice GetChoiceByIndex(int index)
