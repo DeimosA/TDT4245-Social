@@ -4,5 +4,20 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/CharacterCreationScene.unity
+    guid: 0b4d1d714b79350409b42a372d8d4335
+  - enabled: 1
+    path: Assets/Scenes/MainGameUIScene.unity
+    guid: c318871d852de004a94a0789c03bcc13
+  - enabled: 1
+    path: Assets/Scenes/GameLogicScene.unity
+    guid: f388e74e8ec8813498621a58a07f74ac
+  - enabled: 1
+    path: Assets/Scenes/CardsLogicTestScene.unity
+    guid: d4ed04f5d0271d742bdb489c17d6e03e
+  - enabled: 0
+    path: Assets/Scenes/BusinessDevelopmentTreeScene.unity
+    guid: 2978a8718e5707a4f935b2d8a6f95152
   m_configObjects: {}
