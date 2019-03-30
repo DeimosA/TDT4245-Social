@@ -41,11 +41,12 @@ public class GameLoader : MonoBehaviour
 
 
         /* Load game logic scenes */
-        SceneManager.LoadScene("GameLogicScene", LoadSceneMode.Additive);
+        //SceneManager.LoadScene("GameLogicScene", LoadSceneMode.Additive);
+        SceneManager.LoadScene("CardsLogicScene", LoadSceneMode.Additive);
 
 
         /* Instantiate other company info cards */
-        int companyCount = 5;
+        int companyCount = 2;
         GameObject companyContainer = GameObject.Find("OtherCompaniesPanel");
         for (int i = 0; i < companyCount; i++)
         {

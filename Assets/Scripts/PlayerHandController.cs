@@ -13,8 +13,8 @@ public class PlayerHandController : MonoBehaviour
     //public List<GameObject> playSlots;
 
     //Transforms containing card elements in UI
-    public Transform handTransform;
-    public Transform playSlotsTransform;
+    private Transform handTransform;
+    private Transform playSlotsTransform;
 
     //Prefab to be instantiated when drawing new card from deck
     public GameObject cardPrefab;
@@ -25,7 +25,8 @@ public class PlayerHandController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        handTransform = GameObject.Find("UIPlayerHand").transform;
+        playSlotsTransform = GameObject.Find("UIPlaySlots").transform;
     }
 
     public List<GameObject> GetCardsInPlaySlots()
