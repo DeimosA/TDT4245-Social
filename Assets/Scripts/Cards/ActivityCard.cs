@@ -13,7 +13,7 @@ public class ChoicePrerequisite
 [System.Serializable]
 public class FeaturePrerequisiste
 {
-    public string feature;
+    public BusinessFeatureTitle feature;
     public bool value;
 }
 
@@ -43,9 +43,9 @@ public class ActivityCard : ScriptableObject
     public List<ChoicePrerequisite> choicePrerequisites = new List<ChoicePrerequisite>();
 
     //returns whether all prerequisites are met
-    public bool ValidateCard(int currentTurn, List<string> features, PlayerStatIntDictionary playerStats, CardIntDictionary choices)
+    public bool ValidateCard(int currentTurn, BusinessFeatureTitleBusinessFeatureDictionary purchasedFeatures, PlayerStatIntDictionary playerStats, CardIntDictionary choices)
     {
-        return (ValidateTurn(currentTurn) && ValidateFeaturePrerequisites(features)
+        return (ValidateTurn(currentTurn) && ValidateFeaturePrerequisites(purchasedFeatures)
             && ValidateStatPrerequisites(playerStats) && ValidateChoicePrerequisites(choices));
     }
 
@@ -57,7 +57,7 @@ public class ActivityCard : ScriptableObject
 
     //Input: List of player's unlocked features
     //Checks if featurePrerequisites match player's features
-    private bool ValidateFeaturePrerequisites(List<string> playerFeatures)
+    private bool ValidateFeaturePrerequisites(BusinessFeatureTitleBusinessFeatureDictionary purchasedFeatures)
     {
         //iterate over all feature prerequisites, return false if any does not match input
         foreach(FeaturePrerequisiste prerequisite in featurePrerequisites)
@@ -65,11 +65,11 @@ public class ActivityCard : ScriptableObject
             //if the card requires the feature to be activated, return false if it is not held by player
             if(prerequisite.value == true)
             {
-                if (!playerFeatures.Contains(prerequisite.feature)) return false;
+                if (!purchasedFeatures.ContainsKey(prerequisite.feature)) return false;
             }
             else //card requires feature to not be activated, return false if it is held by player
             {
-                if (playerFeatures.Contains(prerequisite.feature)) return false;
+                if (purchasedFeatures.ContainsKey(prerequisite.feature)) return false;
             }
         }
         //no mismatches, card's feature prerequisites have been met

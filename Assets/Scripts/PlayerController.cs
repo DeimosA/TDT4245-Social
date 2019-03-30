@@ -22,14 +22,22 @@ public class PlayerController : MonoBehaviour
 	public event PlayerInputCallback OnPlayerInput;
 	bool isLocalPlayer = false;
 
-	// Use this for initialization
-	void Start()
-	{
-		// assign unique player ID?
-	}
+    public PlayerStats playerStats;
+    public PlayerFeatures playerFeatures;
+    public CardIntDictionary choiceHistory;
+    public int currentTurn;
+    public PlayerHandController playerHandController;
+    public CardDeckController deck;
 
-	// Update is called once per frame
-	void Update()
+    // Use this for initialization
+    void Start()
+	{
+        // assign unique player ID?
+        choiceHistory = new CardIntDictionary();
+    }
+
+    // Update is called once per frame
+    void Update()
 	{
 		if (!isLocalPlayer)
 		{
@@ -75,12 +83,48 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	// methods needed to change turndata array, these happen based on what cards the player plays during their turn. For example playing a card which gives them x more money will modify the corresponding
-	// money index in the array by x.
+    //Commit all cards in player's play slots
+    public void EndTurn()
+    {
+        List<GameObject> cardsInPlaySlots = playerHandController.GetCardsInPlaySlots();
+        for (int i = 0; i < cardsInPlaySlots.Count; i++)
+        {
+            CardController cardController = cardsInPlaySlots[i].GetComponent<CardController>();
+            choiceHistory.Add(cardController.cardData, cardController.GetIndexOfHighlightedChoice());
 
-	// these are probably being written by someone else right now and will be merged later.
+            //apply stat changes
+            ActivityChoice choice = cardController.GetHighlightedChoice();
+            for (int j = 0; j < choice.statChanges.Count; j++)
+            {
+                playerStats.AddToStat(choice.statChanges[j]);
+            }
 
-	/*
+            //Add any potential priority cards to queue
+            if (choice.HasPriorityCard())
+            {
+                deck.AddToQueue(choice.priorityCardToTrigger);
+            }
+
+            Destroy(cardsInPlaySlots[i]);
+        }
+    }
+
+    public void FillHand()
+    {
+        playerHandController.FillHand(currentTurn, choiceHistory, playerStats.stats, playerFeatures.purchasedFeatures);
+    }
+
+    public bool ValidateChoice(ActivityChoice choice)
+    {
+        return choice.ValidateChoice(playerFeatures.purchasedFeatures, playerStats.stats);
+    }
+
+    // methods needed to change turndata array, these happen based on what cards the player plays during their turn. For example playing a card which gives them x more money will modify the corresponding
+    // money index in the array by x.
+
+    // these are probably being written by someone else right now and will be merged later.
+
+    /*
 	public void Shoot()
 	{
 		if (!isLocalPlayer)

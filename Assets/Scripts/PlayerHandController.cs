@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerHandController : MonoBehaviour
 {
-    public TempPlayerController playerController;
+    public PlayerController playerController;
     public CardDeckController deck;
     //public List<GameObject> hand;
     //public List<GameObject> playSlots;
@@ -62,13 +62,13 @@ public class PlayerHandController : MonoBehaviour
         }
     }
 
-    public void FillHand(int currentTurn, CardIntDictionary choiceHistory, PlayerStatIntDictionary playerStats, List<string> playerFeatures)
+    public void FillHand(int currentTurn, CardIntDictionary choiceHistory, PlayerStatIntDictionary playerStats, BusinessFeatureTitleBusinessFeatureDictionary purchasedFeatures)
     {
         //Gets card asset from deck, instantiates new cards with that asset
         //Until hand is full
         while(handTransform.childCount < maxCardsInHand)
         {
-            ActivityCard newCard = deck.GetCard(currentTurn, choiceHistory, playerStats, playerFeatures);
+            ActivityCard newCard = deck.GetCard(currentTurn, choiceHistory, playerStats, purchasedFeatures);
             if(newCard == null)
             {
                 Debug.Log("No new cards found");
