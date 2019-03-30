@@ -46,7 +46,7 @@ public class GameLoader : MonoBehaviour
 
 
         /* Instantiate other company info cards */
-        int companyCount = 2;
+        int companyCount = 20;
         GameObject companyContainer = GameObject.Find("OtherCompaniesPanel");
         for (int i = 0; i < companyCount; i++)
         {
