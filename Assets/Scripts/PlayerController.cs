@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum PlayerAction
 {
-	//SHOOT,
+	SHOOT,
 	//JUMP
 }
 
@@ -22,6 +22,10 @@ public class PlayerController : MonoBehaviour
 	public int publicOpinion;
 	public string name;
 
+	private GameObject sp;
+
+	//public GameObject nwm;
+
 	public delegate void PlayerInputCallback(PlayerAction action, float deg);
 	public event PlayerInputCallback OnPlayerInput;
 	bool isLocalPlayer = false;
@@ -31,6 +35,10 @@ public class PlayerController : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		sp = GameObject.Find("Sphere");
+
+			GameObject.Find("Sphere").SetActive(false);
+		
 		//name = gameobject.PersistentPlayerData.getCompanyName();
 		// assign unique player ID?
 	}
@@ -38,10 +46,18 @@ public class PlayerController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+
+		//Debug.Log(score);
+		//Debug.Log(nwm);
+		//Debug.Log("c");
 		if (!isLocalPlayer)
 		{
 			return;
 		}
+		if(Input.GetKeyDown(KeyCode.W)){
+			sp.SetActive(true);
+		}
+
 		// call whatever methods are needed for inputs
 		//Shoot ();
 	}
@@ -50,6 +66,7 @@ public class PlayerController : MonoBehaviour
 	{
 		//add color to your player
 		isLocalPlayer = true;
+		Debug.Log("test");
 		//instansiate values for each player here I thinK??
 	}
 
@@ -85,12 +102,16 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	public void test(){
+		Debug.Log("test?");
+	}
+
 	// methods needed to change turndata array, these happen based on what cards the player plays during their turn. For example playing a card which gives them x more money will modify the corresponding
 	// money index in the array by x.
 
 	// these are probably being written by someone else right now and will be merged later.
 
-	/*
+
 	public void Shoot()
 	{
 		if (!isLocalPlayer)
@@ -116,5 +137,5 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 	}	
-	*/
+
 }

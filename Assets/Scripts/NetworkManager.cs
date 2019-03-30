@@ -44,6 +44,10 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 	// Update is called once per frame
 	void Update()
 	{
+		
+		foreach (NetworkPlayer player in players){
+			player.controller.test();
+		}
 		if (players.Count > 0)
 		{
 			CheckPlayersReady ();
@@ -83,9 +87,9 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 	}
 	*/
 	// Doesn't work as intended for our project, goes on a rotating basis and has to be rewritten (but how)
-	public void UpdateScore(int score)
+	public void UpdateScore(float score)
 	{
-		//players [ActivePlayer].UpdateScore (score);
+		players [ActivePlayer].UpdateScore (score);
 		//endres til update statistics
 	}
 

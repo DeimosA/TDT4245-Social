@@ -33,7 +33,7 @@ public class CompanyCreationController : MonoBehaviour
     {
         if (startable)
         {
-            SceneManager.LoadScene("MainGameUIScene", LoadSceneMode.Single);
+            //SceneManager.LoadScene("MainGameUIScene", LoadSceneMode.Single);
         }
     }
 

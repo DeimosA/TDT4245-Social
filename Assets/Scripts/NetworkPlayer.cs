@@ -46,7 +46,7 @@ public class NetworkPlayer : NetworkBehaviour
 	// Use this for initialization
 	void Start()		//may need a custom method that runs when game "starts"
 	{
-		//controller.OnPlayerInput += OnPlayerInput; // what
+		controller.OnPlayerInput += OnPlayerInput; // what
 		//playerID = gameObject.GetComponent<NetworkInstanceId>().Value;
 
 	}
@@ -55,6 +55,7 @@ public class NetworkPlayer : NetworkBehaviour
 	[Server]
 	void Update()
 	{
+		//Debug.Log("b");
 		if (isTurn)
 		{
 			time -= Time.deltaTime;
@@ -86,6 +87,7 @@ public class NetworkPlayer : NetworkBehaviour
 	[Server]
 	public void StartPlayer()
 	{
+		gameObject.GetComponent<Transform>().position = new Vector3(Random.Range(0f, 10f), Random.Range(0f, 5f), 0f);
 		ready = true;
 	}
 
@@ -155,6 +157,8 @@ public class NetworkPlayer : NetworkBehaviour
 		
 	}
 
+
+
 	[Server]
 	public void DistributeTurnChanges(){
 		
@@ -188,7 +192,12 @@ public class NetworkPlayer : NetworkBehaviour
 		// temporary setup/sketch, newData[0] is some unique identifier
 	}
 
-	/*
+	public void UpdateScore(float score){
+		Debug.Log("score: " + score);
+	}
+
+
+
 	void OnPlayerInput(PlayerAction action, float amount)
 	{
 		if (action == PlayerAction.SHOOT)
@@ -197,6 +206,7 @@ public class NetworkPlayer : NetworkBehaviour
 		}
 	}
 
+	
 	[Command]
 	void CmdOnPlayerInput(PlayerAction action, float amount)
 	{
@@ -205,7 +215,9 @@ public class NetworkPlayer : NetworkBehaviour
 		//Update score
 		NetworkManager.Instance.UpdateScore(amount);
 	}
-	*/
+
+
+
 	public void UpdateTimeDisplay(float curtime)
 	{
 		GameObject timerText = GameObject.FindWithTag("Timer");
