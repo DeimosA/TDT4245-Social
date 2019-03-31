@@ -7,13 +7,23 @@ using TMPro;
 public class UICompanyController : MonoBehaviour
 {
 
-    private TextMeshProUGUI companyName;
+    
+    public GameObject establishCommDialogPrefab;
+    public GameObject messageDialogPrefab;
+
+    public TextMeshProUGUI companyNameText;
+    public TextMeshProUGUI commButtonText;
+
+    private CompanyModel company;
+    private GameObject mainCanvas;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        companyName = transform.Find("CompanyNameText").GetComponent<TextMeshProUGUI>();
+        //companyNameText = transform.Find("CompanyNameText").GetComponent<TextMeshProUGUI>();
+        mainCanvas = GameObject.Find("MainCanvas");
+        //commButtonText = transform.Find("CommButtonText").GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
@@ -22,13 +32,78 @@ public class UICompanyController : MonoBehaviour
         
     }
 
-    public void SetCompanyName(string newCompanyName)
+    private void SetCompanyName(string newCompanyName)
     {
-        //transform.Find("CompanyNameText").GetComponent<TextMeshProUGUI>().SetText(companyName);
-        if (companyName == null)
-        {
-            companyName = transform.Find("CompanyNameText").GetComponent<TextMeshProUGUI>();
-        }
-        this.companyName.SetText(newCompanyName);
+        //if (companyNameText == null)
+        //{
+        //    companyNameText = transform.Find("CompanyNameText").GetComponent<TextMeshProUGUI>();
+        //}
+        this.companyNameText.SetText(newCompanyName);
     }
+
+    private void ShowChatDialog()
+    {
+        GameObject commDialog = Instantiate(messageDialogPrefab, mainCanvas.transform, false);
+        commDialog.GetComponent<UICommController>().SetCompanyController(this);
+    }
+
+    private void SetCommButtonText()
+    {
+        // TODO set text on comm button to send message or establish comm
+        if (company.IsCommEstablished())
+        {
+            commButtonText.SetText("Send message");
+        }
+        else
+        {
+            commButtonText.SetText("Establish communication");
+        }
+    }
+
+
+    public string GetCompanyName()
+    {
+        return company.companyName;
+    }
+
+    public List<string> GetMessageList()
+    {
+        return company.messages;
+    }
+
+    public void EstablishCommunication()
+    {
+        // Set that communication with this company has been established and show chat
+        company.SetCommEstablished();
+        SetCommButtonText();
+        ShowChatDialog();
+    }
+
+    public void SetCompanyModel(CompanyModel companyModel)
+    {
+        this.company = companyModel;
+        SetCompanyName(company.companyName);
+        SetCommButtonText();
+    }
+
+    public void HandleCommButtonClick()
+    {
+        if (! company.IsCommEstablished())
+        {
+            // Show establish dialog
+            GameObject commDialog = Instantiate(establishCommDialogPrefab, mainCanvas.transform, false);
+            commDialog.GetComponent<UICommController>().SetCompanyController(this);
+        }
+        else
+        {
+            ShowChatDialog();
+        }
+    }
+
+    public void SendMessageToCompany(string newMessage)
+    {
+        company.messages.Add("You: " + newMessage);
+        // TODO send message
+    }
+
 }
