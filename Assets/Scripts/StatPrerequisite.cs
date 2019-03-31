@@ -3,13 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlayerStat
-{
-    USERBASE,
-    CAPITAL,
-    REPUTATION
-}
-
 [Serializable]
 public class StatPrerequisite
 {
@@ -23,5 +16,5 @@ public class StatPrerequisite
 public class StatChange
 {
     public PlayerStat stat;
-    public int statChange;
+    public int valueChange;
 }

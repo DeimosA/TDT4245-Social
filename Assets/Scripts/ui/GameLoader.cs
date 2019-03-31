@@ -11,6 +11,7 @@ public class GameLoader : MonoBehaviour
     public GameObject companyPrefab;
 
     private PersistentPlayerData playerData;
+    private UICompanyController companyStatus;
 
 
     // Start is called before the first frame update
@@ -18,14 +19,15 @@ public class GameLoader : MonoBehaviour
     {
         try
         {
+            // Load player data from company creation
             playerData = GameObject.Find("PlayerData").GetComponent<PersistentPlayerData>();
             if (playerData.GetCompanyName() == null)
             {
+                // If company creation scene is loaded when running main scene, restart
+                // TODO set a test company instead for quicker loading
                 this.RestartGame();
                 return;
             }
-            GameObject.Find("CompanyNameText").GetComponent<TextMeshProUGUI>().SetText(playerData.GetCompanyName());
-
         }
         catch (NullReferenceException)
         {
@@ -33,14 +35,24 @@ public class GameLoader : MonoBehaviour
             this.RestartGame();
             return;
         }
+        //GameObject.Find("CompanyNameText").GetComponent<TextMeshProUGUI>().SetText(playerData.GetCompanyName());
+        companyStatus = GameObject.Find("CompanyStatusPanel").GetComponent<UICompanyController>();
+        companyStatus.SetCompanyName(playerData.GetCompanyName());
 
-        int companyCount = 5;
+
+        /* Load game logic scenes */
+        //SceneManager.LoadScene("GameLogicScene", LoadSceneMode.Additive);
+        SceneManager.LoadScene("CardsLogicScene", LoadSceneMode.Additive);
+
+
+        /* Instantiate other company info cards */
+        int companyCount = 20;
         GameObject companyContainer = GameObject.Find("OtherCompaniesPanel");
         for (int i = 0; i < companyCount; i++)
         {
             GameObject newInstance = Instantiate(companyPrefab, companyContainer.transform, false);
             newInstance.transform.SetParent(companyContainer.transform, false);
-            newInstance.GetComponent<OtherCompanyController>().SetCompanyName("Kompani " + i);
+            newInstance.GetComponent<UICompanyController>().SetCompanyName("Kompani " + i);
         }
 
     }
