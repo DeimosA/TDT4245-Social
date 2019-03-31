@@ -20,4 +20,7 @@ public class PlayerStatIntDictionary : SerializableDictionary<PlayerStat, int> {
 [Serializable]
 public class CardIntDictionary : SerializableDictionary<ActivityCard, int> { }
 
+[Serializable]
+public class BusinessFeatureTitleBusinessFeatureDictionary : SerializableDictionary<BusinessFeatureTitle, BusinessFeature> { }
+
 

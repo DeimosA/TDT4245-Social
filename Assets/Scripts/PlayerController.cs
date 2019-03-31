@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum PlayerAction
 {
-	//SHOOT,
+	SHOOT,
 	//JUMP
 }
 
@@ -22,35 +22,59 @@ public class PlayerController : MonoBehaviour
 	public int publicOpinion;
 	public string name;
 
+	private GameObject sp;
+
+	//public GameObject nwm;
+
 	public delegate void PlayerInputCallback(PlayerAction action, float deg);
 	public event PlayerInputCallback OnPlayerInput;
 	bool isLocalPlayer = false;
 
+    public PlayerStats playerStats;
+    public PlayerFeatures playerFeatures;
+    public CardIntDictionary choiceHistory;
+    public int currentTurn;
+    public PlayerHandController playerHandController;
+    public CardDeckController deck;
+
+    private CardIntDictionary cardsPlayedLastTurn;
 	//bool ready = false;
 
 	// Use this for initialization
 	void Start()
 	{
+		sp = GameObject.Find("Sphere");
+
+			GameObject.Find("Sphere").SetActive(false);
+		
 		//name = gameobject.PersistentPlayerData.getCompanyName();
+        choiceHistory = new CardIntDictionary();
+        cardsPlayedLastTurn = new CardIntDictionary();
 		// assign unique player ID?
 	}
 
-	// Update is called once per frame
-	void Update()
+
+    // Update is called once per frame
+    void Update()
 	{
 		if (!isLocalPlayer)
 		{
 			return;
 		}
+		if(Input.GetKeyDown(KeyCode.W)){
+			sp.SetActive(true);
+		}
+
 		// call whatever methods are needed for inputs
-		//Shoot ();
+		Shoot ();
 	}
 
 	public void SetupLocalPlayer()
 	{
 		//add color to your player
 		isLocalPlayer = true;
-		//instansiate values for each player here I thinK??
+		//instansiate values for each player here as they join
+			// think this might be buggy, having issues with isLocalPlayer for non-host.
 	}
 
 	public void TurnStart()
@@ -82,7 +106,12 @@ public class PlayerController : MonoBehaviour
 			// disable actions/player input
 
 			// send turn data to server
+
 		}
+	}
+
+	public void test(){
+		Debug.Log("test?");
 	}
 
 	// methods needed to change turndata array, these happen based on what cards the player plays during their turn. For example playing a card which gives them x more money will modify the corresponding
@@ -90,7 +119,88 @@ public class PlayerController : MonoBehaviour
 
 	// these are probably being written by someone else right now and will be merged later.
 
-	/*
+
+    //
+    public void OnTurnStart()
+    {
+        //commit cards played last turn
+        if(cardsPlayedLastTurn.Count != 0)
+        {
+            foreach(ActivityCard card in cardsPlayedLastTurn.Keys)
+            {
+                ActivityChoice choice = card.GetChoiceByIndex(cardsPlayedLastTurn[card]);
+                for (int j = 0; j < choice.statChanges.Count; j++)
+                {
+                    playerStats.AddToStat(choice.statChanges[j]);
+                }
+
+                //Add any potential priority cards to queue
+                if (choice.HasPriorityCard())
+                {
+                    deck.AddToQueue(choice.priorityCardToTrigger);
+                }
+
+                //commit to history
+                choiceHistory.Add(card, cardsPlayedLastTurn[card]);
+            }
+
+            //clear cards played last turn
+            cardsPlayedLastTurn.Clear();
+        }
+
+        //get stat changes based on features
+        List<StatChange> featureStatChanges = playerFeatures.GetStatChanges();
+        for(int i = 0; i < featureStatChanges.Count; i++)
+        {
+            playerStats.AddToStat(featureStatChanges[i]);
+        }
+
+        //fill hand
+        FillHand();
+    }
+
+    //add all cards in playslots to cardsPlayedLastTurn
+    public void EndTurn()
+    {
+        List<GameObject> cardsInPlaySlots = playerHandController.GetCardsInPlaySlots();
+        for (int i = 0; i < cardsInPlaySlots.Count; i++)
+        {
+            CardController cardController = cardsInPlaySlots[i].GetComponent<CardController>();
+            cardsPlayedLastTurn.Add(cardController.cardData, cardController.GetIndexOfHighlightedChoice());
+
+            ////apply stat changes
+            //ActivityChoice choice = cardController.GetHighlightedChoice();
+            //for (int j = 0; j < choice.statChanges.Count; j++)
+            //{
+            //    playerStats.AddToStat(choice.statChanges[j]);
+            //}
+
+            ////Add any potential priority cards to queue
+            //if (choice.HasPriorityCard())
+            //{
+            //    deck.AddToQueue(choice.priorityCardToTrigger);
+            //}
+
+            Destroy(cardsInPlaySlots[i]);
+        }
+    }
+
+    public void FillHand()
+    {
+        playerHandController.FillHand(currentTurn, choiceHistory, playerStats.stats, playerFeatures.purchasedFeatures);
+    }
+
+    public bool ValidateChoice(ActivityChoice choice)
+    {
+        return choice.ValidateChoice(playerFeatures.purchasedFeatures, playerStats.stats);
+    }
+
+    // methods needed to change turndata array, these happen based on what cards the player plays during their turn. For example playing a card which gives them x more money will modify the corresponding
+    // money index in the array by x.
+
+    // these are probably being written by someone else right now and will be merged later.
+
+    /*
 	public void Shoot()
 	{
 		if (!isLocalPlayer)
@@ -100,21 +210,11 @@ public class PlayerController : MonoBehaviour
 
 		float power = 50f;
 
-		if (Application.platform == RuntimePlatform.Android)
-		{
-			Touch touch = Input.GetTouch(0);
-			if (touch.phase == TouchPhase.Began)
+			if (Input.GetKeyDown(KeyCode.S))
 			{
 				OnPlayerInput(PlayerAction.SHOOT, power);
 			}
-		}
-		else
-		{
-			if (Input.GetMouseButtonDown (0))
-			{
-				OnPlayerInput(PlayerAction.SHOOT, power);
-			}
-		}
+
 	}	
-	*/
+
 }

@@ -24,7 +24,7 @@ public class CardDeckController : MonoBehaviour
     }
 
     //Gets valid card based on Player's stats, features and history
-    public ActivityCard GetCard(int currentTurn, CardIntDictionary choiceHistory, PlayerStatIntDictionary playerStats, List<string> playerFeatures)
+    public ActivityCard GetCard(int currentTurn, CardIntDictionary choiceHistory, PlayerStatIntDictionary playerStats, BusinessFeatureTitleBusinessFeatureDictionary purchasedFeatures)
     {
         ActivityCard result = null;
 
@@ -37,7 +37,7 @@ public class CardDeckController : MonoBehaviour
         {
             for(int i = 0; i < deck.Count; i++)
             {
-                if (deck[i].ValidateCard(currentTurn, playerFeatures, playerStats, choiceHistory)){
+                if (deck[i].ValidateCard(currentTurn, purchasedFeatures, playerStats, choiceHistory)){
                     result = deck[i];
                     deck.RemoveAt(i);
                     break;

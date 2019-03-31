@@ -4,12 +4,30 @@ using UnityEngine;
 
 public class PlayerFeatures : MonoBehaviour
 {
-    //TODO: better way of representing unlocked features..
-    public List<string> features;
+    public BusinessFeatureTitleBusinessFeatureDictionary purchasedFeatures;
 
     // Start is called before the first frame update
     void Start()
     {
         
+    }
+
+    public void AddFeature(BusinessFeature feature)
+    {
+        purchasedFeatures.Add(feature.title, feature);
+    }
+
+    public List<StatChange> GetStatChanges()
+    {
+        List<StatChange> results = new List<StatChange>();
+        foreach(BusinessFeature feature in purchasedFeatures.Values)
+        {
+            for(int i = 0; i < feature.statChangesPerTurn.Count; i++)
+            {
+                results.Add(feature.statChangesPerTurn[i]);
+            }
+        }
+
+        return results;
     }
 }
