@@ -6,10 +6,16 @@ using UnityEngine.UI;
 public class BusinessTreeButton : MonoBehaviour
 {
     public GameObject businessTreePrefab;
-    public Transform prefabSpawnPosition;
+    private Transform spawnPosition;
+
+    private void Start()
+    {
+        spawnPosition = GameObject.Find("ActivityCardPanel").transform;
+    }
 
     public void OnClick()
     {
-        Instantiate(businessTreePrefab, prefabSpawnPosition, false);
+        GameObject g = Instantiate(businessTreePrefab, spawnPosition, false);
+        g.transform.SetAsLastSibling();
     }
 }

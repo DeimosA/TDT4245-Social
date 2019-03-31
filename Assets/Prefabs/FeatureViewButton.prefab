@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Features
 --- !u!1 &5370276039861529932
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 5370276039861529934}
   - component: {fileID: 5370276039861529939}
   m_Layer: 5
-  m_Name: BusinessTreeButton
+  m_Name: FeatureViewButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
