@@ -18,6 +18,9 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 
 	public static NetworkManager Instance;
 
+	private bool started = false;
+
+
 	int iActivePlayer = 0;
 	public int ActivePlayer
 	{
@@ -37,17 +40,19 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 	// Use this for initialization
 	void Start()
 	{
+		//Instance = this;
 		players = new List<NetworkPlayer>();
 		SceneManager.sceneLoaded += OnSceneLoaded;
+
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
 		
-		foreach (NetworkPlayer player in players){
-			player.controller.test();
-		}
+		//foreach (NetworkPlayer player in players){
+		//	player.controller.test();
+		//}
 		if (players.Count > 0)
 		{
 			CheckPlayersReady ();
@@ -63,10 +68,14 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 			// add a bool "ready" which is set after a player is done setting up their business
 		}
 
-		if (playersReady)
+		if (playersReady && !started)
 		{
 			//players[iActivePlayer].StartGame();			rewrite, this is when game starts
-		}
+			foreach (NetworkPlayer player in players){
+				player.StartGame();
+				started = true;
+				player.controller.test();
+			}		}
 
 		return playersReady;
 	}
@@ -74,7 +83,11 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 	public void ReTurn()		// terrible naming
 	{
 		Debug.Log ("turn::"+iActivePlayer);		//
-		players[iActivePlayer].TurnStart();
+		foreach(NetworkPlayer player in players){
+			player.TurnStart();
+
+		}
+		//players[iActivePlayer].TurnStart();
 	}
 	/*
 	public void AlterTurns()
@@ -89,6 +102,7 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 	// Doesn't work as intended for our project, goes on a rotating basis and has to be rewritten (but how)
 	public void UpdateScore(float score)
 	{
+
 		players [ActivePlayer].UpdateScore (score);
 		//endres til update statistics
 	}

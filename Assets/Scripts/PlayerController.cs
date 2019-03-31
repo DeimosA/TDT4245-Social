@@ -46,10 +46,6 @@ public class PlayerController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-
-		//Debug.Log(score);
-		//Debug.Log(nwm);
-		//Debug.Log("c");
 		if (!isLocalPlayer)
 		{
 			return;
@@ -59,15 +55,15 @@ public class PlayerController : MonoBehaviour
 		}
 
 		// call whatever methods are needed for inputs
-		//Shoot ();
+		Shoot ();
 	}
 
 	public void SetupLocalPlayer()
 	{
 		//add color to your player
 		isLocalPlayer = true;
-		Debug.Log("test");
-		//instansiate values for each player here I thinK??
+		//instansiate values for each player here as they join
+			// think this might be buggy, having issues with isLocalPlayer for non-host.
 	}
 
 	public void TurnStart()
@@ -99,6 +95,7 @@ public class PlayerController : MonoBehaviour
 			// disable actions/player input
 
 			// send turn data to server
+
 		}
 	}
 
@@ -121,21 +118,11 @@ public class PlayerController : MonoBehaviour
 
 		float power = 50f;
 
-		if (Application.platform == RuntimePlatform.Android)
-		{
-			Touch touch = Input.GetTouch(0);
-			if (touch.phase == TouchPhase.Began)
+			if (Input.GetKeyDown(KeyCode.S))
 			{
 				OnPlayerInput(PlayerAction.SHOOT, power);
 			}
-		}
-		else
-		{
-			if (Input.GetMouseButtonDown (0))
-			{
-				OnPlayerInput(PlayerAction.SHOOT, power);
-			}
-		}
+
 	}	
 
 }
