@@ -111,7 +111,7 @@ public class ActivityCardEditor : EditorWindow
         {
             var item = activityCard.featurePrerequisites[i];
             GUILayout.BeginHorizontal();
-            item.feature = EditorGUILayout.TextField("Feature: ", item.feature);
+            item.feature = (BusinessFeatureTitle)EditorGUILayout.EnumPopup("Feature: ", item.feature);
             GUILayout.Space(10);
             item.value = EditorGUILayout.Toggle("Must be purchased: ", item.value);
 
