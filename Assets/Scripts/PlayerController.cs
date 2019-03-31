@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     public PlayerHandController playerHandController;
     public CardDeckController deck;
 
+    private CardIntDictionary cardsPlayedLastTurn;
 	//bool ready = false;
 
 	// Use this for initialization
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
 	{
 		//name = gameobject.PersistentPlayerData.getCompanyName();
         choiceHistory = new CardIntDictionary();
+        cardsPlayedLastTurn = new CardIntDictionary();
 		// assign unique player ID?
 	}
 
@@ -94,27 +96,66 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-    //Commit all cards in player's play slots
+    //
+    public void OnTurnStart()
+    {
+        //commit cards played last turn
+        if(cardsPlayedLastTurn.Count != 0)
+        {
+            foreach(ActivityCard card in cardsPlayedLastTurn.Keys)
+            {
+                ActivityChoice choice = card.GetChoiceByIndex(cardsPlayedLastTurn[card]);
+                for (int j = 0; j < choice.statChanges.Count; j++)
+                {
+                    playerStats.AddToStat(choice.statChanges[j]);
+                }
+
+                //Add any potential priority cards to queue
+                if (choice.HasPriorityCard())
+                {
+                    deck.AddToQueue(choice.priorityCardToTrigger);
+                }
+
+                //commit to history
+                choiceHistory.Add(card, cardsPlayedLastTurn[card]);
+            }
+
+            //clear cards played last turn
+            cardsPlayedLastTurn.Clear();
+        }
+
+        //get stat changes based on features
+        List<StatChange> featureStatChanges = playerFeatures.GetStatChanges();
+        for(int i = 0; i < featureStatChanges.Count; i++)
+        {
+            playerStats.AddToStat(featureStatChanges[i]);
+        }
+
+        //fill hand
+        FillHand();
+    }
+
+    //add all cards in playslots to cardsPlayedLastTurn
     public void EndTurn()
     {
         List<GameObject> cardsInPlaySlots = playerHandController.GetCardsInPlaySlots();
         for (int i = 0; i < cardsInPlaySlots.Count; i++)
         {
             CardController cardController = cardsInPlaySlots[i].GetComponent<CardController>();
-            choiceHistory.Add(cardController.cardData, cardController.GetIndexOfHighlightedChoice());
+            cardsPlayedLastTurn.Add(cardController.cardData, cardController.GetIndexOfHighlightedChoice());
 
-            //apply stat changes
-            ActivityChoice choice = cardController.GetHighlightedChoice();
-            for (int j = 0; j < choice.statChanges.Count; j++)
-            {
-                playerStats.AddToStat(choice.statChanges[j]);
-            }
+            ////apply stat changes
+            //ActivityChoice choice = cardController.GetHighlightedChoice();
+            //for (int j = 0; j < choice.statChanges.Count; j++)
+            //{
+            //    playerStats.AddToStat(choice.statChanges[j]);
+            //}
 
-            //Add any potential priority cards to queue
-            if (choice.HasPriorityCard())
-            {
-                deck.AddToQueue(choice.priorityCardToTrigger);
-            }
+            ////Add any potential priority cards to queue
+            //if (choice.HasPriorityCard())
+            //{
+            //    deck.AddToQueue(choice.priorityCardToTrigger);
+            //}
 
             Destroy(cardsInPlaySlots[i]);
         }

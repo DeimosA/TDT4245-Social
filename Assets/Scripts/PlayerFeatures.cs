@@ -16,4 +16,18 @@ public class PlayerFeatures : MonoBehaviour
     {
         purchasedFeatures.Add(feature.title, feature);
     }
+
+    public List<StatChange> GetStatChanges()
+    {
+        List<StatChange> results = new List<StatChange>();
+        foreach(BusinessFeature feature in purchasedFeatures.Values)
+        {
+            for(int i = 0; i < feature.statChangesPerTurn.Count; i++)
+            {
+                results.Add(feature.statChangesPerTurn[i]);
+            }
+        }
+
+        return results;
+    }
 }
