@@ -163,8 +163,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 192.4}
-  m_SizeDelta: {x: -20, y: -404.7}
+  m_AnchoredPosition: {x: 0, y: 193.1}
+  m_SizeDelta: {x: -20, y: -406.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3123819408784948494
 CanvasRenderer:
@@ -643,7 +643,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Cancel
+  m_text: Deny request
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -712,10 +712,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 3123819409978088942}
-    characterCount: 6
+    characterCount: 12
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 1
+    spaceCount: 1
+    wordCount: 2
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -772,8 +772,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -12.19}
-  m_SizeDelta: {x: -40, y: -203.92}
+  m_AnchoredPosition: {x: 0, y: -7.8200073}
+  m_SizeDelta: {x: -40, y: -221.95}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3123819410049090156
 CanvasRenderer:
@@ -803,7 +803,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'You have not established a communication channel with this company. Establish
+  m_text: 'This company wants to establish a communication channel with you. Establish
     one now?
 
     <size=-7><i>The existence of this comm channel will be visible to all players,
@@ -876,7 +876,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 3123819410049090157}
-    characterCount: 183
+    characterCount: 181
     spriteCount: 0
     spaceCount: 29
     wordCount: 30
@@ -915,7 +915,7 @@ GameObject:
   - component: {fileID: 3123819410382262330}
   - component: {fileID: 3123819410382262276}
   m_Layer: 5
-  m_Name: EstablishCommDialog
+  m_Name: AnswerEstablishCommDialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -933,7 +933,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3123819408784948492}
-  - {fileID: 6608353648500379276}
+  - {fileID: 1530270248788176232}
   - {fileID: 3123819410049090146}
   - {fileID: 3123819408460281805}
   - {fileID: 3123819409178072289}
@@ -995,11 +995,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   messageItemPrefab: {fileID: 0}
-  companyNameText: {fileID: 1433866378313633985}
+  companyNameText: {fileID: 3954617866360766758}
   messageContainer: {fileID: 0}
   messageInput: {fileID: 0}
   messageScrollRect: {fileID: 0}
---- !u!1 &3662032316177312359
+--- !u!1 &4665775926426755152
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1007,9 +1007,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6608353648500379276}
-  - component: {fileID: 6540258687583362930}
-  - component: {fileID: 1433866378313633985}
+  - component: {fileID: 1530270248788176232}
+  - component: {fileID: 4326951495603434052}
+  - component: {fileID: 3954617866360766758}
   m_Layer: 5
   m_Name: CompanyName
   m_TagString: Untagged
@@ -1017,13 +1017,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &6608353648500379276
+--- !u!224 &1530270248788176232
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3662032316177312359}
+  m_GameObject: {fileID: 4665775926426755152}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -1033,24 +1033,24 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 44.85, y: 167.08}
-  m_SizeDelta: {x: 390.3, y: 44.67}
+  m_AnchoredPosition: {x: 44.149975, y: 168.47}
+  m_SizeDelta: {x: 391.7, y: 44.65}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &6540258687583362930
+--- !u!222 &4326951495603434052
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3662032316177312359}
+  m_GameObject: {fileID: 4665775926426755152}
   m_CullTransparentMesh: 0
---- !u!114 &1433866378313633985
+--- !u!114 &3954617866360766758
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3662032316177312359}
+  m_GameObject: {fileID: 4665775926426755152}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
@@ -1132,7 +1132,7 @@ MonoBehaviour:
   m_pageToDisplay: 1
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
-    textComponent: {fileID: 1433866378313633985}
+    textComponent: {fileID: 3954617866360766758}
     characterCount: 12
     spriteCount: 0
     spaceCount: 1

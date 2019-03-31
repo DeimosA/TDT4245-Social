@@ -49,7 +49,7 @@ public class UICompanyController : MonoBehaviour
 
     private void SetCommButtonText()
     {
-        // TODO set text on comm button to send message or establish comm
+        // Set text on comm button to send message or establish comm
         if (company.IsCommEstablished())
         {
             commButtonText.SetText("Send message");
@@ -77,6 +77,8 @@ public class UICompanyController : MonoBehaviour
         company.SetCommEstablished();
         SetCommButtonText();
         ShowChatDialog();
+
+        // TODO notify other company
     }
 
     public void SetCompanyModel(CompanyModel companyModel)
@@ -93,6 +95,9 @@ public class UICompanyController : MonoBehaviour
             // Show establish dialog
             GameObject commDialog = Instantiate(establishCommDialogPrefab, mainCanvas.transform, false);
             commDialog.GetComponent<UICommController>().SetCompanyController(this);
+
+            // TODO if request from another company, show answer dialog
+
         }
         else
         {

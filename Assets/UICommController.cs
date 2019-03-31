@@ -80,6 +80,7 @@ public class UICommController : MonoBehaviour
     public void CancelCommDialog()
     {
         Destroy(gameObject);
+        // TODO notify other company if request denied
     }
 
     public void SendMessageClickHandler()
@@ -90,6 +91,7 @@ public class UICommController : MonoBehaviour
             company.SendMessageToCompany(message);
             AddMessageItem("You: " + message, true);
             // Clear message input
+            message = "";
             messageInput.text = "";
             messageInput.ActivateInputField();
         }

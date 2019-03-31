@@ -42,7 +42,7 @@ public class CompanyModel
     public void SetCommEstablished()
     {
         commEstablished = true;
-        // TODO probably transmit some message about this
+        // TODO probably transmit some message about this to other company
     }
 
 
