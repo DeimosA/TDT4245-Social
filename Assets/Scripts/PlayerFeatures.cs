@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayerFeatures : MonoBehaviour
 {
-    public BusinessFeatureTitleBusinessFeatureDictionary purchasedFeatures;
+    public List<BusinessFeature> featureGroup1;
+    public List<BusinessFeature> featureGroup2;
+    public List<BusinessFeature> featureGroup3;
 
     // Start is called before the first frame update
     void Start()
@@ -12,8 +14,5 @@ public class PlayerFeatures : MonoBehaviour
         
     }
 
-    public void AddFeature(BusinessFeature feature)
-    {
-        purchasedFeatures.Add(feature.title, feature);
-    }
+
 }
