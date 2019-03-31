@@ -63,7 +63,7 @@ public class PlayerHandController : MonoBehaviour
         }
     }
 
-    public void FillHand(int currentTurn, CardIntDictionary choiceHistory, PlayerStatIntDictionary playerStats, BusinessFeatureTitleBusinessFeatureDictionary purchasedFeatures)
+    public void FillHand(int currentTurn, CardIntDictionary choiceHistory, PlayerStatIntDictionary playerStats, HashSet<BusinessFeatureTitle> purchasedFeatures)
     {
         //Gets card asset from deck, instantiates new cards with that asset
         //Until hand is full

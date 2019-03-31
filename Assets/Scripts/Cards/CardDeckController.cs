@@ -24,7 +24,7 @@ public class CardDeckController : MonoBehaviour
     }
 
     //Gets valid card based on Player's stats, features and history
-    public ActivityCard GetCard(int currentTurn, CardIntDictionary choiceHistory, PlayerStatIntDictionary playerStats, BusinessFeatureTitleBusinessFeatureDictionary purchasedFeatures)
+    public ActivityCard GetCard(int currentTurn, CardIntDictionary choiceHistory, PlayerStatIntDictionary playerStats, HashSet<BusinessFeatureTitle> purchasedFeatures)
     {
         ActivityCard result = null;
 

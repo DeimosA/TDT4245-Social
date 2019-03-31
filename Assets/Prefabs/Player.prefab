@@ -61,9 +61,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aefe315f0bcc6342a031cfab8945e8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  purchasedFeatures:
-    m_keys: 
-    m_values: []
+  imageGroup:
+  - title: 0
+    cost: 10
+    purchased: 0
+    statChangesPerTurn: []
+  - title: 1
+    cost: 20
+    purchased: 0
+    statChangesPerTurn: []
+  - title: 2
+    cost: 30
+    purchased: 0
+    statChangesPerTurn: []
+  securityGroup:
+  - title: 3
+    cost: 5
+    purchased: 0
+    statChangesPerTurn: []
+  - title: 4
+    cost: 120
+    purchased: 0
+    statChangesPerTurn: []
+  socialGroup:
+  - title: 7
+    cost: 888
+    purchased: 0
+    statChangesPerTurn: []
 --- !u!114 &4345577979974593704
 MonoBehaviour:
   m_ObjectHideFlags: 0
