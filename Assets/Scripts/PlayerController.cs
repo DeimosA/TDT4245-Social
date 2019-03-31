@@ -163,12 +163,12 @@ public class PlayerController : MonoBehaviour
 
     public void FillHand()
     {
-        playerHandController.FillHand(currentTurn, choiceHistory, playerStats.stats, playerFeatures.purchasedFeatures);
+        playerHandController.FillHand(currentTurn, choiceHistory, playerStats.stats, playerFeatures.GetPurchasedFeatureTitlesAsHashSet());
     }
 
     public bool ValidateChoice(ActivityChoice choice)
     {
-        return choice.ValidateChoice(playerFeatures.purchasedFeatures, playerStats.stats);
+        return choice.ValidateChoice(playerFeatures.GetPurchasedFeatureTitlesAsHashSet(), playerStats.stats);
     }
 
     // methods needed to change turndata array, these happen based on what cards the player plays during their turn. For example playing a card which gives them x more money will modify the corresponding

@@ -8,7 +8,11 @@ public enum BusinessFeatureTitle
     FeatureA,
     FeatureB,
     FeatureC,
-    FeatureD
+    FeatureD,
+    FeatureE,
+    FeatureF,
+    FeatureG,
+    FeatureH
 }
 
 [System.Serializable]
@@ -23,6 +27,11 @@ public class BusinessFeature
     public bool CanBePurchased(PlayerStatIntDictionary playerStats)
     {
         return (playerStats[PlayerStat.capital] >= cost);
+    }
+
+    public void SetPurchased(bool purchased)
+    {
+        this.purchased = purchased;
     }
 
 

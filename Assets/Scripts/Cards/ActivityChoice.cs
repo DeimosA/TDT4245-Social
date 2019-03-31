@@ -25,7 +25,7 @@ public class ActivityChoice
     }
 
     //returns whether all prerequisites are met
-    public bool ValidateChoice(BusinessFeatureTitleBusinessFeatureDictionary purchasedFeatures, PlayerStatIntDictionary playerStats)
+    public bool ValidateChoice(HashSet<BusinessFeatureTitle> purchasedFeatures, PlayerStatIntDictionary playerStats)
     {
         return (ValidateFeaturePrerequisites(purchasedFeatures)
             && ValidateStatPrerequisites(playerStats));
@@ -40,7 +40,7 @@ public class ActivityChoice
 
     //Input: List of player's unlocked features
     //Checks if featurePrerequisites match player's features
-    private bool ValidateFeaturePrerequisites(BusinessFeatureTitleBusinessFeatureDictionary purchasedFeatures)
+    private bool ValidateFeaturePrerequisites(HashSet<BusinessFeatureTitle> purchasedFeatures)
     {
         //iterate over all feature prerequisites, return false if any does not match input
         foreach (FeaturePrerequisiste prerequisite in featurePrerequisites)
@@ -48,11 +48,11 @@ public class ActivityChoice
             //if the card requires the feature to be activated, return false if it is not held by player
             if (prerequisite.value == true)
             {
-                if (!purchasedFeatures.ContainsKey(prerequisite.feature)) return false;
+                if (!purchasedFeatures.Contains(prerequisite.feature)) return false;
             }
             else //card requires feature to not be activated, return false if it is held by player
             {
-                if (purchasedFeatures.ContainsKey(prerequisite.feature)) return false;
+                if (purchasedFeatures.Contains(prerequisite.feature)) return false;
             }
         }
         //no mismatches, card's feature prerequisites have been met
