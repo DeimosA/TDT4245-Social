@@ -20,9 +20,11 @@ public class NetworkPlayer : NetworkBehaviour
 	public bool isTurn = false;
 
 	[SyncVar(hook = "UpdateTimeDisplay")]
-	public float time = 90;
+	public float time = 90.0f;
 
 	public PlayerController controller;
+
+	//public NetworkManager nwm;
 
 	private int[] turnData;
 
@@ -46,8 +48,10 @@ public class NetworkPlayer : NetworkBehaviour
 	// Use this for initialization
 	void Start()		//may need a custom method that runs when game "starts"
 	{
-		//controller.OnPlayerInput += OnPlayerInput; // what
+		//nwm = GameObject.Find("NetworkManager");
+		controller.OnPlayerInput += OnPlayerInput; // what
 		//playerID = gameObject.GetComponent<NetworkInstanceId>().Value;
+		Time.timeScale = 1.0f;
 
 	}
 
@@ -60,6 +64,7 @@ public class NetworkPlayer : NetworkBehaviour
 			time -= Time.deltaTime;
 			if (time <= 0)
 			{
+				TurnEnd();
 				//NetworkManager.Instance.AlterTurns();
 				// server starts handling new data
 			}
@@ -73,7 +78,6 @@ public class NetworkPlayer : NetworkBehaviour
 		base.OnStartClient();
 		Debug.Log("Client Network Player start");
 		StartPlayer();
-
 		NetworkManager.Instance.RegisterNetworkPlayer(this);
 	}
 
@@ -86,7 +90,8 @@ public class NetworkPlayer : NetworkBehaviour
 	[Server]
 	public void StartPlayer()
 	{
-		ready = true;
+		gameObject.GetComponent<Transform>().position = new Vector3(Random.Range(0f, 10f), Random.Range(0f, 5f), 0f);
+		GameObject.Find("NetworkManager").GetComponent<NetworkManagerHUD>().enabled = false;
 	}
 
 	public void StartGame()
@@ -155,6 +160,8 @@ public class NetworkPlayer : NetworkBehaviour
 		
 	}
 
+
+
 	[Server]
 	public void DistributeTurnChanges(){
 		
@@ -173,7 +180,7 @@ public class NetworkPlayer : NetworkBehaviour
 		if (isLocalPlayer)	// && turn, can be used to do different things on turn start/end
 		{
 			//play turn sound, display some "new turn" effect i guess
-			NetworkManager.Instance.UpdateStatistics(turnData);
+			//NetworkManager.Instance.UpdateStatistics(turnData);
 		}
 	}
 
@@ -188,7 +195,12 @@ public class NetworkPlayer : NetworkBehaviour
 		// temporary setup/sketch, newData[0] is some unique identifier
 	}
 
-	/*
+	public void UpdateScore(float score){
+		Debug.Log("score: " + score);
+	}
+
+
+
 	void OnPlayerInput(PlayerAction action, float amount)
 	{
 		if (action == PlayerAction.SHOOT)
@@ -197,18 +209,22 @@ public class NetworkPlayer : NetworkBehaviour
 		}
 	}
 
+	
 	[Command]
 	void CmdOnPlayerInput(PlayerAction action, float amount)
 	{
 		//Shoot bullets
 
 		//Update score
+		ready = true;
 		NetworkManager.Instance.UpdateScore(amount);
 	}
-	*/
+
+
+
 	public void UpdateTimeDisplay(float curtime)
 	{
-		GameObject timerText = GameObject.FindWithTag("Timer");
+		GameObject timerText = GameObject.Find("Timer");
 		Text timer = timerText.GetComponent<Text> ();
 		timer.text = Mathf.Round(curtime).ToString();
 	}

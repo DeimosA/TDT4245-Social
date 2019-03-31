@@ -37,7 +37,7 @@ public class GameLoader : MonoBehaviour
         }
         //GameObject.Find("CompanyNameText").GetComponent<TextMeshProUGUI>().SetText(playerData.GetCompanyName());
         companyStatus = GameObject.Find("CompanyStatusPanel").GetComponent<UICompanyController>();
-        companyStatus.SetCompanyName(playerData.GetCompanyName());
+        companyStatus.SetCompanyModel(new CompanyModel(playerData.GetCompanyName()));
 
 
         /* Load game logic scenes */
@@ -50,9 +50,10 @@ public class GameLoader : MonoBehaviour
         GameObject companyContainer = GameObject.Find("OtherCompaniesPanel");
         for (int i = 0; i < companyCount; i++)
         {
+            CompanyModel company = new CompanyModel("Kompani " + i);
             GameObject newInstance = Instantiate(companyPrefab, companyContainer.transform, false);
             newInstance.transform.SetParent(companyContainer.transform, false);
-            newInstance.GetComponent<UICompanyController>().SetCompanyName("Kompani " + i);
+            newInstance.GetComponent<UICompanyController>().SetCompanyModel(company);
         }
 
     }
