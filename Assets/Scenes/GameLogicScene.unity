@@ -376,6 +376,14 @@ MonoBehaviour:
   capital: 0
   publicOpinion: 0
   name: 
+  playerStats: {fileID: 0}
+  playerFeatures: {fileID: 0}
+  choiceHistory:
+    m_keys: []
+    m_values: 
+  currentTurn: 0
+  playerHandController: {fileID: 0}
+  deck: {fileID: 0}
 --- !u!1 &861242678
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,7 +491,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &969072158
 Light:
   m_ObjectHideFlags: 0
@@ -902,5 +910,10 @@ PrefabInstance:
       propertyPath: controller
       value: 
       objectReference: {fileID: 781433641}
+    - target: {fileID: 8373390733975664441, guid: 52c3d6e78551bdb49ac32cce0257a3ae,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52c3d6e78551bdb49ac32cce0257a3ae, type: 3}

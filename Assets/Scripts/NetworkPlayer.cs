@@ -77,6 +77,7 @@ public class NetworkPlayer : NetworkBehaviour
 
 		base.OnStartClient();
 		Debug.Log("Client Network Player start");
+		GameObject.Find("NetworkManager").GetComponent<NetworkManagerHUD>().enabled = false;
 		StartPlayer();
 		NetworkManager.Instance.RegisterNetworkPlayer(this);
 	}
@@ -91,6 +92,7 @@ public class NetworkPlayer : NetworkBehaviour
 	public void StartPlayer()
 	{
 		gameObject.GetComponent<Transform>().position = new Vector3(Random.Range(0f, 10f), Random.Range(0f, 5f), 0f);
+		Debug.Log(GameObject.Find("NetworkManager").GetComponent<NetworkManagerHUD>().enabled);
 		GameObject.Find("NetworkManager").GetComponent<NetworkManagerHUD>().enabled = false;
 	}
 

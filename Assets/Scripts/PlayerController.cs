@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
 	{
 		sp = GameObject.Find("Sphere");
 
-			GameObject.Find("Sphere").SetActive(false);
+			sp.SetActive(false);
 		
 		//name = gameobject.PersistentPlayerData.getCompanyName();
         choiceHistory = new CardIntDictionary();
