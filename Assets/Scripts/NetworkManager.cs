@@ -75,7 +75,9 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 				player.StartGame();
 				started = true;
 				player.controller.test();
-			}		}
+			}
+			SceneManager.LoadScene("CharacterCreationScene", LoadSceneMode.Single);
+		}
 
 		return playersReady;
 	}
