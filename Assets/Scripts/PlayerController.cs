@@ -200,7 +200,7 @@ public class PlayerController : MonoBehaviour
 
     // these are probably being written by someone else right now and will be merged later.
 
-    /*
+
 	public void Shoot()
 	{
 		if (!isLocalPlayer)
