@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum PlayerAction
 {
-	//SHOOT,
+	SHOOT,
 	//JUMP
 }
 
@@ -21,6 +21,10 @@ public class PlayerController : MonoBehaviour
 	public int capital;
 	public int publicOpinion;
 	public string name;
+
+	private GameObject sp;
+
+	//public GameObject nwm;
 
 	public delegate void PlayerInputCallback(PlayerAction action, float deg);
 	public event PlayerInputCallback OnPlayerInput;
@@ -39,6 +43,10 @@ public class PlayerController : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		sp = GameObject.Find("Sphere");
+
+			GameObject.Find("Sphere").SetActive(false);
+		
 		//name = gameobject.PersistentPlayerData.getCompanyName();
         choiceHistory = new CardIntDictionary();
         cardsPlayedLastTurn = new CardIntDictionary();
@@ -53,15 +61,20 @@ public class PlayerController : MonoBehaviour
 		{
 			return;
 		}
+		if(Input.GetKeyDown(KeyCode.W)){
+			sp.SetActive(true);
+		}
+
 		// call whatever methods are needed for inputs
-		//Shoot ();
+		Shoot ();
 	}
 
 	public void SetupLocalPlayer()
 	{
 		//add color to your player
 		isLocalPlayer = true;
-		//instansiate values for each player here I thinK??
+		//instansiate values for each player here as they join
+			// think this might be buggy, having issues with isLocalPlayer for non-host.
 	}
 
 	public void TurnStart()
@@ -93,8 +106,19 @@ public class PlayerController : MonoBehaviour
 			// disable actions/player input
 
 			// send turn data to server
+
 		}
 	}
+
+	public void test(){
+		Debug.Log("test?");
+	}
+
+	// methods needed to change turndata array, these happen based on what cards the player plays during their turn. For example playing a card which gives them x more money will modify the corresponding
+	// money index in the array by x.
+
+	// these are probably being written by someone else right now and will be merged later.
+
 
     //
     public void OnTurnStart()
@@ -186,21 +210,11 @@ public class PlayerController : MonoBehaviour
 
 		float power = 50f;
 
-		if (Application.platform == RuntimePlatform.Android)
-		{
-			Touch touch = Input.GetTouch(0);
-			if (touch.phase == TouchPhase.Began)
+			if (Input.GetKeyDown(KeyCode.S))
 			{
 				OnPlayerInput(PlayerAction.SHOOT, power);
 			}
-		}
-		else
-		{
-			if (Input.GetMouseButtonDown (0))
-			{
-				OnPlayerInput(PlayerAction.SHOOT, power);
-			}
-		}
+
 	}	
-	*/
+
 }
