@@ -138,6 +138,7 @@ public class PlayerController : MonoBehaviour
                 //Add any potential priority cards to queue
                 if (choice.HasPriorityCard())
                 {
+                    Debug.Log(deck.priorityCards);
                     deck.AddToQueue(choice.priorityCardToTrigger);
                 }
 

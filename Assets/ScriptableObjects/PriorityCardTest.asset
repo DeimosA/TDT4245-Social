@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e6011b15cc15a499b9ce18b3bb2696, type: 3}
   m_Name: PriorityCardTest
   m_EditorClassIdentifier: 
+  cooperative: 0
   cardCategory: 0
   description: If you took choice 0 in card 1, this card shows up! Seriously! You
     can't escaped it! It's top priority!
