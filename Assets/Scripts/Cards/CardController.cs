@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +15,7 @@ public class CardController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.Find("Text").GetComponent<Text>().text = cardData.description;
+        transform.Find("Text").GetComponent<TextMeshProUGUI>().text = cardData.description;
 
         dropdown = transform.Find("Dropdown").GetComponent<Dropdown>();
 
