@@ -83,7 +83,7 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
     {
         int cId = networkMessage.conn.connectionId;
         SendMessage message = networkMessage.ReadMessage<SendMessage>();
-        Debug.Log("ServerSide " + message.receiverNetId + " " + message.messageContent);
+        //Debug.Log("ServerSide " + message.receiverNetId + " " + message.messageContent);
         NetworkServer.SendToClient(connIdLookup[message.receiverNetId], SendMessageType.Score, message);
     }
 
