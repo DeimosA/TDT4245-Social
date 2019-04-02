@@ -9,7 +9,7 @@ public abstract class CardController : MonoBehaviour
     public ActivityCard cardData;
     public PlayerHandController playerHandController;
 
-    protected Dropdown choiceDropdown;
+    protected TMP_Dropdown choiceDropdown;
 
 
     // Start is called before the first frame update

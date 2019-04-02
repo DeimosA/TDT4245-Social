@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     m_keys: 010000000200000000000000
-    m_values: 640000006400000064000000
+    m_values: 881300003200000064000000
 --- !u!114 &4345577979974593711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,75 +64,127 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageGroup:
   - title: 0
-    cost: 10
+    cost: 5000
     purchased: 0
     statChangesPerTurn:
     - stat: 0
-      valueChange: 10
+      valueChange: 500
+    - stat: 1
+      valueChange: 2500
   - title: 1
-    cost: 20
+    cost: 7500
     purchased: 0
     statChangesPerTurn:
     - stat: 0
-      valueChange: 100
+      valueChange: 2000
+    - stat: 1
+      valueChange: 5000
   - title: 2
-    cost: 30
+    cost: 10000
     purchased: 0
     statChangesPerTurn:
     - stat: 0
       valueChange: 1000
+    - stat: 1
+      valueChange: 5000
   - title: 3
-    cost: 30
+    cost: 20000
     purchased: 0
     statChangesPerTurn:
     - stat: 0
-      valueChange: 1000
+      valueChange: 2000
+    - stat: 1
+      valueChange: 5000
   securityGroup:
   - title: 4
-    cost: 1000
+    cost: 5000
     purchased: 0
-    statChangesPerTurn: []
+    statChangesPerTurn:
+    - stat: 0
+      valueChange: 0
+    - stat: 0
+      valueChange: 0
   - title: 5
     cost: 10000
     purchased: 0
-    statChangesPerTurn: []
+    statChangesPerTurn:
+    - stat: 0
+      valueChange: 3000
+    - stat: 1
+      valueChange: 0
   - title: 6
     cost: 25000
     purchased: 0
-    statChangesPerTurn: []
+    statChangesPerTurn:
+    - stat: 0
+      valueChange: 3000
   - title: 7
     cost: 100000
     purchased: 0
-    statChangesPerTurn: []
+    statChangesPerTurn:
+    - stat: 0
+      valueChange: 5000
+    - stat: 2
+      valueChange: 10
   - title: 8
     cost: 1000000
     purchased: 0
-    statChangesPerTurn: []
+    statChangesPerTurn:
+    - stat: 1
+      valueChange: 950300
+    - stat: 2
+      valueChange: -50
   socialGroup:
   - title: 9
     cost: 0
     purchased: 1
-    statChangesPerTurn: []
+    statChangesPerTurn:
+    - stat: 0
+      valueChange: 1000
+    - stat: 1
+      valueChange: 1000
   - title: 10
-    cost: 1000
+    cost: 5000
     purchased: 0
-    statChangesPerTurn: []
+    statChangesPerTurn:
+    - stat: 0
+      valueChange: 1000
+    - stat: 1
+      valueChange: 5000
   - title: 11
     cost: 10000
     purchased: 0
-    statChangesPerTurn: []
+    statChangesPerTurn:
+    - stat: 0
+      valueChange: 2000
+    - stat: 1
+      valueChange: 5000
   - title: 12
     cost: 50000
     purchased: 0
-    statChangesPerTurn: []
+    statChangesPerTurn:
+    - stat: 0
+      valueChange: 5000
+    - stat: 1
+      valueChange: 5000
   - title: 13
     cost: 100000
     purchased: 0
-    statChangesPerTurn: []
+    statChangesPerTurn:
+    - stat: 0
+      valueChange: 5000
+    - stat: 1
+      valueChange: 10000
+    - stat: 2
+      valueChange: 10
   - title: 14
     cost: 250000
     purchased: 0
-    statChangesPerTurn: []
+    statChangesPerTurn:
+    - stat: 0
+      valueChange: 10000
+    - stat: 1
+      valueChange: 10000
 --- !u!114 &4345577979974593704
 MonoBehaviour:
   m_ObjectHideFlags: 0

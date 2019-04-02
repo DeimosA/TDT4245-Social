@@ -11,7 +11,7 @@ public class CoopCardController : CardController
     //disable some stuff if this card is receiving
     public bool receivingCard;
 
-    private Dropdown playerDropdown;
+    private TMP_Dropdown playerDropdown;
     private Button sendButton;
 
     private bool sent = false;
@@ -48,7 +48,7 @@ public class CoopCardController : CardController
             transform.Find("DescriptionScrollView/Viewport/Content/DescriptionText").GetComponent<TextMeshProUGUI>().text = cardData.description;
 
 
-            choiceDropdown = transform.Find("ChoiceDropdown").GetComponent<Dropdown>();
+            choiceDropdown = transform.Find("ChoiceDropdown").GetComponent<TMP_Dropdown>();
 
 
             //Temporary way of displaying valid choices
@@ -56,24 +56,24 @@ public class CoopCardController : CardController
             {
                 if (playerHandController.playerController.ValidateChoice(cardData.choices[i]))
                 {
-                    choiceDropdown.options.Add(new Dropdown.OptionData(cardData.choices[i].title));
+                    choiceDropdown.options.Add(new TMP_Dropdown.OptionData(cardData.choices[i].title));
                 }
             }
 
             sendButton = transform.Find("SendButton").GetComponent<Button>();
 
             //set player dropdown options
-            playerDropdown = transform.Find("PlayerDropdown").GetComponent<Dropdown>();
+            playerDropdown = transform.Find("PlayerDropdown").GetComponent<TMP_Dropdown>();
 
             //TODO: Get player company names and add them here..
-            playerDropdown.options.Add(new Dropdown.OptionData("MockPlayer1"));
-            playerDropdown.options.Add(new Dropdown.OptionData("MockPlayer2"));
-            playerDropdown.options.Add(new Dropdown.OptionData("MockPlayer3"));
+            playerDropdown.options.Add(new TMP_Dropdown.OptionData("MockPlayer1"));
+            playerDropdown.options.Add(new TMP_Dropdown.OptionData("MockPlayer2"));
+            playerDropdown.options.Add(new TMP_Dropdown.OptionData("MockPlayer3"));
 
         }
         else
         {
-            choiceDropdown = transform.Find("ChoiceDropdown").GetComponent<Dropdown>();
+            choiceDropdown = transform.Find("ChoiceDropdown").GetComponent<TMP_Dropdown>();
             choiceDropdown.interactable = false;
         }
     }
@@ -81,7 +81,7 @@ public class CoopCardController : CardController
     public void SetCardData(ActivityCard activityCard)
     {
         this.cardData = activityCard;
-        choiceDropdown = transform.Find("ChoiceDropdown").GetComponent<Dropdown>();
+        choiceDropdown = transform.Find("ChoiceDropdown").GetComponent<TMP_Dropdown>();
         //set type text
         transform.Find("TypeText").GetComponent<TextMeshProUGUI>().text = cardData.cardCategory.ToString();
 
@@ -91,7 +91,7 @@ public class CoopCardController : CardController
         //Temporary way of displaying valid choices
         for (int i = 0; i < cardData.choices.Count; i++)
         {
-            choiceDropdown.options.Add(new Dropdown.OptionData(cardData.choices[i].title));
+            choiceDropdown.options.Add(new TMP_Dropdown.OptionData(cardData.choices[i].title));
         }
 
     }
