@@ -102,6 +102,7 @@ public class GameLoader : MonoBehaviour
         companyStatus.SetCompanyModel(localCompany);
 
 
+
         //// TEST DATA ////////
         //TestData();
         ///////////////////////
