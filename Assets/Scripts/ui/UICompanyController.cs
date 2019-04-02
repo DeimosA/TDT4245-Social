@@ -47,6 +47,7 @@ public class UICompanyController : MonoBehaviour
         //    companyNameText = transform.Find("CompanyNameText").GetComponent<TextMeshProUGUI>();
         //}
         this.companyNameText.SetText(newCompanyName);
+        company.companyName = newCompanyName;
     }
 
     private void ShowChatDialog()
