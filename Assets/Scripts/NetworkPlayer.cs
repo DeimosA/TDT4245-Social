@@ -43,15 +43,20 @@ public class NetworkPlayer : NetworkBehaviour
 	//[SyncVar]
 	public uint playerID;
 
-	[SyncVar]
+<<<<<<< HEAD
+	public int userbase;
+
+	public int capital;
+
+
+	public int publicOpinion;
+
 	public int userbase = 0;
 
-	[SyncVar]
+
 	public int capital = 500;
 
-	[SyncVar]
 	public int publicOpinion = 1;
-
     
     public string companyName = "";
 
@@ -63,6 +68,8 @@ public class NetworkPlayer : NetworkBehaviour
 	public bool SetupNames;
 
 	bool done;
+
+	public int numberInList;
 
 	//public int instanceID;
 
@@ -84,7 +91,7 @@ public class NetworkPlayer : NetworkBehaviour
 	[Server]
 	void Update()
 	{
-		if (isTurn)
+		if (isTurn && done)
 		{
 			time -= Time.deltaTime;
 			if (time <= 0)
@@ -104,7 +111,9 @@ public class NetworkPlayer : NetworkBehaviour
 			controller.name = GameObject.Find("PlayerData").GetComponent<PersistentPlayerData>().GetCompanyName();
 			OnPlayerAdd();
 			done = true;
+			time = 10;
 		}
+		Debug.Log(numberInList);
 			//CmdAddToPlayersList(controller.name);
 		//if(isServer){
 		//RpcSpawnPlayers(controller.name);
@@ -167,7 +176,13 @@ public class NetworkPlayer : NetworkBehaviour
 	[ClientRpc]
 	void RpcTurnEnd()
 	{
-		controller.TurnEnd();
+		//CmdTurnEnd(userBase, capital, publicOpinion);
+		List<int> tmpValues = new List<int>();
+		tmpValues.Add(userbase);
+		tmpValues.Add(capital);
+		tmpValues.Add(publicOpinion);
+		Debug.Log(tmpValues[0] + tmpValues[1] + tmpValues[2]);
+		NetworkManager.Instance.UpdateValues(tmpValues);
 	}
 
 	[Command]
