@@ -19,7 +19,7 @@ public class IndividualCardController : CardController
         //set description text
         transform.Find("DescriptionScrollView/Viewport/Content/DescriptionText").GetComponent<TextMeshProUGUI>().text = cardData.description;
 
-        choiceDropdown = transform.Find("ChoiceDropdown").GetComponent<Dropdown>();
+        choiceDropdown = transform.Find("ChoiceDropdown").GetComponent<TMP_Dropdown>();
 
 
         //Temporary way of displaying valid choices
@@ -27,7 +27,7 @@ public class IndividualCardController : CardController
         {
             if (playerHandController.playerController.ValidateChoice(cardData.choices[i]))
             {
-                choiceDropdown.options.Add(new Dropdown.OptionData(cardData.choices[i].title));
+                choiceDropdown.options.Add(new TMP_Dropdown.OptionData(cardData.choices[i].title));
             }
         }
     }

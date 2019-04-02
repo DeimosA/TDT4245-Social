@@ -30,6 +30,21 @@ public class PlayerStats : MonoBehaviour
         
     }
 
+    public int GetCapital()
+    {
+        return stats[PlayerStat.capital];
+    }
+
+    public int GetReputation()
+    {
+        return stats[PlayerStat.reputation];
+    }
+
+    public int GetUserbase()
+    {
+        return stats[PlayerStat.userbase];
+    }
+
     public void AddToStat(StatChange statChange)
     {
         stats[statChange.stat] += statChange.valueChange;

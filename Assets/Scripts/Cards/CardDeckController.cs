@@ -45,16 +45,27 @@ public class CardDeckController : MonoBehaviour
                 result = queueCard;
             }
         }
-        else //otherwise find first valid card from list of all cards
+        else //otherwise find random valid card from list of all cards
         {
-            for(int i = 0; i < deck.Count; i++)
+            //super duper excellent algorithm for getting random card..
+            HashSet<int> used = new HashSet<int>();
+            while (result == null && used.Count < deck.Count)
             {
-                if (deck[i].ValidateCard(currentTurn, purchasedFeatures, playerStats, choiceHistory)){
-                    result = deck[i];
-                    deck.RemoveAt(i);
-                    break;
+                int index = Random.Range(0, deck.Count);
+                if (!used.Contains(index))
+                {
+                    used.Add(index);
+                    if (deck[index].ValidateCard(currentTurn, purchasedFeatures, playerStats, choiceHistory))
+                    {
+                        result = deck[index];
+                        deck.RemoveAt(index);
+                    }
                 }
             }
+            //for(int i = 0; i < deck.Count; i++)
+            //{
+
+            //}
         }
         if(result != null)
         {
