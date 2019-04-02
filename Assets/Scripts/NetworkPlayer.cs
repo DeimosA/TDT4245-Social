@@ -62,7 +62,6 @@ public class NetworkPlayer : NetworkBehaviour
 		//playerID = gameObject.GetComponent<NetworkInstanceId>().Value;
 		Time.timeScale = 1.0f;
 		bool done = false;
-
 	}
 
 	// Update is called once per frame
