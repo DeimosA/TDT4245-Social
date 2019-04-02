@@ -37,6 +37,12 @@ public class PlayerController : MonoBehaviour
     public int currentTurn;
     public PlayerHandController playerHandController;
     public CardDeckController deck;
+    [Header("Newsfeed stuff")]
+    public int newsCounter = 0;
+    public PlayerNewsFeedController playerNewsFeedController;
+
+    [Header("Prefabs")]
+    public GameObject newTurnPrefab;
 
     private CardIntDictionary cardsPlayedLastTurn;
 	//bool ready = false;
@@ -141,16 +147,23 @@ public class PlayerController : MonoBehaviour
     //
     public void OnTurnStart()
     {
+        //Display new turn text
+        StartCoroutine(DisplayNewTurnText());
+
         //commit cards played last turn
         if(cardsPlayedLastTurn.Count != 0)
         {
             foreach(ActivityCard card in cardsPlayedLastTurn.Keys)
             {
+                //Apply stat changes
                 ActivityChoice choice = card.GetChoice(cardsPlayedLastTurn[card]);
                 for (int j = 0; j < choice.statChanges.Count; j++)
                 {
                     playerStats.AddToStat(choice.statChanges[j]);
                 }
+
+                //Apply news counter changes
+                newsCounter += choice.addToNewsCounter;
 
                 //Add any potential priority cards to queue
                 if (choice.HasPriorityCard())
@@ -160,7 +173,14 @@ public class PlayerController : MonoBehaviour
                 }
 
                 //commit to history
-                choiceHistory.Add(card, cardsPlayedLastTurn[card]);
+                try
+                {
+                    choiceHistory.Add(card, cardsPlayedLastTurn[card]);
+                }
+                catch (System.ArgumentException)
+                {
+                    Debug.Log("Uh oh card already in choiceHistory");
+                }
             }
 
             //clear cards played last turn
@@ -174,6 +194,10 @@ public class PlayerController : MonoBehaviour
             playerStats.AddToStat(featureStatChanges[i]);
         }
 
+        //update newsfeed
+        playerNewsFeedController.OnTurnStart();
+
+
         //fill hand
         FillHand();
     }
@@ -185,7 +209,14 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < cardsInPlaySlots.Count; i++)
         {
             CardController cardController = cardsInPlaySlots[i].GetComponent<CardController>();
-            cardsPlayedLastTurn.Add(cardController.cardData, cardController.GetIndexOfHighlightedChoice());
+            try
+            {
+                cardsPlayedLastTurn.Add(cardController.cardData, cardController.GetIndexOfHighlightedChoice());
+            }
+            catch (System.ArgumentException)
+            {
+                Debug.Log("Uh oh card already in cardsplayedlastturn");
+            }
 
             ////apply stat changes
             //ActivityChoice choice = cardController.GetHighlightedChoice();
@@ -212,6 +243,13 @@ public class PlayerController : MonoBehaviour
     public bool ValidateChoice(ActivityChoice choice)
     {
         return choice.ValidateChoice(playerFeatures.GetPurchasedFeatureTitlesAsHashSet(), playerStats.stats);
+    }
+
+    private IEnumerator DisplayNewTurnText()
+    {
+        GameObject g = Instantiate(newTurnPrefab, GameObject.Find("MainCanvas").transform, false);
+        yield return new WaitForSecondsRealtime(2f);
+        Destroy(g);
     }
 
     // methods needed to change turndata array, these happen based on what cards the player plays during their turn. For example playing a card which gives them x more money will modify the corresponding

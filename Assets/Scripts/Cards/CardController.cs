@@ -21,7 +21,7 @@ public abstract class CardController : MonoBehaviour
     public abstract void OnStart();
 
     //set buttons interactable based on whether playslot or hand is full
-    public abstract void SetButtonsInteractable(bool fullPlaySlots, bool fullHand);
+    public abstract void SetButtonsInteractable(bool fullPlaySlots, bool fullHand, bool cardInHand);
 
     //Temporary way of getting which choice is currently chosen
     public int GetIndexOfHighlightedChoice()
@@ -40,14 +40,9 @@ public abstract class CardController : MonoBehaviour
         return cardData.GetChoice(GetTitleOfHighlightedChoice());
     }
 
-    public void MoveToPlaySlot()
+    public void MoveCard()
     {
-        playerHandController.MoveCardToPlaySlot(gameObject);
-    }
-
-    public void MoveToHand()
-    {
-        playerHandController.MoveCardToHand(gameObject);
+        playerHandController.MoveCard(gameObject);
     }
 
     public void DestroyCard()

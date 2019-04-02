@@ -8,13 +8,22 @@ using UnityEngine;
 /// </summary>
 public class CardDeckController : MonoBehaviour
 {
-    public List<ActivityCard> deck;
     public Queue<ActivityCard> priorityCards;
+    [Tooltip("Path of folder containing cards to build deck from (relative to Resources)")]
+    public string deckFolderPath = "ActivityCards/FinalCards";
+    private List<ActivityCard> deck = new List<ActivityCard>();
 
     // Start is called before the first frame update
     void Start()
     {
         priorityCards = new Queue<ActivityCard>();
+
+        //build deck from folder
+        var cardObjects = Resources.LoadAll(deckFolderPath, typeof(ActivityCard));
+        foreach(Object o in cardObjects)
+        {
+            deck.Add((ActivityCard)o);
+        }
     }
 
     //Public methods

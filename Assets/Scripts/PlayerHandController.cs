@@ -42,6 +42,18 @@ public class PlayerHandController : MonoBehaviour
         return result;
     }
 
+    public void MoveCard(GameObject card)
+    {
+        if (card.transform.IsChildOf(handTransform))
+        {
+            MoveCardToPlaySlot(card);
+        }
+        else if (card.transform.IsChildOf(playSlotsTransform))
+        {
+            MoveCardToHand(card);
+        }
+    }
+
     public void MoveCardToPlaySlot(GameObject card)
     {
         if (playSlotsTransform.childCount < maxCardsInPlaySlots)
@@ -114,7 +126,7 @@ public class PlayerHandController : MonoBehaviour
         {
             try
             {
-                handTransform.GetChild(i).GetComponent<CardController>().SetButtonsInteractable(fullPlaySlots, fullHand);
+                handTransform.GetChild(i).GetComponent<CardController>().SetButtonsInteractable(fullPlaySlots, fullHand, true);
             }
             catch (System.NullReferenceException){
                 Debug.Log("No cardcontroller found", this);
@@ -125,11 +137,22 @@ public class PlayerHandController : MonoBehaviour
         {
             try
             {
-                playSlotsTransform.GetChild(i).GetComponent<CardController>().SetButtonsInteractable(fullPlaySlots, fullHand);
+                playSlotsTransform.GetChild(i).GetComponent<CardController>().SetButtonsInteractable(fullPlaySlots, fullHand, false);
             }
             catch (System.NullReferenceException)
             {
                 Debug.Log("No cardcontroller found", this);
+            }
+        }
+    }
+
+    public void CheckForDuplicatesInHand(ActivityCard card)
+    {
+        for(int i = 0; i < handTransform.childCount; i++)
+        {
+            if(handTransform.GetChild(i).GetComponent<CardController>().cardData == card)
+            {
+                handTransform.GetChild(i).GetComponent<CardController>().DestroyCard();
             }
         }
     }

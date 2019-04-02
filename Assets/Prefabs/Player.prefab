@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4345577979974593711}
   - component: {fileID: 4345577979974593704}
   - component: {fileID: 4345577979974593707}
+  - component: {fileID: 6716387239518171772}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -65,27 +66,71 @@ MonoBehaviour:
   - title: 0
     cost: 10
     purchased: 0
-    statChangesPerTurn: []
+    statChangesPerTurn:
+    - stat: 0
+      valueChange: 10
   - title: 1
     cost: 20
     purchased: 0
-    statChangesPerTurn: []
+    statChangesPerTurn:
+    - stat: 0
+      valueChange: 100
   - title: 2
     cost: 30
     purchased: 0
-    statChangesPerTurn: []
-  securityGroup:
+    statChangesPerTurn:
+    - stat: 0
+      valueChange: 1000
   - title: 3
-    cost: 5
+    cost: 30
+    purchased: 0
+    statChangesPerTurn:
+    - stat: 0
+      valueChange: 1000
+  securityGroup:
+  - title: 4
+    cost: 1000
     purchased: 0
     statChangesPerTurn: []
-  - title: 4
-    cost: 120
+  - title: 5
+    cost: 10000
+    purchased: 0
+    statChangesPerTurn: []
+  - title: 6
+    cost: 25000
+    purchased: 0
+    statChangesPerTurn: []
+  - title: 7
+    cost: 100000
+    purchased: 0
+    statChangesPerTurn: []
+  - title: 8
+    cost: 1000000
     purchased: 0
     statChangesPerTurn: []
   socialGroup:
-  - title: 7
-    cost: 888
+  - title: 9
+    cost: 0
+    purchased: 1
+    statChangesPerTurn: []
+  - title: 10
+    cost: 1000
+    purchased: 0
+    statChangesPerTurn: []
+  - title: 11
+    cost: 10000
+    purchased: 0
+    statChangesPerTurn: []
+  - title: 12
+    cost: 50000
+    purchased: 0
+    statChangesPerTurn: []
+  - title: 13
+    cost: 100000
+    purchased: 0
+    statChangesPerTurn: []
+  - title: 14
+    cost: 250000
     purchased: 0
     statChangesPerTurn: []
 --- !u!114 &4345577979974593704
@@ -127,7 +172,7 @@ MonoBehaviour:
   userbase: 0
   capital: 0
   publicOpinion: 0
-  name: 
+  name: TESTNAME
   playerStats: {fileID: 4345577979974593710}
   playerFeatures: {fileID: 4345577979974593711}
   choiceHistory:
@@ -136,3 +181,21 @@ MonoBehaviour:
   currentTurn: 0
   playerHandController: {fileID: 4345577979974593704}
   deck: {fileID: 0}
+  newsCounter: 0
+  playerNewsFeedController: {fileID: 6716387239518171772}
+  newTurnPrefab: {fileID: 4911866883658365859, guid: 7add6481a66c9914ab3d72f4f42dbe5f,
+    type: 3}
+  playerList: []
+--- !u!114 &6716387239518171772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4345577979974593708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fc321788f32aa4479775242ae194579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newsItemFolderPath: NewsFeedItems
