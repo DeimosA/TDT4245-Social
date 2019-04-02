@@ -44,20 +44,27 @@ public class UICommController : MonoBehaviour
     {
         foreach (string message in company.GetMessageList())
         {
-            if (message.StartsWith("You: ")) AddMessageItem(message, true);
+            if (message.StartsWith("You: ")) AddMessagePrefab(message, true);
             else AddMessageItem(message);
         }
     }
 
-    private void AddMessageItem(string message, bool ownMessage = false)
+    private void AddMessagePrefab(string message, bool ownMessage = false)
     {
         GameObject messageItem = Instantiate(messageItemPrefab, messageContainer, false);
         messageItem.transform.SetParent(messageContainer, false);
         TextMeshProUGUI text = messageItem.GetComponent<TextMeshProUGUI>();
-        text.SetText(message);
+
         // Set a different color for our own messages
         if (ownMessage) text.color = new Color(0.1f, 0.1f, 0.5f);
+        text.SetText(message);
         messageScrollRect.velocity = new Vector2(0, 1000f);
+    }
+
+    public void AddMessageItem(string message, bool ownMessage = false)
+    {
+        if (ownMessage) AddMessagePrefab("You: " + message, true);
+        else AddMessagePrefab(message);
     }
 
 
@@ -89,7 +96,7 @@ public class UICommController : MonoBehaviour
         if (message != "")
         {
             company.SendMessageToCompany(message);
-            AddMessageItem("You: " + message, true);
+            AddMessageItem(message, true);
             // Clear message input
             message = "";
             messageInput.text = "";
