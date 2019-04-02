@@ -23,17 +23,17 @@ public class CooperationInviteController : MonoBehaviour
     //FOR TESTING; DELETE
     public void Init()
     {
-        Init(sendingPlayerCompanyName, card, choiceIndex);
+        Init(sendingPlayerCompanyName, card, card.GetChoice(choiceIndex));
     }
 
     //set values
     //Input: sending player string, activity card to be cooperated on, choice index highlighted by sending player
-    public void Init(string sendingPlayerCompanyName, ActivityCard activityCard, int choiceIndex)
+    public void Init(string sendingPlayerCompanyName, ActivityCard activityCard, ActivityChoice choice)
     {
         companyNameText.text = sendingPlayerCompanyName;
 
         coopCardController.SetCardData(activityCard);
-        coopCardController.HighlightChoice(choiceIndex);
+        coopCardController.HighlightChoice(choice);
         coopCardController.SetPlayerHandController(GameObject.Find("Player").GetComponent<PlayerHandController>());
     }
 

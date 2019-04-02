@@ -29,9 +29,15 @@ public abstract class CardController : MonoBehaviour
         return choiceDropdown.value;
     }
 
+    public string GetTitleOfHighlightedChoice()
+    {
+        Debug.Log("Choice title: " + choiceDropdown.options[choiceDropdown.value].text);
+        return choiceDropdown.options[choiceDropdown.value].text;
+    }
+
     public ActivityChoice GetHighlightedChoice()
     {
-        return cardData.GetChoiceByIndex(GetIndexOfHighlightedChoice());
+        return cardData.GetChoice(GetTitleOfHighlightedChoice());
     }
 
     public void MoveToPlaySlot()

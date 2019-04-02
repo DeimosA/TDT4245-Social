@@ -21,12 +21,16 @@ public class CoopCardController : CardController
     {
         //TODO: Send the card to the player chosen in playerdropdown
 
-        //TODO: Deactivate choice and player dropdowns, display something else instead..
 
-        //move to play slot, remove a card from playslot if needed..
+        //Deactivate card elements
+        playerDropdown.interactable = false;
+        choiceDropdown.interactable = false;
+
+        //move to play slot
         MoveToPlaySlot();
 
         sendButton.interactable = false;
+        sendButton.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Invite sent";
         sent = true;
 
     }
@@ -81,6 +85,7 @@ public class CoopCardController : CardController
 
     }
 
+    //Highlight choice by choice index
     public void HighlightChoice(int choiceIndex)
     {
         if(choiceIndex >= choiceDropdown.options.Count)
@@ -92,6 +97,22 @@ public class CoopCardController : CardController
         {
             choiceDropdown.value = choiceIndex;
         }
+    }
+
+    //Highlight choice matching title of input choice
+    public void HighlightChoice(ActivityChoice choice)
+    {
+        for(int i = 0; i < choiceDropdown.options.Count; i++)
+        {
+            if(choice.title == choiceDropdown.options[i].text)
+            {
+                choiceDropdown.value = i;
+                return;
+            }
+        }
+
+        Debug.Log("Choice not found in choicedropdown options");
+        
     }
 
 

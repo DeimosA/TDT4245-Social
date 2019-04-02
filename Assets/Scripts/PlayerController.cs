@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviour
         {
             foreach(ActivityCard card in cardsPlayedLastTurn.Keys)
             {
-                ActivityChoice choice = card.GetChoiceByIndex(cardsPlayedLastTurn[card]);
+                ActivityChoice choice = card.GetChoice(cardsPlayedLastTurn[card]);
                 for (int j = 0; j < choice.statChanges.Count; j++)
                 {
                     playerStats.AddToStat(choice.statChanges[j]);
