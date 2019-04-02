@@ -7,12 +7,21 @@ using UnityEngine.Networking;
 public class SendMessage : MessageBase
 {
 	public string messageContent;
+    public int senderNetId;
+    public int receiverNetId;
+    public string companyName;
+}
+
+public class SendMessageType
+{
+    public static short Score = MsgType.Highest + 1;
 }
 
 
 public class NetworkPlayer : NetworkBehaviour
 {
 
+    public List<NetworkPlayer> otherPlayers;
 
 	public SendMessage m_Message;
 
@@ -31,18 +40,22 @@ public class NetworkPlayer : NetworkBehaviour
 	[SyncVar]
 	public bool ready = false;
 
-	[SyncVar]
+	//[SyncVar]
 	public uint playerID;
 
 	[SyncVar]
-	public int userbase;
+	public int userbase = 0;
 
 	[SyncVar]
-	public int capital;
+	public int capital = 500;
 
 	[SyncVar]
-	public int publicOpinion;
+	public int publicOpinion = 1;
 
+    
+    public string companyName = "";
+
+    public UICompanyController uiCompanyController;
 
 
 	// Use this for initialization
@@ -53,7 +66,9 @@ public class NetworkPlayer : NetworkBehaviour
 		//playerID = gameObject.GetComponent<NetworkInstanceId>().Value;
 		Time.timeScale = 1.0f;
 
-	}
+        playerID = gameObject.GetComponent<NetworkIdentity>().netId.Value;
+        
+    }
 
 	// Update is called once per frame
 	[Server]
@@ -129,13 +144,13 @@ public class NetworkPlayer : NetworkBehaviour
 	}
 
 	[Command]
-	void CmdSendInstantMessage(int receiverID, string msg){
-		// send msg to Receiver
+	public void CmdSendInstantMessage(int receiverID, string msg){
+        // send msg to Receiver
 	}
 
 	[ClientRpc]
 	void RpcReceiveInstantMessage(int senderID, string msg){
-		Debug.Log("received a message from " + senderID + ": " + msg);
+        Debug.Log("received a message from " + senderID + ": " + msg);
 	}
 
 	[Command]
@@ -230,5 +245,7 @@ public class NetworkPlayer : NetworkBehaviour
 		Text timer = timerText.GetComponent<Text> ();
 		timer.text = Mathf.Round(curtime).ToString();
 	}
+
+    
 }
 

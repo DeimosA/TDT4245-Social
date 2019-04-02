@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
+
 using TMPro;
 
 public class GameLoader : MonoBehaviour
@@ -12,6 +14,8 @@ public class GameLoader : MonoBehaviour
 
     private PersistentPlayerData playerData;
     private UICompanyController companyStatus;
+    private NetworkManager networkManager;
+    private List<NetworkPlayer> networkPlayers;
 
 
     // Start is called before the first frame update
@@ -24,10 +28,31 @@ public class GameLoader : MonoBehaviour
             if (playerData.GetCompanyName() == null)
             {
                 // If company creation scene is loaded when running main scene, restart
-                // TODO set a test company instead for quicker loading
                 this.RestartGame();
                 return;
             }
+
+            // Find network stuff
+            networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+            networkPlayers = networkManager.getPlayerList();
+            Debug.Log("Player count: " + networkPlayers.Count);
+            //foreach (NetworkPlayer player in networkPlayers) {
+            //    Debug.Log(player +
+            //        " isClient: " + player.gameObject.GetComponent<NetworkIdentity>().isClient +
+            //        " " + player.gameObject.GetComponent<NetworkIdentity>().netId.ToString()
+            //    );
+            //}
+            foreach (NetworkPlayer player in networkPlayers)
+            {
+                Debug.Log(player +
+                    " isClient: " + player.isClient +
+                    " isServer: " + player.isServer +
+                    " isLocalPlayer: " + player.isLocalPlayer +
+                    " " + player.gameObject.GetComponent<NetworkIdentity>().netId.ToString() +
+                    " " + player.netId.ToString()
+                );
+            }
+
         }
         catch (NullReferenceException)
         {
@@ -35,16 +60,54 @@ public class GameLoader : MonoBehaviour
             this.RestartGame();
             return;
         }
-        //GameObject.Find("CompanyNameText").GetComponent<TextMeshProUGUI>().SetText(playerData.GetCompanyName());
-        companyStatus = GameObject.Find("CompanyStatusPanel").GetComponent<UICompanyController>();
-        companyStatus.SetCompanyModel(new CompanyModel(playerData.GetCompanyName()));
-
 
         /* Load game logic scenes */
         //SceneManager.LoadScene("GameLogicScene", LoadSceneMode.Additive);
         SceneManager.LoadScene("CardsLogicScene", LoadSceneMode.Additive);
 
 
+        /* Instantiate other company info cards */
+        GameObject companyContainer = GameObject.Find("OtherCompaniesPanel");
+        NetworkPlayer ownPlayer = null;
+
+        for (int i = 0; i < networkPlayers.Count; i++)
+        {
+            if (networkPlayers[i].isLocalPlayer)
+            {
+                ownPlayer = networkPlayers[i];
+            }
+        }
+
+        for (int i = 0; i < networkPlayers.Count; i++)
+        {
+            if (! networkPlayers[i].isLocalPlayer)
+            {
+                networkPlayers[i].companyName = "Kompani " + i;
+                CompanyModel company = new CompanyModel(networkPlayers[i]);
+                company.localCompany = ownPlayer;
+                GameObject newInstance = Instantiate(companyPrefab, companyContainer.transform, false);
+                newInstance.transform.SetParent(companyContainer.transform, false);
+                UICompanyController cc = newInstance.GetComponent<UICompanyController>();
+                networkPlayers[i].uiCompanyController = cc;
+                cc.SetCompanyModel(company);
+            }
+        }
+
+        /* Put info in own company info panel */
+        companyStatus = GameObject.Find("CompanyStatusPanel").GetComponent<UICompanyController>();
+        ownPlayer.companyName = playerData.GetCompanyName();
+        ownPlayer.uiCompanyController = companyStatus;
+        companyStatus.SetCompanyModel(new CompanyModel(ownPlayer));
+
+
+        //// TEST DATA ////////
+        //TestData();
+        ///////////////////////
+
+    }
+
+    private void TestData()
+    {
         /* Instantiate other company info cards */
         int companyCount = 20;
         GameObject companyContainer = GameObject.Find("OtherCompaniesPanel");
@@ -55,12 +118,21 @@ public class GameLoader : MonoBehaviour
             newInstance.transform.SetParent(companyContainer.transform, false);
             newInstance.GetComponent<UICompanyController>().SetCompanyModel(company);
         }
-
     }
 
+    /**
+     * For reloading game in editor
+     */
     private void RestartGame()
     {
-        SceneManager.LoadScene("CharacterCreationScene", LoadSceneMode.Single);
+        // Destroy everything
+        var go = new GameObject("Sacrificial Lamb");
+        DontDestroyOnLoad(go);
+        foreach (var root in go.scene.GetRootGameObjects())
+            Destroy(root);
+
+        // Load network manager
+        SceneManager.LoadScene("GameLogicScene", LoadSceneMode.Single);
     }
 
 }

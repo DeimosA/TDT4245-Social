@@ -59,7 +59,55 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 		}
 	}
 
-	bool CheckPlayersReady()
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        NetworkServer.RegisterHandler(SendMessageType.Score, ServerInstantMessageHandler);
+    }
+
+
+    public override void OnClientConnect(NetworkConnection conn)
+    {
+        base.OnClientConnect(conn);
+        client.RegisterHandler(SendMessageType.Score, ReceiveInstantMessage);
+    }
+
+    public void ServerInstantMessageHandler(NetworkMessage networkMessage)
+    {
+        SendMessage message = networkMessage.ReadMessage<SendMessage>();
+        Debug.Log("ServerSide " + message.receiverNetId + " " + message.messageContent);
+        NetworkServer.SendToClient(message.receiverNetId - 1, SendMessageType.Score, message);
+    }
+
+    public void SendInstantMessage(int senderNetId, int receiverNetId, string msg, string companyName)
+    {
+        // send msg to Receiver
+        SendMessage message = new SendMessage();
+        message.senderNetId = senderNetId;
+        message.receiverNetId = receiverNetId;
+        message.messageContent = msg;
+        message.companyName = companyName;
+        Debug.Log("send: " + receiverNetId + " " + msg);
+        //NetworkServer.SendToAll(SendMessageType.Score, message);
+        client.Send(SendMessageType.Score, message);
+    }
+
+    void ReceiveInstantMessage(NetworkMessage networkMessage)
+    {
+        SendMessage message = networkMessage.ReadMessage<SendMessage>();
+        Debug.Log("receive " + message.senderNetId + " " + message.messageContent);
+        //Debug.Log(message.messageContent);
+        foreach (NetworkPlayer player in players)
+        {
+            if (player.netId.Value == message.senderNetId)
+            {
+                //Debug.Log("value match");
+                player.uiCompanyController.ReceiveMessage(message.messageContent);
+            }
+        }
+    }
+
+    bool CheckPlayersReady()
 	{
 		bool playersReady = true;
 		foreach (var player in players)
@@ -196,6 +244,11 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 			matchJoined(success, matchInfo);
 		}
 	}
+
+    public List<NetworkPlayer> getPlayerList()
+    {
+        return this.players;
+    }
 }
 
 // possible a lot of these methods shouldn't be touched at all.
