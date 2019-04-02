@@ -16,6 +16,7 @@ public class UICompanyController : MonoBehaviour
 
     private CompanyModel company;
     private GameObject mainCanvas;
+    private GameObject commDialog;
 
 
     // Start is called before the first frame update
@@ -43,7 +44,7 @@ public class UICompanyController : MonoBehaviour
 
     private void ShowChatDialog()
     {
-        GameObject commDialog = Instantiate(messageDialogPrefab, mainCanvas.transform, false);
+        commDialog = Instantiate(messageDialogPrefab, mainCanvas.transform, false);
         commDialog.GetComponent<UICommController>().SetCompanyController(this);
     }
 
@@ -68,7 +69,7 @@ public class UICompanyController : MonoBehaviour
 
     public List<string> GetMessageList()
     {
-        return company.messages;
+        return company.GetMessages();
     }
 
     public void EstablishCommunication()
@@ -107,8 +108,20 @@ public class UICompanyController : MonoBehaviour
 
     public void SendMessageToCompany(string newMessage)
     {
-        company.messages.Add("You: " + newMessage);
-        // TODO send message
+        int receiverNetId = (int)company.networkCompany.netId.Value;
+        int senderNetId = (int)company.localCompany.netId.Value;
+        company.AddMessage(newMessage, true);
+        GameObject.Find("NetworkManager").GetComponent<NetworkManager>().SendInstantMessage(senderNetId, receiverNetId, newMessage, company.companyName);
+        //company.localCompany.SendInstantMessage(id, newMessage, company.companyName);
+    }
+
+    public void ReceiveMessage(string message)
+    {
+        company.AddMessage(message);
+        if (commDialog)
+        {
+            commDialog.GetComponent<UICommController>().AddMessageItem(message);
+        }
     }
 
 }
