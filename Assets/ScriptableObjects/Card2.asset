@@ -21,7 +21,9 @@ MonoBehaviour:
     priorityCardToTrigger: {fileID: 0}
     featurePrerequisites: []
     statPrerequisites: []
-    statChanges: []
+    statChanges:
+    - stat: 0
+      valueChange: 1000
   minimumTurn: 0
   featurePrerequisites: []
   statPrerequisites: []

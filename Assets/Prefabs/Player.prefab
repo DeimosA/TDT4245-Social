@@ -136,3 +136,5 @@ MonoBehaviour:
   currentTurn: 0
   playerHandController: {fileID: 4345577979974593704}
   deck: {fileID: 0}
+  newTurnPrefab: {fileID: 4911866883658365859, guid: 7add6481a66c9914ab3d72f4f42dbe5f,
+    type: 3}

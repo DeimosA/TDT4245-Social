@@ -37,6 +37,9 @@ public class PlayerController : MonoBehaviour
     public PlayerHandController playerHandController;
     public CardDeckController deck;
 
+    [Header("Prefabs")]
+    public GameObject newTurnPrefab;
+
     private CardIntDictionary cardsPlayedLastTurn;
 	//bool ready = false;
 
@@ -124,6 +127,9 @@ public class PlayerController : MonoBehaviour
     //
     public void OnTurnStart()
     {
+        //Display new turn text
+        StartCoroutine(DisplayNewTurnText());
+
         //commit cards played last turn
         if(cardsPlayedLastTurn.Count != 0)
         {
@@ -195,6 +201,13 @@ public class PlayerController : MonoBehaviour
     public bool ValidateChoice(ActivityChoice choice)
     {
         return choice.ValidateChoice(playerFeatures.GetPurchasedFeatureTitlesAsHashSet(), playerStats.stats);
+    }
+
+    private IEnumerator DisplayNewTurnText()
+    {
+        GameObject g = Instantiate(newTurnPrefab, GameObject.Find("MainCanvas").transform, false);
+        yield return new WaitForSecondsRealtime(2f);
+        Destroy(g);
     }
 
     // methods needed to change turndata array, these happen based on what cards the player plays during their turn. For example playing a card which gives them x more money will modify the corresponding
