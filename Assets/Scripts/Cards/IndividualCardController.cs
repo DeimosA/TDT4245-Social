@@ -30,6 +30,9 @@ public class IndividualCardController : CardController
                 choiceDropdown.options.Add(new TMP_Dropdown.OptionData(cardData.choices[i].title));
             }
         }
+
+        //force label to update
+        choiceDropdown.transform.Find("Label").GetComponent<TextMeshProUGUI>().text = choiceDropdown.options[0].text;
     }
 
     public override void SetButtonsInteractable(bool fullPlaySlot, bool fullHand, bool cardInHand)

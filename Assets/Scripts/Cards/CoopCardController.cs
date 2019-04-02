@@ -60,6 +60,10 @@ public class CoopCardController : CardController
                 }
             }
 
+
+            //force label to update
+            choiceDropdown.transform.Find("Label").GetComponent<TextMeshProUGUI>().text = choiceDropdown.options[0].text;
+
             sendButton = transform.Find("SendButton").GetComponent<Button>();
 
             //set player dropdown options
@@ -93,6 +97,9 @@ public class CoopCardController : CardController
         {
             choiceDropdown.options.Add(new TMP_Dropdown.OptionData(cardData.choices[i].title));
         }
+
+        //force label to update
+        choiceDropdown.transform.Find("Label").GetComponent<TextMeshProUGUI>().text = choiceDropdown.options[0].text;
 
     }
 
