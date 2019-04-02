@@ -57,6 +57,7 @@ public class CompanyCreationController : MonoBehaviour
     {
         if (startable)
         {
+			GameObject.Find("local").GetComponent<NetworkPlayer>().SetupNames = true;
             SceneManager.LoadScene("MainGameUIScene", LoadSceneMode.Single);
         }
     }

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -56,6 +56,15 @@ public class NetworkPlayer : NetworkBehaviour
     public string companyName = "";
 
     public UICompanyController uiCompanyController;
+    
+	//[SyncList(hook = "AddPlayerToList")]
+	public List<string> playerList = new List<string>();
+
+	public bool SetupNames;
+
+	bool done;
+
+	//public int instanceID;
 
 
 	// Use this for initialization
@@ -68,7 +77,8 @@ public class NetworkPlayer : NetworkBehaviour
 
         playerID = gameObject.GetComponent<NetworkIdentity>().netId.Value;
         
-    }
+		bool done = false;
+	}
 
 	// Update is called once per frame
 	[Server]
@@ -86,9 +96,25 @@ public class NetworkPlayer : NetworkBehaviour
 		}
 	}
 
+	void LateUpdate(){
+		if(!isLocalPlayer){
+			return;
+		}
+		if(SetupNames && !done){
+			controller.name = GameObject.Find("PlayerData").GetComponent<PersistentPlayerData>().GetCompanyName();
+			OnPlayerAdd();
+			done = true;
+		}
+			//CmdAddToPlayersList(controller.name);
+		//if(isServer){
+		//RpcSpawnPlayers(controller.name);
+		//}
+	}
+
 	public override void OnStartClient() //this one should maybe be called when a player is ready setting up their business
 	{
 		DontDestroyOnLoad(this);
+		//gameObject.GetComponent<NetworkIdentity>().AssignClientAuthority(connectionToClient);
 
 		base.OnStartClient();
 		Debug.Log("Client Network Player start");
@@ -101,13 +127,13 @@ public class NetworkPlayer : NetworkBehaviour
 	{
 		base.OnStartLocalPlayer();
 		controller.SetupLocalPlayer();
+		this.name = "local";
 	}
 
 	[Server]
 	public void StartPlayer()
 	{
 		gameObject.GetComponent<Transform>().position = new Vector3(Random.Range(0f, 10f), Random.Range(0f, 5f), 0f);
-		Debug.Log(GameObject.Find("NetworkManager").GetComponent<NetworkManagerHUD>().enabled);
 		GameObject.Find("NetworkManager").GetComponent<NetworkManagerHUD>().enabled = false;
 	}
 
@@ -115,6 +141,7 @@ public class NetworkPlayer : NetworkBehaviour
 	{
 		TurnStart();
 	}
+
 
 	[Server]
 	public void TurnStart()
@@ -179,6 +206,9 @@ public class NetworkPlayer : NetworkBehaviour
 
 
 
+
+
+
 	[Server]
 	public void DistributeTurnChanges(){
 		
@@ -216,7 +246,26 @@ public class NetworkPlayer : NetworkBehaviour
 		Debug.Log("score: " + score);
 	}
 
+	public void OnPlayerAdd(){
+		CmdAddToPlayersList(controller.name);
+	}
 
+
+	[Command]
+	void CmdAddToPlayersList(string name){
+		RpcSpawnPlayers(name);
+		//NetworkManager.Instance.AddName(controller.name);
+	}
+
+
+	[ClientRpc]
+	void RpcSpawnPlayers(string playerName){		//List<string> ServerPlayers){
+		//List<String> playerList = ServerPlayers;
+		if(!playerList.Contains(playerName)){
+			//playerList.Add(playerName);
+			NetworkManager.Instance.AddName(playerName);
+		}
+	}
 
 	void OnPlayerInput(PlayerAction action, float amount)
 	{
@@ -225,7 +274,7 @@ public class NetworkPlayer : NetworkBehaviour
 			CmdOnPlayerInput(action, amount);
 		}
 	}
-
+		
 	
 	[Command]
 	void CmdOnPlayerInput(PlayerAction action, float amount)
@@ -235,8 +284,9 @@ public class NetworkPlayer : NetworkBehaviour
 		//Update score
 		ready = true;
 		NetworkManager.Instance.UpdateScore(amount);
-	}
 
+	}
+		
 
 
 	public void UpdateTimeDisplay(float curtime)

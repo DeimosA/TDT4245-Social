@@ -31,7 +31,10 @@ public class CardDeckController : MonoBehaviour
         //Check priority queue first
         if(priorityCards.Count > 0)
         {
-            result = priorityCards.Dequeue();
+            var queueCard = priorityCards.Dequeue();
+            if(queueCard.ValidateCard(currentTurn, purchasedFeatures, playerStats, choiceHistory)){
+                result = queueCard;
+            }
         }
         else //otherwise find first valid card from list of all cards
         {
