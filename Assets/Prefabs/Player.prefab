@@ -102,7 +102,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 4345577979974593707}
   deck: {fileID: 0}
-  cardPrefab: {fileID: 2819221715590872437, guid: fe7959d3134060e49a2df599a1423272,
+  individualCardPrefab: {fileID: 2819221715590872437, guid: fe7959d3134060e49a2df599a1423272,
+    type: 3}
+  coopCardPrefab: {fileID: 8375782253349445962, guid: ee2306fb149faa54890fdc61d7d4f0bb,
+    type: 3}
+  coopRequestPrefab: {fileID: 8145456296824692182, guid: aff3c1cf0d7fbe0459a49ef68a1b5340,
     type: 3}
   maxCardsInHand: 3
   maxCardsInPlaySlots: 2

@@ -43,10 +43,16 @@ public class ActivityCard : ScriptableObject
     public List<ChoicePrerequisite> choicePrerequisites = new List<ChoicePrerequisite>();
 
     //returns whether all prerequisites are met
-    public bool ValidateCard(int currentTurn, HashSet<BusinessFeatureTitle> purchasedFeatures, PlayerStatIntDictionary playerStats, CardIntDictionary choices)
+    public bool ValidateCard(int currentTurn, HashSet<BusinessFeatureTitle> purchasedFeatures, PlayerStatIntDictionary playerStats, CardIntDictionary choiceHistory)
     {
+        //not valid if player has played card before
+        if (choiceHistory.ContainsKey(this))
+        {
+            return false;
+        }
+        //otherwise check all prerequisites
         return (ValidateTurn(currentTurn) && ValidateFeaturePrerequisites(purchasedFeatures)
-            && ValidateStatPrerequisites(playerStats) && ValidateChoicePrerequisites(choices));
+            && ValidateStatPrerequisites(playerStats) && ValidateChoicePrerequisites(choiceHistory));
     }
 
     //check if turn requirement has been met
@@ -129,9 +135,21 @@ public class ActivityCard : ScriptableObject
         return choices.IndexOf(c);
     }
 
-    public ActivityChoice GetChoiceByIndex(int index)
+    public ActivityChoice GetChoice(int index)
     {
         return choices[index];
+    }
+
+    public ActivityChoice GetChoice(string title)
+    {
+        for(int i = 0; i < choices.Count; i++)
+        {
+            if(choices[i].title == title)
+            {
+                return choices[i];
+            }
+        }
+        return null;
     }
 
     public string GetChoiceTitleByIndex(int index)
