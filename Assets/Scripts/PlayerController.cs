@@ -36,17 +36,20 @@ public class PlayerController : MonoBehaviour
     public int currentTurn;
     public PlayerHandController playerHandController;
     public CardDeckController deck;
+    public int newsCounter = 0;
 
     [Header("Prefabs")]
     public GameObject newTurnPrefab;
 
     private CardIntDictionary cardsPlayedLastTurn;
+    private UINewsFeedController uiNewsFeedController;
 	//bool ready = false;
 
 	// Use this for initialization
 	void Start()
 	{
 		sp = GameObject.Find("Sphere");
+        uiNewsFeedController = GameObject.Find("NewsFeedContent").GetComponent<UINewsFeedController>();
 
 		//GameObject.Find("Sphere").SetActive(false);
 
@@ -135,11 +138,15 @@ public class PlayerController : MonoBehaviour
         {
             foreach(ActivityCard card in cardsPlayedLastTurn.Keys)
             {
+                //Apply stat changes
                 ActivityChoice choice = card.GetChoice(cardsPlayedLastTurn[card]);
                 for (int j = 0; j < choice.statChanges.Count; j++)
                 {
                     playerStats.AddToStat(choice.statChanges[j]);
                 }
+
+                //Apply news counter changes
+                newsCounter += choice.addToNewsCounter;
 
                 //Add any potential priority cards to queue
                 if (choice.HasPriorityCard())
@@ -169,6 +176,9 @@ public class PlayerController : MonoBehaviour
         {
             playerStats.AddToStat(featureStatChanges[i]);
         }
+
+        //update newsfeed
+        uiNewsFeedController.UpdateNewsFeed();
 
 
         //fill hand

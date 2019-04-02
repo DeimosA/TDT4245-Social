@@ -18,6 +18,7 @@ MonoBehaviour:
   choices:
   - title: Choice0
     description: 
+    addToNewsCounter: 0
     priorityCardToTrigger: {fileID: 11400000, guid: 7b8eb29e2c7ea524c8dab83dce98973a,
       type: 2}
     featurePrerequisites: []
@@ -27,6 +28,7 @@ MonoBehaviour:
       valueChange: -50
   - title: Choice1
     description: 
+    addToNewsCounter: 0
     priorityCardToTrigger: {fileID: 0}
     featurePrerequisites: []
     statPrerequisites: []
