@@ -4,40 +4,40 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CardController : MonoBehaviour
+public abstract class CardController : MonoBehaviour
 {
     public ActivityCard cardData;
     public PlayerHandController playerHandController;
 
-    private Dropdown dropdown;
+    protected Dropdown choiceDropdown;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        transform.Find("Text").GetComponent<TextMeshProUGUI>().text = cardData.description;
-
-        dropdown = transform.Find("Dropdown").GetComponent<Dropdown>();
-
-        //Temporary way of displaying valid choices
-        for(int i = 0; i < cardData.choices.Count; i++)
-        {
-            if (playerHandController.playerController.ValidateChoice(cardData.choices[i]))
-            {
-                dropdown.options.Add(new Dropdown.OptionData(cardData.choices[i].title));
-            }
-        }
+        OnStart();
     }
+
+    public abstract void OnStart();
+
+    //set buttons interactable based on whether playslot or hand is full
+    public abstract void SetButtonsInteractable(bool fullPlaySlots, bool fullHand);
 
     //Temporary way of getting which choice is currently chosen
     public int GetIndexOfHighlightedChoice()
     {
-        return dropdown.value;
+        return choiceDropdown.value;
+    }
+
+    public string GetTitleOfHighlightedChoice()
+    {
+        Debug.Log("Choice title: " + choiceDropdown.options[choiceDropdown.value].text);
+        return choiceDropdown.options[choiceDropdown.value].text;
     }
 
     public ActivityChoice GetHighlightedChoice()
     {
-        return cardData.GetChoiceByIndex(GetIndexOfHighlightedChoice());
+        return cardData.GetChoice(GetTitleOfHighlightedChoice());
     }
 
     public void MoveToPlaySlot()
@@ -54,5 +54,6 @@ public class CardController : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
 
 }

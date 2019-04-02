@@ -17,7 +17,10 @@ public class PlayerHandController : MonoBehaviour
     private Transform playSlotsTransform;
 
     //Prefab to be instantiated when drawing new card from deck
-    public GameObject cardPrefab;
+    [Header("Prefabs")]
+    public GameObject individualCardPrefab;
+    public GameObject coopCardPrefab;
+    public GameObject coopRequestPrefab;
 
     public int maxCardsInHand;
     public int maxCardsInPlaySlots;
@@ -44,6 +47,8 @@ public class PlayerHandController : MonoBehaviour
         if (playSlotsTransform.childCount < maxCardsInPlaySlots)
         {
             card.transform.SetParent(playSlotsTransform);
+            //update interactable status in all cards
+            SetInteractableInCards();
         }
         else
         {
@@ -51,11 +56,23 @@ public class PlayerHandController : MonoBehaviour
         }
     }
 
+    //move card to play slot, replace first card if play slot is full
+    public void ReplaceCardInPlaySlot(GameObject card)
+    {
+        if(playSlotsTransform.childCount >= maxCardsInPlaySlots)
+        {
+            MoveCardToHand(playSlotsTransform.GetChild(0).gameObject);
+        }
+        MoveCardToPlaySlot(card);
+    }
+
     public void MoveCardToHand(GameObject card)
     {
         if (handTransform.childCount < maxCardsInHand)
         {
             card.transform.SetParent(handTransform);
+            //update interactable status in all cards
+            SetInteractableInCards();
         }
         else
         {
@@ -75,9 +92,52 @@ public class PlayerHandController : MonoBehaviour
                 Debug.Log("No new cards found");
                 break;
             }
-            GameObject c = Instantiate(cardPrefab, handTransform, false);
+
+            //spawn coop or individual card
+
+            GameObject c = newCard.cooperative ? Instantiate(coopCardPrefab, handTransform, false) : Instantiate(individualCardPrefab, handTransform, false);
             c.GetComponent<CardController>().cardData = newCard;
             c.GetComponent<CardController>().playerHandController = this;
         }
+
+        //Set interactable status in all cards
+        SetInteractableInCards();
+    }
+
+    //set interactable status in all cards present
+    public void SetInteractableInCards()
+    {
+        bool fullHand = handTransform.childCount >= maxCardsInHand;
+        bool fullPlaySlots = playSlotsTransform.childCount >= maxCardsInPlaySlots;
+
+        for(int i = 0; i < handTransform.childCount; i++)
+        {
+            try
+            {
+                handTransform.GetChild(i).GetComponent<CardController>().SetButtonsInteractable(fullPlaySlots, fullHand);
+            }
+            catch (System.NullReferenceException){
+                Debug.Log("No cardcontroller found", this);
+            }
+        }
+
+        for (int i = 0; i < playSlotsTransform.childCount; i++)
+        {
+            try
+            {
+                playSlotsTransform.GetChild(i).GetComponent<CardController>().SetButtonsInteractable(fullPlaySlots, fullHand);
+            }
+            catch (System.NullReferenceException)
+            {
+                Debug.Log("No cardcontroller found", this);
+            }
+        }
+    }
+
+    //TODO: init with proper data
+    public void ReceiveCoopRequest()
+    {
+        GameObject g = Instantiate(coopRequestPrefab, GameObject.Find("MainCanvas").transform, false);
+        g.GetComponent<CooperationInviteController>().Init();
     }
 }

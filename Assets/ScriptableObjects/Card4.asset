@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e6011b15cc15a499b9ce18b3bb2696, type: 3}
   m_Name: Card4
   m_EditorClassIdentifier: 
+  cooperative: 0
   cardCategory: 0
   description: If you took choice 1 in card 1 this shows up (but it's not guaranteed
     to!!)
