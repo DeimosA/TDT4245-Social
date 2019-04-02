@@ -91,7 +91,14 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
     {
         int connectionId = networkMessage.conn.connectionId;
         SendMessage message = networkMessage.ReadMessage<SendMessage>();
-        connIdLookup.Add(message.senderNetId, connectionId);
+        if (! connIdLookup.ContainsKey(message.senderNetId))
+        {
+            connIdLookup.Add(message.senderNetId, connectionId);
+        }
+        else
+        {
+            connIdLookup[message.senderNetId] = connectionId;
+        }
 
         Debug.Log("Client connected: " + message.senderNetId + " " + message.companyName);
         //NetworkServer.SendToClient(message.receiverNetId - 1, SendMessageType.Score, message);

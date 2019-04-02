@@ -51,14 +51,17 @@ public class UICommController : MonoBehaviour
 
     private void AddMessagePrefab(string message, bool ownMessage = false)
     {
-        GameObject messageItem = Instantiate(messageItemPrefab, messageContainer, false);
-        messageItem.transform.SetParent(messageContainer, false);
-        TextMeshProUGUI text = messageItem.GetComponent<TextMeshProUGUI>();
+        if (messageItemPrefab != null)
+        {
+            GameObject messageItem = Instantiate(messageItemPrefab, messageContainer, false);
+            messageItem.transform.SetParent(messageContainer, false);
+            TextMeshProUGUI text = messageItem.GetComponent<TextMeshProUGUI>();
 
-        // Set a different color for our own messages
-        if (ownMessage) text.color = new Color(0.1f, 0.1f, 0.5f);
-        text.SetText(message);
-        messageScrollRect.velocity = new Vector2(0, 1000f);
+            // Set a different color for our own messages
+            if (ownMessage) text.color = new Color(0.1f, 0.1f, 0.5f);
+            text.SetText(message);
+            messageScrollRect.velocity = new Vector2(0, 1000f);
+        }
     }
 
     public void AddMessageItem(string message, bool ownMessage = false)
