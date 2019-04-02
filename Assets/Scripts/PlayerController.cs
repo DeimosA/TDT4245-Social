@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 	public int userbase;
 	public int capital;
 	public int publicOpinion;
-	public string name;
+	public string name = "testing";
 
 	private GameObject sp;
 
@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
 	public delegate void PlayerInputCallback(PlayerAction action, float deg);
 	public event PlayerInputCallback OnPlayerInput;
+
 	bool isLocalPlayer = false;
 
     public PlayerStats playerStats;
@@ -40,11 +41,15 @@ public class PlayerController : MonoBehaviour
     private CardIntDictionary cardsPlayedLastTurn;
 	//bool ready = false;
 
+	public List<string> playerList;
+
 	// Use this for initialization
 	void Start()
 	{
 		sp = GameObject.Find("Sphere");
+		DontDestroyOnLoad(this);
 
+		List<string> playerList = new List<string>();
 		//GameObject.Find("Sphere").SetActive(false);
 
 		
@@ -62,9 +67,9 @@ public class PlayerController : MonoBehaviour
 		{
 			return;
 		}
-		if(Input.GetKeyDown(KeyCode.W)){
-			sp.SetActive(true);
-		}
+		//if(Input.GetKeyDown(KeyCode.W)){
+		//	sp.SetActive(true);
+		//}
 
 		// call whatever methods are needed for inputs
 		Shoot ();
@@ -110,9 +115,21 @@ public class PlayerController : MonoBehaviour
 
 		}
 	}
+	public void test(List<string> names){
+		foreach (string name in names){
+			Debug.Log(name);
+		}
 
+	/*
 	public void test(){
-		Debug.Log("test?");
+		Debug.Log("???????");
+	}
+*/
+	}
+	public void testtwo(string name, bool a){
+		Debug.Log(name);
+		Debug.Log(a);
+		//DebugConsole.Log(name);
 	}
 
 	// methods needed to change turndata array, these happen based on what cards the player plays during their turn. For example playing a card which gives them x more money will modify the corresponding
@@ -214,7 +231,12 @@ public class PlayerController : MonoBehaviour
 			if (Input.GetKeyDown(KeyCode.S))
 			{
 				OnPlayerInput(PlayerAction.SHOOT, power);
-			}
+		}
+		if(Input.GetKeyDown(KeyCode.W)){
+			Debug.Log("??");
+
+
+		}
 
 	}	
 
