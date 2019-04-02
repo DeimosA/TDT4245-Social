@@ -22,22 +22,37 @@ public class UICompanyController : MonoBehaviour
     private GameObject mainCanvas;
     private GameObject commDialog;
 
+    private PlayerStats cardLogicPlayerStats;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        //companyNameText = transform.Find("CompanyNameText").GetComponent<TextMeshProUGUI>();
         mainCanvas = GameObject.Find("MainCanvas");
-        //commButtonText = transform.Find("CommButtonText").GetComponent<TextMeshProUGUI>();
+        cardLogicPlayerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
     }
 
     // Update is called once per frame
     void Update()
     {
         // Update values in view
-        companyUserCountValue.SetText(company.networkCompany.userbase.ToString());
-        companyReputationValue.SetText(company.networkCompany.publicOpinion.ToString());
-        companyCashValue.SetText(company.networkCompany.capital.ToString());
+        if (cardLogicPlayerStats == null) cardLogicPlayerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
+
+        if (company.networkCompany.isLocalPlayer)
+        {
+            //Debug.Log("uikompanikontrollør" + cardLogicPlayerStats.GetUserbase().ToString());
+            companyUserCountValue.SetText( cardLogicPlayerStats.GetUserbase().ToString() );
+            companyReputationValue.SetText( cardLogicPlayerStats.GetReputation().ToString() );
+            companyCashValue.SetText( cardLogicPlayerStats.GetCapital().ToString() );
+        }
+        else
+        {
+            companyUserCountValue.SetText(company.networkCompany.userbase.ToString());
+            companyReputationValue.SetText(company.networkCompany.publicOpinion.ToString());
+            companyCashValue.SetText(company.networkCompany.capital.ToString());
+        }
+
+        
     }
 
     public void SetCompanyName(string newCompanyName)
