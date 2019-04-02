@@ -367,7 +367,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1900041864}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99999994
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -605,7 +605,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0.00005780643, y: -0.000076293945}
+  m_AnchoredPosition: {x: 0.00003089623, y: -0.000076293945}
   m_SizeDelta: {x: 0, y: 480}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &558583985
@@ -723,7 +723,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 764336993}
   m_HandleRect: {fileID: 764336992}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1783,7 +1783,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1992618917}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2304,7 +2304,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00001962148}
+  m_AnchoredPosition: {x: 0, y: 0.000043327596}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1841867443
@@ -2333,8 +2333,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6379a5c17c4a7d4e94c03c7c6ee46b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newsItemPrefab: {fileID: 5811337920030313506, guid: 56c6bbe6f0981e244ab8bd5630770b21,
+  newsItemPrefab: {fileID: 4270404901775004521, guid: ac43113647bfb9640a8d02ef61918b9d,
     type: 3}
+  newsFeedItems: []
 --- !u!114 &1841867445
 MonoBehaviour:
   m_ObjectHideFlags: 0
