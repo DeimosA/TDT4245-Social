@@ -149,7 +149,14 @@ public class PlayerController : MonoBehaviour
                 }
 
                 //commit to history
-                choiceHistory.Add(card, cardsPlayedLastTurn[card]);
+                try
+                {
+                    choiceHistory.Add(card, cardsPlayedLastTurn[card]);
+                }
+                catch (System.ArgumentException)
+                {
+                    Debug.Log("Uh oh card already in choiceHistory");
+                }
             }
 
             //clear cards played last turn
@@ -163,6 +170,7 @@ public class PlayerController : MonoBehaviour
             playerStats.AddToStat(featureStatChanges[i]);
         }
 
+
         //fill hand
         FillHand();
     }
@@ -174,7 +182,14 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < cardsInPlaySlots.Count; i++)
         {
             CardController cardController = cardsInPlaySlots[i].GetComponent<CardController>();
-            cardsPlayedLastTurn.Add(cardController.cardData, cardController.GetIndexOfHighlightedChoice());
+            try
+            {
+                cardsPlayedLastTurn.Add(cardController.cardData, cardController.GetIndexOfHighlightedChoice());
+            }
+            catch (System.ArgumentException)
+            {
+                Debug.Log("Uh oh card already in cardsplayedlastturn");
+            }
 
             ////apply stat changes
             //ActivityChoice choice = cardController.GetHighlightedChoice();

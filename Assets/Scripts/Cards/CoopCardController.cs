@@ -27,7 +27,7 @@ public class CoopCardController : CardController
         choiceDropdown.interactable = false;
 
         //move to play slot
-        MoveCard();
+        MoveToPlaySlotWithPriority();
 
         sendButton.interactable = false;
         sendButton.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Invite sent";
@@ -144,6 +144,9 @@ public class CoopCardController : CardController
     public void MoveToPlaySlotWithPriority()
     {
         playerHandController.ReplaceCardInPlaySlot(gameObject);
+
+        //Remove any duplicates in hand here...
+        playerHandController.CheckForDuplicatesInHand(cardData);
     }
 
     public void SetPlayerHandController(PlayerHandController playerHandController)

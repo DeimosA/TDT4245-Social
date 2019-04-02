@@ -146,6 +146,17 @@ public class PlayerHandController : MonoBehaviour
         }
     }
 
+    public void CheckForDuplicatesInHand(ActivityCard card)
+    {
+        for(int i = 0; i < handTransform.childCount; i++)
+        {
+            if(handTransform.GetChild(i).GetComponent<CardController>().cardData == card)
+            {
+                handTransform.GetChild(i).GetComponent<CardController>().DestroyCard();
+            }
+        }
+    }
+
     //TODO: init with proper data
     public void ReceiveCoopRequest()
     {
