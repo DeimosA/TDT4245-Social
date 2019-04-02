@@ -36,20 +36,20 @@ public class PlayerController : MonoBehaviour
     public int currentTurn;
     public PlayerHandController playerHandController;
     public CardDeckController deck;
+    [Header("Newsfeed stuff")]
     public int newsCounter = 0;
+    public PlayerNewsFeedController playerNewsFeedController;
 
     [Header("Prefabs")]
     public GameObject newTurnPrefab;
 
     private CardIntDictionary cardsPlayedLastTurn;
-    private UINewsFeedController uiNewsFeedController;
 	//bool ready = false;
 
 	// Use this for initialization
 	void Start()
 	{
 		sp = GameObject.Find("Sphere");
-        uiNewsFeedController = GameObject.Find("NewsFeedContent").GetComponent<UINewsFeedController>();
 
 		//GameObject.Find("Sphere").SetActive(false);
 
@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //update newsfeed
-        uiNewsFeedController.UpdateNewsFeed();
+        playerNewsFeedController.OnTurnStart();
 
 
         //fill hand

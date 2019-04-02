@@ -13,9 +13,6 @@ MonoBehaviour:
   m_Name: News5
   m_EditorClassIdentifier: 
   header: Oh no
-  content: You really done did it! You fool! Look at this. This is a newsitem. You
-    triggered it. It is very long. It may just be a testitem to test how the item
-    prefab functions with long items. Or it may be very important to your game. Who
-    knows? I don't!
+  content: Testing string formatting in news items {0}
   newsCounterMinimum: 0
   choicePrerequisites: []
