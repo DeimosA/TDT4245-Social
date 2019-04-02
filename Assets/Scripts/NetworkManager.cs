@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -22,6 +22,7 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 
 	List<string> playerNames;
 
+	List<List<int>> playerStats;
 
 	int iActivePlayer = 0;
 	public int ActivePlayer
@@ -45,6 +46,8 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 		//Instance = this;
 		players = new List<NetworkPlayer>();
 		playerNames = new List<string>();
+
+		playerStats = new List<List<int>>();
 		SceneManager.sceneLoaded += OnSceneLoaded;
 	}
 
@@ -59,16 +62,81 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 		{
 			CheckPlayersReady ();
 		}
-
-		foreach(var player in players){
-			//player.controller.test(playerNames);
-			//player.controller.test(playerNames);
-			//player.controller.testtwo("?", false);
-		}
-
 	}
 
-	bool CheckPlayersReady()
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        NetworkServer.RegisterHandler(SendMessageType.Score, ServerInstantMessageHandler);
+        NetworkServer.RegisterHandler(ConnectMessageType.Score, ServerConnectMessageHandler);
+    }
+
+    public override void OnClientConnect(NetworkConnection conn)
+    {
+        base.OnClientConnect(conn);
+        client.RegisterHandler(SendMessageType.Score, ReceiveInstantMessage);
+    }
+
+    private Dictionary<int, int> connIdLookup = new Dictionary<int, int>();
+
+    public void ServerInstantMessageHandler(NetworkMessage networkMessage)
+    {
+        int cId = networkMessage.conn.connectionId;
+        SendMessage message = networkMessage.ReadMessage<SendMessage>();
+        Debug.Log("ServerSide " + message.receiverNetId + " " + message.messageContent);
+        NetworkServer.SendToClient(connIdLookup[message.receiverNetId], SendMessageType.Score, message);
+    }
+
+    public void ServerConnectMessageHandler(NetworkMessage networkMessage)
+    {
+        int connectionId = networkMessage.conn.connectionId;
+        SendMessage message = networkMessage.ReadMessage<SendMessage>();
+        connIdLookup.Add(message.senderNetId, connectionId);
+
+        Debug.Log("Client connected: " + message.senderNetId + " " + message.companyName);
+        //NetworkServer.SendToClient(message.receiverNetId - 1, SendMessageType.Score, message);
+    }
+
+    public void SendConnectMessage(int senderNetId, string companyName)
+    {
+        // send msg to server
+        SendMessage message = new SendMessage();
+        message.senderNetId = senderNetId;
+        message.receiverNetId = -1;
+        message.messageContent = "";
+        message.companyName = companyName;
+        client.Send(ConnectMessageType.Score, message);
+    }
+
+    public void SendInstantMessage(int senderNetId, int receiverNetId, string msg, string companyName)
+    {
+        // send msg to Receiver
+        SendMessage message = new SendMessage();
+        message.senderNetId = senderNetId;
+        message.receiverNetId = receiverNetId;
+        message.messageContent = msg;
+        message.companyName = companyName;
+        Debug.Log("send: " + receiverNetId + " " + msg);
+        //NetworkServer.SendToAll(SendMessageType.Score, message);
+        client.Send(SendMessageType.Score, message);
+    }
+
+    void ReceiveInstantMessage(NetworkMessage networkMessage)
+    {
+        SendMessage message = networkMessage.ReadMessage<SendMessage>();
+        Debug.Log("receive " + message.senderNetId + " " + message.messageContent);
+        //Debug.Log(message.messageContent);
+        foreach (NetworkPlayer player in players)
+        {
+            if (player.netId.Value == message.senderNetId)
+            {
+                //Debug.Log("value match");
+                player.uiCompanyController.ReceiveMessage(message.messageContent);
+            }
+        }
+    }
+
+    bool CheckPlayersReady()
 	{
 		bool playersReady = true;
 		foreach (var player in players)
@@ -83,6 +151,7 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 			foreach (NetworkPlayer player in players){
 				player.StartGame();
 				started = true;
+				playerStats.Add(new List<int>());
 				//player.SetupNames();
 				//player.controller.test();
 			}
@@ -128,6 +197,7 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 		if (players.Count <= 4)
 		{
 			players.Add(player);
+			player.numberInList = players.IndexOf(player);
 		}
 	}
 
@@ -207,17 +277,28 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 		}
 	}
 
+    public List<NetworkPlayer> getPlayerList()
+    {
+        return this.players;
+    }
 
 	public void AddName(string name){
-		foreach(var player in players){
-			player.controller.testtwo(name, playerNames.Contains(name));
-		}
 		if(!playerNames.Contains(name) && name != null){
 			playerNames.Add(name);
 			foreach(var player in players){
 				player.playerList.Add(name);
 			}
 		}		
+	}
+
+	public void UpdateValues(List<int> newValues){
+		foreach(var player in players){
+			//if(playerStats[player.NumberInList] == null){
+			//	playerStats.Insert(player.NumberInList, newValues);
+			//}else{
+				playerStats[player.numberInList] = newValues;
+			//}
+		}
 	}
 
 }

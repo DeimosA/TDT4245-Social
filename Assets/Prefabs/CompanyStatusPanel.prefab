@@ -1542,6 +1542,9 @@ MonoBehaviour:
     type: 3}
   companyNameText: {fileID: 8537975451745019497}
   commButtonText: {fileID: 2163410637395755136}
+  companyUserCountValue: {fileID: 8537975450161249348}
+  companyReputationValue: {fileID: 8537975450484943963}
+  companyCashValue: {fileID: 8537975451257028691}
 --- !u!1 &8537975451899852038
 GameObject:
   m_ObjectHideFlags: 0

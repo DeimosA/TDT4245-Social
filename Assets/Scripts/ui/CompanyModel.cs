@@ -10,9 +10,15 @@ public class CompanyModel
     public int reputation;
     public int cash;
 
-    public List<string> messages;
+    private List<string> messages;
+
+    public NetworkPlayer networkCompany;
+    public NetworkPlayer localCompany;
 
     private bool commEstablished = false;
+
+
+    /* CONSTRUCTORS */
 
     public CompanyModel(string companyName)
     {
@@ -23,9 +29,26 @@ public class CompanyModel
         messages = new List<string>();
 
         ///////////
-        TestData();
+        //TestData();
         ///////////
     }
+
+    public CompanyModel(NetworkPlayer networkPlayer)
+    {
+        networkCompany = networkPlayer;
+        this.companyName = networkCompany.companyName;
+        this.userCount = networkCompany.userbase;
+        this.reputation = networkCompany.publicOpinion;
+        this.cash = networkCompany.capital;
+        messages = new List<string>();
+
+        ///////////
+        //TestData();
+        ///////////
+    }
+
+
+    /* PRIVATE METHODS */
 
     private void TestData()
     {
@@ -43,6 +66,24 @@ public class CompanyModel
     {
         commEstablished = true;
         // TODO probably transmit some message about this to other company
+    }
+
+    public void AddMessage(string message, bool ownMessage = false)
+    {
+        if (ownMessage)
+        {
+            messages.Add("You: " + message);
+        }
+        else
+        {
+            messages.Add(message);
+        }
+
+    }
+
+    public List<string> GetMessages()
+    {
+        return messages;
     }
 
 

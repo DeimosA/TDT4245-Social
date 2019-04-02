@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,12 +7,26 @@ using UnityEngine.Networking;
 public class SendMessage : MessageBase
 {
 	public string messageContent;
+    public int senderNetId;
+    public int receiverNetId;
+    public string companyName;
+}
+
+public class SendMessageType
+{
+    public static short Score = MsgType.Highest + 1;
+}
+
+public class ConnectMessageType
+{
+    public static short Score = MsgType.Highest + 2;
 }
 
 
 public class NetworkPlayer : NetworkBehaviour
 {
 
+    public List<NetworkPlayer> otherPlayers;
 
 	public SendMessage m_Message;
 
@@ -31,18 +45,19 @@ public class NetworkPlayer : NetworkBehaviour
 	[SyncVar]
 	public bool ready = false;
 
-	[SyncVar]
+	//[SyncVar]
 	public uint playerID;
 
-	[SyncVar]
-	public int userbase;
+	public int userbase = 0;
 
-	[SyncVar]
-	public int capital;
+	public int capital = 500;
 
-	[SyncVar]
-	public int publicOpinion;
+	public int publicOpinion = 1;
+    
+    public string companyName = "";
 
+    public UICompanyController uiCompanyController;
+    
 	//[SyncList(hook = "AddPlayerToList")]
 	public List<string> playerList = new List<string>();
 
@@ -50,8 +65,9 @@ public class NetworkPlayer : NetworkBehaviour
 
 	bool done;
 
-	//public int instanceID;
+	public int numberInList;
 
+	//public int instanceID;
 
 
 	// Use this for initialization
@@ -61,6 +77,9 @@ public class NetworkPlayer : NetworkBehaviour
 		controller.OnPlayerInput += OnPlayerInput; // what
 		//playerID = gameObject.GetComponent<NetworkInstanceId>().Value;
 		Time.timeScale = 1.0f;
+
+        playerID = gameObject.GetComponent<NetworkIdentity>().netId.Value;
+        
 		bool done = false;
 	}
 
@@ -68,7 +87,7 @@ public class NetworkPlayer : NetworkBehaviour
 	[Server]
 	void Update()
 	{
-		if (isTurn)
+		if (isTurn && done)
 		{
 			time -= Time.deltaTime;
 			if (time <= 0)
@@ -88,7 +107,9 @@ public class NetworkPlayer : NetworkBehaviour
 			controller.name = GameObject.Find("PlayerData").GetComponent<PersistentPlayerData>().GetCompanyName();
 			OnPlayerAdd();
 			done = true;
+			time = 10;
 		}
+		//Debug.Log(numberInList);
 			//CmdAddToPlayersList(controller.name);
 		//if(isServer){
 		//RpcSpawnPlayers(controller.name);
@@ -151,17 +172,23 @@ public class NetworkPlayer : NetworkBehaviour
 	[ClientRpc]
 	void RpcTurnEnd()
 	{
-		controller.TurnEnd();
+		//CmdTurnEnd(userBase, capital, publicOpinion);
+		List<int> tmpValues = new List<int>();
+		tmpValues.Add(userbase);
+		tmpValues.Add(capital);
+		tmpValues.Add(publicOpinion);
+		Debug.Log(tmpValues[0] + tmpValues[1] + tmpValues[2]);
+		NetworkManager.Instance.UpdateValues(tmpValues);
 	}
 
 	[Command]
-	void CmdSendInstantMessage(int receiverID, string msg){
-		// send msg to Receiver
+	public void CmdSendInstantMessage(int receiverID, string msg){
+        // send msg to Receiver
 	}
 
 	[ClientRpc]
 	void RpcReceiveInstantMessage(int senderID, string msg){
-		Debug.Log("received a message from " + senderID + ": " + msg);
+        Debug.Log("received a message from " + senderID + ": " + msg);
 	}
 
 	[Command]
@@ -279,5 +306,7 @@ public class NetworkPlayer : NetworkBehaviour
 		Text timer = timerText.GetComponent<Text> ();
 		timer.text = Mathf.Round(curtime).ToString();
 	}
+
+    
 }
 
