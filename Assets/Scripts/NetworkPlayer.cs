@@ -17,6 +17,11 @@ public class SendMessageType
     public static short Score = MsgType.Highest + 1;
 }
 
+public class ConnectMessageType
+{
+    public static short Score = MsgType.Highest + 2;
+}
+
 
 public class NetworkPlayer : NetworkBehaviour
 {
@@ -43,16 +48,7 @@ public class NetworkPlayer : NetworkBehaviour
 	//[SyncVar]
 	public uint playerID;
 
-<<<<<<< HEAD
-	public int userbase;
-
-	public int capital;
-
-
-	public int publicOpinion;
-
 	public int userbase = 0;
-
 
 	public int capital = 500;
 
@@ -113,7 +109,7 @@ public class NetworkPlayer : NetworkBehaviour
 			done = true;
 			time = 10;
 		}
-		Debug.Log(numberInList);
+		//Debug.Log(numberInList);
 			//CmdAddToPlayersList(controller.name);
 		//if(isServer){
 		//RpcSpawnPlayers(controller.name);

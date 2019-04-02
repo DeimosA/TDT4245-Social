@@ -68,8 +68,8 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
     {
         base.OnStartServer();
         NetworkServer.RegisterHandler(SendMessageType.Score, ServerInstantMessageHandler);
+        NetworkServer.RegisterHandler(ConnectMessageType.Score, ServerConnectMessageHandler);
     }
-
 
     public override void OnClientConnect(NetworkConnection conn)
     {
@@ -77,11 +77,35 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
         client.RegisterHandler(SendMessageType.Score, ReceiveInstantMessage);
     }
 
+    private Dictionary<int, int> connIdLookup = new Dictionary<int, int>();
+
     public void ServerInstantMessageHandler(NetworkMessage networkMessage)
     {
+        int cId = networkMessage.conn.connectionId;
         SendMessage message = networkMessage.ReadMessage<SendMessage>();
         Debug.Log("ServerSide " + message.receiverNetId + " " + message.messageContent);
-        NetworkServer.SendToClient(message.receiverNetId - 1, SendMessageType.Score, message);
+        NetworkServer.SendToClient(connIdLookup[message.receiverNetId], SendMessageType.Score, message);
+    }
+
+    public void ServerConnectMessageHandler(NetworkMessage networkMessage)
+    {
+        int connectionId = networkMessage.conn.connectionId;
+        SendMessage message = networkMessage.ReadMessage<SendMessage>();
+        connIdLookup.Add(message.senderNetId, connectionId);
+
+        Debug.Log("Client connected: " + message.senderNetId + " " + message.companyName);
+        //NetworkServer.SendToClient(message.receiverNetId - 1, SendMessageType.Score, message);
+    }
+
+    public void SendConnectMessage(int senderNetId, string companyName)
+    {
+        // send msg to server
+        SendMessage message = new SendMessage();
+        message.senderNetId = senderNetId;
+        message.receiverNetId = -1;
+        message.messageContent = "";
+        message.companyName = companyName;
+        client.Send(ConnectMessageType.Score, message);
     }
 
     public void SendInstantMessage(int senderNetId, int receiverNetId, string msg, string companyName)

@@ -97,7 +97,10 @@ public class GameLoader : MonoBehaviour
         companyStatus = GameObject.Find("CompanyStatusPanel").GetComponent<UICompanyController>();
         ownPlayer.companyName = playerData.GetCompanyName();
         ownPlayer.uiCompanyController = companyStatus;
-        companyStatus.SetCompanyModel(new CompanyModel(ownPlayer));
+        CompanyModel localCompany = new CompanyModel(ownPlayer);
+        localCompany.localCompany = ownPlayer;
+        companyStatus.SetCompanyModel(localCompany);
+
 
 
         //// TEST DATA ////////
