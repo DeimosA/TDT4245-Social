@@ -10,7 +10,7 @@ public class CardDeckController : MonoBehaviour
 {
     public Queue<ActivityCard> priorityCards;
     [Tooltip("Path of folder containing cards to build deck from (relative to Resources)")]
-    public string deckFolderPath = "ActivityCards";
+    public string deckFolderPath = "ActivityCards/FinalCards";
     private List<ActivityCard> deck = new List<ActivityCard>();
 
     // Start is called before the first frame update

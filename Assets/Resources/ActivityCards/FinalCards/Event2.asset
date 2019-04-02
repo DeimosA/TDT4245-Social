@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76e6011b15cc15a499b9ce18b3bb2696, type: 3}
+  m_Name: Event2
+  m_EditorClassIdentifier: 
+  cooperative: 0
+  cardCategory: 2
+  description: "\rSomeone has reported that they have managed to hack your security.
+    \r"
+  choices:
+  - title: Do nothing
+    description: 
+    addToNewsCounter: 0
+    priorityCardToTrigger: {fileID: 0}
+    featurePrerequisites: []
+    statPrerequisites: []
+    statChanges:
+    - stat: 0
+      valueChange: -1000
+    - stat: 2
+      valueChange: -10
+  - title: Thank them publicly
+    description: 
+    addToNewsCounter: 0
+    priorityCardToTrigger: {fileID: 0}
+    featurePrerequisites: []
+    statPrerequisites: []
+    statChanges:
+    - stat: 0
+      valueChange: -1000
+    - stat: 1
+      valueChange: -5000
+    - stat: 2
+      valueChange: 20
+  - title: Sue them
+    description: 
+    addToNewsCounter: 0
+    priorityCardToTrigger: {fileID: 0}
+    featurePrerequisites: []
+    statPrerequisites: []
+    statChanges:
+    - stat: 2
+      valueChange: -30
+    - stat: 0
+      valueChange: -1000
+  minimumTurn: 0
+  featurePrerequisites:
+  - feature: 5
+    value: 0
+  statPrerequisites: []
+  choicePrerequisites: []

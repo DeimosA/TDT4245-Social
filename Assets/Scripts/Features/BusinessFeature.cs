@@ -5,14 +5,21 @@ using UnityEngine.UI;
 
 public enum BusinessFeatureTitle
 {
-    FeatureA,
-    FeatureB,
-    FeatureC,
-    FeatureD,
-    FeatureE,
-    FeatureF,
-    FeatureG,
-    FeatureH
+    Images,
+    Videos,
+    Gif_Keyboards,
+    Stories,
+    Hacking,
+    Basic_Encryption,
+    Routine_Backups,
+    End_To_End_Encryption,
+    NSA_Backdoor,
+    Text,
+    Friend_System,
+    Commenting,
+    Favorites,
+    User_blocking,
+    Archiving
 }
 
 [System.Serializable]
