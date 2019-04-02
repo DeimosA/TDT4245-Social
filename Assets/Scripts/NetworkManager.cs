@@ -20,6 +20,8 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 
 	private bool started = false;
 
+	List<string> playerNames;
+
 
 	int iActivePlayer = 0;
 	public int ActivePlayer
@@ -42,8 +44,8 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 	{
 		//Instance = this;
 		players = new List<NetworkPlayer>();
+		playerNames = new List<string>();
 		SceneManager.sceneLoaded += OnSceneLoaded;
-
 	}
 
 	// Update is called once per frame
@@ -57,6 +59,13 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 		{
 			CheckPlayersReady ();
 		}
+
+		foreach(var player in players){
+			//player.controller.test(playerNames);
+			//player.controller.test(playerNames);
+			//player.controller.testtwo("?", false);
+		}
+
 	}
 
 	bool CheckPlayersReady()
@@ -74,7 +83,8 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 			foreach (NetworkPlayer player in players){
 				player.StartGame();
 				started = true;
-				player.controller.test();
+				//player.SetupNames();
+				//player.controller.test();
 			}
 			SceneManager.LoadScene("CharacterCreationScene", LoadSceneMode.Single);
 		}
@@ -135,7 +145,7 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 
 	public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 	{
-		if(scene.name == "GameScene")		// rename
+		if(scene.name == "MainGameUIScene")		// rename
 		{
 			NetworkServer.SpawnObjects();
 		}
@@ -196,6 +206,20 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 			matchJoined(success, matchInfo);
 		}
 	}
+
+
+	public void AddName(string name){
+		foreach(var player in players){
+			player.controller.testtwo(name, playerNames.Contains(name));
+		}
+		if(!playerNames.Contains(name) && name != null){
+			playerNames.Add(name);
+			foreach(var player in players){
+				player.playerList.Add(name);
+			}
+		}		
+	}
+
 }
 
 // possible a lot of these methods shouldn't be touched at all.
