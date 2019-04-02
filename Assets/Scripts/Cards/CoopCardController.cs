@@ -27,7 +27,7 @@ public class CoopCardController : CardController
         choiceDropdown.interactable = false;
 
         //move to play slot
-        MoveToPlaySlot();
+        MoveCard();
 
         sendButton.interactable = false;
         sendButton.transform.GetComponentInChildren<TextMeshProUGUI>().text = "Invite sent";
@@ -41,7 +41,12 @@ public class CoopCardController : CardController
         if (!receivingCard)
         {
 
-            transform.Find("Text").GetComponent<TextMeshProUGUI>().text = cardData.description;
+            //set type text
+            transform.Find("TypeText").GetComponent<TextMeshProUGUI>().text = cardData.cardCategory.ToString();
+
+            //set description text
+            transform.Find("DescriptionScrollView/Viewport/Content/DescriptionText").GetComponent<TextMeshProUGUI>().text = cardData.description;
+
 
             choiceDropdown = transform.Find("ChoiceDropdown").GetComponent<Dropdown>();
 
@@ -69,6 +74,7 @@ public class CoopCardController : CardController
         else
         {
             choiceDropdown = transform.Find("ChoiceDropdown").GetComponent<Dropdown>();
+            choiceDropdown.interactable = false;
         }
     }
 
@@ -76,7 +82,12 @@ public class CoopCardController : CardController
     {
         this.cardData = activityCard;
         choiceDropdown = transform.Find("ChoiceDropdown").GetComponent<Dropdown>();
-        transform.Find("Text").GetComponent<TextMeshProUGUI>().text = cardData.description;
+        //set type text
+        transform.Find("TypeText").GetComponent<TextMeshProUGUI>().text = cardData.cardCategory.ToString();
+
+        //set description text
+        transform.Find("DescriptionScrollView/Viewport/Content/DescriptionText").GetComponent<TextMeshProUGUI>().text = cardData.description;
+
         //Temporary way of displaying valid choices
         for (int i = 0; i < cardData.choices.Count; i++)
         {
@@ -116,7 +127,7 @@ public class CoopCardController : CardController
     }
 
 
-    public override void SetButtonsInteractable(bool fullPlaySlot, bool fullHand)
+    public override void SetButtonsInteractable(bool fullPlaySlot, bool fullHand, bool cardInHand)
     {
         if (sent || receivingCard) return;
 
