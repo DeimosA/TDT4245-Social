@@ -10,27 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76e6011b15cc15a499b9ce18b3bb2696, type: 3}
-  m_Name: Card1
+  m_Name: Event5
   m_EditorClassIdentifier: 
-  cooperative: 1
-  cardCategory: 1
-  description: Card 1
+  cooperative: 0
+  cardCategory: 3
+  description: "\rThe government has decided to vote upon a law that is similar to
+    GDPR. \r\n"
   choices:
-  - title: Choice0
+  - title: Lobby against law
     description: 
-    priorityCardToTrigger: {fileID: 11400000, guid: 7b8eb29e2c7ea524c8dab83dce98973a,
-      type: 2}
+    addToNewsCounter: 0
+    priorityCardToTrigger: {fileID: 0}
+    featurePrerequisites: []
+    statPrerequisites: []
+    statChanges:
+    - stat: 2
+      valueChange: -10
+  - title: Lobby for law
+    description: 
+    addToNewsCounter: 0
+    priorityCardToTrigger: {fileID: 0}
     featurePrerequisites: []
     statPrerequisites: []
     statChanges:
     - stat: 1
-      valueChange: -50
-  - title: Choice1
-    description: 
-    priorityCardToTrigger: {fileID: 0}
-    featurePrerequisites: []
-    statPrerequisites: []
-    statChanges: []
+      valueChange: -20000
   minimumTurn: 0
   featurePrerequisites: []
   statPrerequisites: []

@@ -20,10 +20,10 @@ public class FeaturePrerequisiste
 public enum CardCategory
 {
     Default,
-    BusinessDeal,
+    Hacking,
+    Event,
     Lobby,
-    PressRelease,
-    Philanthropy
+    Business
 }
 
 [CreateAssetMenu(fileName = "ActivityCard", menuName = "Custom/ActivityCard", order = 1)]

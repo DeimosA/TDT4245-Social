@@ -7,35 +7,31 @@ public class UINewsFeedController : MonoBehaviour
 {
 
     public GameObject newsItemPrefab;
+    public List<NewsFeedItem> newsFeedItems;
 
     private GameObject newsContainer;
-
 
     // Start is called before the first frame update
     void Start()
     {
-
-        //// Test data /////
-        int newsCount = 50;
         newsContainer = GameObject.Find("NewsFeedContent");
-        for (int i = 0; i < newsCount; i++)
-        {
-            AddNewsItem("News item " + i);
-        }
+
+
+        ////// Test data /////
+        //int newsCount = 50;
+        //for (int i = 0; i < newsCount; i++)
+        //{
+        //    AddNewsItem("News item " + i);
+        //}
         /////////////////////
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddNewsItem(string content)
     {
-        
-    }
 
-    public void AddNewsItem(string newsItemText)
-    {
         GameObject newInstance = Instantiate(newsItemPrefab, newsContainer.transform, false);
         newInstance.transform.SetParent(newsContainer.transform, false);
-        newInstance.GetComponent<TextMeshProUGUI>().SetText(newsItemText);
+        newInstance.transform.Find("NewsItemContent").GetComponent<TextMeshProUGUI>().SetText(content);
     }
 }

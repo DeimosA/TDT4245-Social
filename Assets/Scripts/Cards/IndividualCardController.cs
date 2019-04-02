@@ -6,15 +6,18 @@ using TMPro;
 
 public class IndividualCardController : CardController
 {
-    private Button moveToPlaySlotButton;
-    private Button moveToHandButton;
+    private Button moveButton;
 
     public override void OnStart()
     {
-        moveToPlaySlotButton = transform.Find("MoveToPlaySlotButton").GetComponent<Button>();
-        moveToHandButton = transform.Find("MoveToHandButton").GetComponent<Button>();
+        moveButton = transform.Find("MoveButton").GetComponent<Button>();
 
-        transform.Find("Text").GetComponent<TextMeshProUGUI>().text = cardData.description;
+
+        //set type text
+        transform.Find("TypeText").GetComponent<TextMeshProUGUI>().text = cardData.cardCategory.ToString();
+
+        //set description text
+        transform.Find("DescriptionScrollView/Viewport/Content/DescriptionText").GetComponent<TextMeshProUGUI>().text = cardData.description;
 
         choiceDropdown = transform.Find("ChoiceDropdown").GetComponent<Dropdown>();
 
@@ -29,24 +32,29 @@ public class IndividualCardController : CardController
         }
     }
 
-    public override void SetButtonsInteractable(bool fullPlaySlot, bool fullHand)
+    public override void SetButtonsInteractable(bool fullPlaySlot, bool fullHand, bool cardInHand)
     {
-        if (fullPlaySlot)
+        if (cardInHand)
         {
-            moveToPlaySlotButton.interactable = false;
+            if (fullPlaySlot)
+            {
+                moveButton.interactable = false;
+            }
+            else
+            {
+                moveButton.interactable = true;
+            }
         }
         else
         {
-            moveToPlaySlotButton.interactable = true;
-        }
-
-        if (fullHand)
-        {
-            moveToHandButton.interactable = false;
-        }
-        else
-        {
-            moveToHandButton.interactable = true;
+            if (fullHand)
+            {
+                moveButton.interactable = false;
+            }
+            else
+            {
+                moveButton.interactable = true;
+            }
         }
     }
 

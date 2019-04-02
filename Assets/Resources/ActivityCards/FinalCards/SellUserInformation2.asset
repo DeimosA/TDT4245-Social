@@ -10,20 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76e6011b15cc15a499b9ce18b3bb2696, type: 3}
-  m_Name: Card3
+  m_Name: SellUserInformation2
   m_EditorClassIdentifier: 
   cooperative: 0
-  cardCategory: 0
-  description: 'Card 3
-
-'
+  cardCategory: 4
+  description: Coop wishes to buy anonymous user information to help their marketing
+    campaign. They are offering 25000 NOK.
   choices:
-  - title: Choice0
+  - title: Sell
     description: 
+    addToNewsCounter: 1
     priorityCardToTrigger: {fileID: 0}
     featurePrerequisites: []
     statPrerequisites: []
-    statChanges: []
+    statChanges:
+    - stat: 1
+      valueChange: 25000
   minimumTurn: 0
   featurePrerequisites: []
   statPrerequisites: []

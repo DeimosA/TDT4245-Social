@@ -10,6 +10,7 @@ public class ActivityChoice
     public string title;
     [TextArea]
     public string description;
+    public int addToNewsCounter;
     [Tooltip("Reference a card here if this choice should guarantee this card to trigger")]
     public ActivityCard priorityCardToTrigger;
     [Tooltip("Contains all features that must have been reached for choice to appear")]
