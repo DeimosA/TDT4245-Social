@@ -22,6 +22,7 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 
 	List<string> playerNames;
 
+	List<List<int>> playerStats;
 
 	int iActivePlayer = 0;
 	public int ActivePlayer
@@ -45,6 +46,8 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 		//Instance = this;
 		players = new List<NetworkPlayer>();
 		playerNames = new List<string>();
+
+		playerStats = new List<List<int>>();
 		SceneManager.sceneLoaded += OnSceneLoaded;
 	}
 
@@ -59,13 +62,6 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 		{
 			CheckPlayersReady ();
 		}
-
-		foreach(var player in players){
-			//player.controller.test(playerNames);
-			//player.controller.test(playerNames);
-			//player.controller.testtwo("?", false);
-		}
-
 	}
 
 	bool CheckPlayersReady()
@@ -83,6 +79,7 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 			foreach (NetworkPlayer player in players){
 				player.StartGame();
 				started = true;
+				playerStats.Add(new List<int>());
 				//player.SetupNames();
 				//player.controller.test();
 			}
@@ -128,6 +125,7 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 		if (players.Count <= 4)
 		{
 			players.Add(player);
+			player.numberInList = players.IndexOf(player);
 		}
 	}
 
@@ -209,15 +207,22 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 
 
 	public void AddName(string name){
-		foreach(var player in players){
-			player.controller.testtwo(name, playerNames.Contains(name));
-		}
 		if(!playerNames.Contains(name) && name != null){
 			playerNames.Add(name);
 			foreach(var player in players){
 				player.playerList.Add(name);
 			}
 		}		
+	}
+
+	public void UpdateValues(List<int> newValues){
+		foreach(var player in players){
+			//if(playerStats[player.NumberInList] == null){
+			//	playerStats.Insert(player.NumberInList, newValues);
+			//}else{
+				playerStats[player.numberInList] = newValues;
+			//}
+		}
 	}
 
 }
