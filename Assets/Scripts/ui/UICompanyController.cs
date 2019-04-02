@@ -14,6 +14,10 @@ public class UICompanyController : MonoBehaviour
     public TextMeshProUGUI companyNameText;
     public TextMeshProUGUI commButtonText;
 
+    public TextMeshProUGUI companyUserCountValue;
+    public TextMeshProUGUI companyReputationValue;
+    public TextMeshProUGUI companyCashValue;
+
     private CompanyModel company;
     private GameObject mainCanvas;
     private GameObject commDialog;
@@ -30,7 +34,10 @@ public class UICompanyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // Update values in view
+        companyUserCountValue.SetText(company.networkCompany.userbase.ToString());
+        companyReputationValue.SetText(company.networkCompany.publicOpinion.ToString());
+        companyCashValue.SetText(company.networkCompany.capital.ToString());
     }
 
     private void SetCompanyName(string newCompanyName)

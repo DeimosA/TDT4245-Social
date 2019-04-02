@@ -223,8 +223,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
   showGUI: 1
-  offsetX: 760
-  offsetY: -40
+  offsetX: 0
+  offsetY: 0
 --- !u!114 &677759232
 MonoBehaviour:
   m_ObjectHideFlags: 0
