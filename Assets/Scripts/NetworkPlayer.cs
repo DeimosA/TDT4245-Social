@@ -54,9 +54,9 @@ public class NetworkPlayer : NetworkBehaviour
 
 	public int publicOpinion = 1;
     
-    public string companyName = "";
+    public string companyName = "connecting";
 
-    public UICompanyController uiCompanyController;
+    public UICompanyController uiCompanyController = null;
     
 	//[SyncList(hook = "AddPlayerToList")]
 	public List<string> playerList = new List<string>();
@@ -306,6 +306,15 @@ public class NetworkPlayer : NetworkBehaviour
 		Text timer = timerText.GetComponent<Text> ();
 		timer.text = Mathf.Round(curtime).ToString();
 	}
+
+    public void SetCompanyName(string name)
+    {
+        this.companyName = name;
+        if (uiCompanyController != null)
+        {
+            uiCompanyController.SetCompanyName(name);
+        }
+    }
 
     
 }

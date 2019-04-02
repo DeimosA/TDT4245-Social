@@ -82,7 +82,6 @@ public class GameLoader : MonoBehaviour
         {
             if (! networkPlayers[i].isLocalPlayer)
             {
-                networkPlayers[i].companyName = "Kompani " + i;
                 CompanyModel company = new CompanyModel(networkPlayers[i]);
                 company.localCompany = ownPlayer;
                 GameObject newInstance = Instantiate(companyPrefab, companyContainer.transform, false);

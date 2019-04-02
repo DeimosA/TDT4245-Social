@@ -40,7 +40,7 @@ public class UICompanyController : MonoBehaviour
         companyCashValue.SetText(company.networkCompany.capital.ToString());
     }
 
-    private void SetCompanyName(string newCompanyName)
+    public void SetCompanyName(string newCompanyName)
     {
         //if (companyNameText == null)
         //{

@@ -75,6 +75,7 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
     {
         base.OnClientConnect(conn);
         client.RegisterHandler(SendMessageType.Score, ReceiveInstantMessage);
+        client.RegisterHandler(ConnectMessageType.Score, ReceiveOtherCompany);
     }
 
     private Dictionary<int, int> connIdLookup = new Dictionary<int, int>();
@@ -94,6 +95,7 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
         if (! connIdLookup.ContainsKey(message.senderNetId))
         {
             connIdLookup.Add(message.senderNetId, connectionId);
+            NetworkServer.SendToAll(ConnectMessageType.Score, message);
         }
         else
         {
@@ -139,6 +141,18 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
             {
                 //Debug.Log("value match");
                 player.uiCompanyController.ReceiveMessage(message.messageContent);
+            }
+        }
+    }
+
+    void ReceiveOtherCompany(NetworkMessage networkMessage)
+    {
+        SendMessage message = networkMessage.ReadMessage<SendMessage>();
+        foreach (NetworkPlayer player in players)
+        {
+            if (player.netId.Value == message.senderNetId)
+            {
+                player.SetCompanyName(message.companyName);
             }
         }
     }
