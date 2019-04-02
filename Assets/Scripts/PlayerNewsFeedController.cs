@@ -9,13 +9,15 @@ using UnityEngine;
 /// </summary>
 public class PlayerNewsFeedController : MonoBehaviour
 {
-    //list of all newsfeeditems. Must be same for all players
-    public List<NewsFeedItem> newsFeedItems;
+    [Tooltip("Path to folder containing news items, relative to Resources")]
+    public string newsItemFolderPath = "NewsFeedItems";
 
     private PlayerController playerController;
     private UINewsFeedController uiNewsFeedController;
     //keep track of which newsfeeditems player has triggered, to avoid duplicates
     private HashSet<NewsFeedItem> newsItemsTriggeredByPlayer;
+    //list of all newsfeeditems. Must be same for all players
+    private List<NewsFeedItem> newsFeedItems = new List<NewsFeedItem>();
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +25,13 @@ public class PlayerNewsFeedController : MonoBehaviour
         newsItemsTriggeredByPlayer = new HashSet<NewsFeedItem>();
         uiNewsFeedController = GameObject.Find("NewsFeedContent").GetComponent<UINewsFeedController>();
         playerController = GetComponent<PlayerController>();
+
+        //build list of newsfeeditems from assets in Resources/NewsFeedItems
+        var newsFeedObjects = Resources.LoadAll(newsItemFolderPath, typeof(NewsFeedItem));
+        foreach(Object o in newsFeedObjects)
+        {
+            newsFeedItems.Add((NewsFeedItem)o);
+        }
     }
 
     //trigger any valid newsitems

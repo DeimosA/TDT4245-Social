@@ -2510,7 +2510,7 @@ MonoBehaviour:
   companyNameText: {fileID: 8145456295243234829}
   coopCardController: {fileID: 4767628771265794445}
   sendingPlayerCompanyName: TestCompany
-  card: {fileID: 11400000, guid: ead5652aa97fb784cbe3f0445f3159cd, type: 2}
+  card: {fileID: 11400000, guid: fc3cf91341947d74e8ed46517100f7d0, type: 2}
   choiceIndex: 0
 --- !u!1 &8145456296930316419
 GameObject:
