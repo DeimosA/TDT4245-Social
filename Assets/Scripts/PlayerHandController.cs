@@ -163,4 +163,10 @@ public class PlayerHandController : MonoBehaviour
         GameObject g = Instantiate(coopRequestPrefab, GameObject.Find("MainCanvas").transform, false);
         g.GetComponent<CooperationInviteController>().Init();
     }
+
+    public void ReceiveCoopRequest(string sendingPlayerCompanyName, ActivityCard activityCard, ActivityChoice choice)
+    {
+        GameObject g = Instantiate(coopRequestPrefab, GameObject.Find("MainCanvas").transform, false);
+        g.GetComponent<CooperationInviteController>().Init(sendingPlayerCompanyName, activityCard, choice);
+    }
 }

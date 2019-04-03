@@ -69,10 +69,15 @@ public class CoopCardController : CardController
             //set player dropdown options
             playerDropdown = transform.Find("PlayerDropdown").GetComponent<TMP_Dropdown>();
 
-            //TODO: Get player company names and add them here..
-            playerDropdown.options.Add(new TMP_Dropdown.OptionData("MockPlayer1"));
-            playerDropdown.options.Add(new TMP_Dropdown.OptionData("MockPlayer2"));
-            playerDropdown.options.Add(new TMP_Dropdown.OptionData("MockPlayer3"));
+            //Get player company names and add them here
+            for(int i = 0; i < NetworkManager.Instance.getPlayerList().Count; i++)
+            {
+                string playerName = NetworkManager.Instance.getPlayerList()[i].companyName;
+                playerDropdown.options.Add(new TMP_Dropdown.OptionData(playerName));
+            }
+
+            //force player dropdown label to update
+            playerDropdown.transform.Find("Label").GetComponent<TextMeshProUGUI>().text = playerDropdown.options[0].text;
 
         }
         else
