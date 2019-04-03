@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using TMPro;
+
 
 public class SendMessage : MessageBase
 {
@@ -63,24 +65,25 @@ public class NetworkPlayer : NetworkBehaviour
 
 	public bool SetupNames;
 
-	bool done;
+	public bool done;
 
 	public int numberInList;
 
-	//public int instanceID;
+    //public int instanceID;
+
+    TextMeshProUGUI timerDisplayText;
 
 
-	// Use this for initialization
-	void Start()		//may need a custom method that runs when game "starts"
+    // Use this for initialization
+    void Start()		//may need a custom method that runs when game "starts"
 	{
 		//nwm = GameObject.Find("NetworkManager");
-		controller.OnPlayerInput += OnPlayerInput; // what
+		//controller.OnPlayerInput += OnPlayerInput; // what
 		//playerID = gameObject.GetComponent<NetworkInstanceId>().Value;
 		Time.timeScale = 1.0f;
 
         playerID = gameObject.GetComponent<NetworkIdentity>().netId.Value;
         
-		bool done = false;
 	}
 
 	// Update is called once per frame
@@ -92,8 +95,8 @@ public class NetworkPlayer : NetworkBehaviour
 			time -= Time.deltaTime;
 			if (time <= 0)
 			{
-				TurnEnd();
-				//NetworkManager.Instance.AlterTurns();
+				//TurnEnd();
+				NetworkManager.Instance.AlterTurns();
 				// server starts handling new data
 			}
 		}
@@ -104,7 +107,7 @@ public class NetworkPlayer : NetworkBehaviour
 			return;
 		}
 		if(SetupNames && !done){
-			controller.name = GameObject.Find("PlayerData").GetComponent<PersistentPlayerData>().GetCompanyName();
+			//controller.name = GameObject.Find("PlayerData").GetComponent<PersistentPlayerData>().GetCompanyName();
 			OnPlayerAdd();
 			done = true;
 			time = 10;
@@ -131,7 +134,7 @@ public class NetworkPlayer : NetworkBehaviour
 	public override void OnStartLocalPlayer()
 	{
 		base.OnStartLocalPlayer();
-		controller.SetupLocalPlayer();
+		//controller.SetupLocalPlayer();
 		this.name = "local";
 	}
 
@@ -151,6 +154,7 @@ public class NetworkPlayer : NetworkBehaviour
 	[Server]
 	public void TurnStart()
 	{
+        Debug.Log("Server turn start");
 		isTurn = true;
 		time = 90;
 		RpcTurnStart();
@@ -159,13 +163,15 @@ public class NetworkPlayer : NetworkBehaviour
 	[ClientRpc]
 	void RpcTurnStart()
 	{
-		controller.TurnStart();
+        Debug.Log("Client turn start");
+        controller.TurnStart();
 	}
 
 	[Server]
 	public void TurnEnd()
 	{
-		isTurn = false;
+        Debug.Log("Server turn end");
+        isTurn = false;
 		RpcTurnEnd();
 	}
 
@@ -173,23 +179,27 @@ public class NetworkPlayer : NetworkBehaviour
 	void RpcTurnEnd()
 	{
 		//CmdTurnEnd(userBase, capital, publicOpinion);
-		List<int> tmpValues = new List<int>();
+		controller.EndTurn();
+        Debug.Log("Client turn end");
+        //CmdTurnEnd(userBase, capital, publicOpinion);
+        List<int> tmpValues = new List<int>();
 		tmpValues.Add(userbase);
 		tmpValues.Add(capital);
 		tmpValues.Add(publicOpinion);
 		Debug.Log(tmpValues[0] + tmpValues[1] + tmpValues[2]);
 		NetworkManager.Instance.UpdateValues(tmpValues);
+
 	}
 
-	[Command]
-	public void CmdSendInstantMessage(int receiverID, string msg){
-        // send msg to Receiver
-	}
+	//[Command]
+	//public void CmdSendInstantMessage(int receiverID, string msg){
+ //       // send msg to Receiver
+	//}
 
-	[ClientRpc]
-	void RpcReceiveInstantMessage(int senderID, string msg){
-        Debug.Log("received a message from " + senderID + ": " + msg);
-	}
+	//[ClientRpc]
+	//void RpcReceiveInstantMessage(int senderID, string msg){
+ //       Debug.Log("received a message from " + senderID + ": " + msg);
+	//}
 
 	[Command]
 	void CmdRequestCooperation(int receiverID, int cardID){
@@ -258,7 +268,7 @@ public class NetworkPlayer : NetworkBehaviour
 	}
 
 	public void OnPlayerAdd(){
-		CmdAddToPlayersList(controller.name);
+		//CmdAddToPlayersList(controller.name);
 	}
 
 
@@ -278,7 +288,7 @@ public class NetworkPlayer : NetworkBehaviour
 		}
 	}
 
-	void OnPlayerInput(PlayerAction action, float amount)
+	public void OnPlayerInput(PlayerAction action, float amount)
 	{
 		if (action == PlayerAction.SHOOT)
 		{
@@ -302,9 +312,13 @@ public class NetworkPlayer : NetworkBehaviour
 
 	public void UpdateTimeDisplay(float curtime)
 	{
-		GameObject timerText = GameObject.Find("Timer");
-		Text timer = timerText.GetComponent<Text> ();
-		timer.text = Mathf.Round(curtime).ToString();
+        if (timerDisplayText == null)
+        {
+		    GameObject timerObject = GameObject.Find("EndTurnTimerText");
+            if (timerObject == null) return;
+            timerDisplayText = timerObject.GetComponent<TextMeshProUGUI>();
+        }
+        timerDisplayText.text = Mathf.Round(curtime).ToString();
 	}
 
     public void SetCompanyName(string name)

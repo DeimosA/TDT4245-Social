@@ -22,21 +22,32 @@ public class UICompanyController : MonoBehaviour
     private GameObject mainCanvas;
     private GameObject commDialog;
 
-    private PlayerStats cardLogicPlayerStats;
+    private PlayerStats cardLogicPlayerStats = null;
 
 
     // Start is called before the first frame update
     void Start()
     {
         mainCanvas = GameObject.Find("MainCanvas");
-        cardLogicPlayerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
+        //cardLogicPlayerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
     }
 
     // Update is called once per frame
     void Update()
     {
         // Update values in view
-        if (cardLogicPlayerStats == null) cardLogicPlayerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
+        if (cardLogicPlayerStats == null)
+        {
+            GameObject playerDude = GameObject.Find("Player");
+            if (playerDude != null)
+            {
+                cardLogicPlayerStats = playerDude.GetComponent<PlayerStats>();
+            }
+            else
+            {
+                return;
+            }
+        }
 
         if (company.networkCompany.isLocalPlayer)
         {

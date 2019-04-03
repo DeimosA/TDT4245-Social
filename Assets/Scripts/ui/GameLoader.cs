@@ -108,6 +108,8 @@ public class GameLoader : MonoBehaviour
 
     }
 
+    /* PRIVATE METHODS */
+
     private void TestData()
     {
         /* Instantiate other company info cards */
@@ -135,6 +137,14 @@ public class GameLoader : MonoBehaviour
 
         // Load network manager
         SceneManager.LoadScene("GameLogicScene", LoadSceneMode.Single);
+    }
+
+    /* PUBLIC METHODS */
+
+    public void NextTurnButtonHandler()
+    {
+        // TODO go next turn or go home
+        Debug.Log("Next turn plz");
     }
 
 }
