@@ -17,6 +17,8 @@ public class GameLoader : MonoBehaviour
     private NetworkManager networkManager;
     private List<NetworkPlayer> networkPlayers;
 
+    private GameObject player;
+
 
     // Start is called before the first frame update
     void Start()
@@ -100,7 +102,7 @@ public class GameLoader : MonoBehaviour
         localCompany.localCompany = ownPlayer;
         companyStatus.SetCompanyModel(localCompany);
 
-
+        player = GameObject.Find("Player");
 
         //// TEST DATA ////////
         //TestData();
@@ -144,6 +146,11 @@ public class GameLoader : MonoBehaviour
     public void NextTurnButtonHandler()
     {
         // TODO go next turn or go home
+        if (player == null)
+        {
+            player = GameObject.Find("Player");
+        }
+        player.GetComponent<PlayerController>().EndTurn();
         Debug.Log("Next turn plz");
     }
 
