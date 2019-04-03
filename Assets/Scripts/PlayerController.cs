@@ -215,6 +215,7 @@ public class PlayerController : MonoBehaviour
 
         //fill hand
         FillHand();
+		localNetworkPlayer.UpdateValues();
     }
 
     //add all cards in playslots to cardsPlayedLastTurn

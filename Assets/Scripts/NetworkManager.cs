@@ -375,6 +375,13 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 				playerStats[player.numberInList] = newValues;
 			//}
 		}
+		//foreach(var player in players){
+		//for(int i = 0; i>players.Count-1; i++){
+		//	players[i].userbase = playerStats[i][0];
+		//	players[i].capital = playerStats[i][1];
+		//	players[i].publicOpinion = playerStats[i][2];
+		//}
+		//}
 	}
 
 }

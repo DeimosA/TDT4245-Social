@@ -50,10 +50,13 @@ public class NetworkPlayer : NetworkBehaviour
 	//[SyncVar]
 	public uint playerID;
 
+	[SyncVar]
 	public int userbase = 0;
 
+	[SyncVar]
 	public int capital = 500;
 
+	[SyncVar]
 	public int publicOpinion = 1;
     
     public string companyName = "connecting";
@@ -185,17 +188,43 @@ public class NetworkPlayer : NetworkBehaviour
 	{
         if (controller != null)
         {
+
+			//userbase = controller.playerStats.GetUserbase();
+			//capital = controller.playerStats.GetCapital();
+			//publicOpinion = controller.playerStats.GetReputation();
+
+
+
             //CmdTurnEnd(userBase, capital, publicOpinion);
             controller.EndTurn();
+
+			//CmdUpdateValues(controller.playerStats.GetUserbase(), controller.playerStats.GetCapital(), controller.playerStats.GetReputation());
+
             Debug.Log("Client turn end");
             //CmdTurnEnd(userBase, capital, publicOpinion);
             List<int> tmpValues = new List<int>();
-            tmpValues.Add(userbase);
-            tmpValues.Add(capital);
-            tmpValues.Add(publicOpinion);
-            Debug.Log(tmpValues[0] + tmpValues[1] + tmpValues[2]);
+			tmpValues.Add(controller.playerStats.GetUserbase());
+			tmpValues.Add(controller.playerStats.GetCapital());
+			tmpValues.Add(controller.playerStats.GetReputation());
+            Debug.Log(tmpValues[0] + " " +  tmpValues[1] + " " + tmpValues[2]);
             NetworkManager.Instance.UpdateValues(tmpValues);
         }
+		else{
+			//userbase = 500000;
+			//NetworkManager.Instance.playerStats[]
+		}
+	}
+
+	public void UpdateValues(){
+		CmdUpdateValues(controller.playerStats.GetUserbase(), controller.playerStats.GetCapital(), controller.playerStats.GetReputation());
+
+	}
+
+	[Command]
+	void CmdUpdateValues(int m_userbase, int m_capital, int m_reputation){
+		userbase = m_userbase;
+		capital = m_capital;
+		publicOpinion = m_reputation;
 	}
 
     public void EndTurnEarly()
