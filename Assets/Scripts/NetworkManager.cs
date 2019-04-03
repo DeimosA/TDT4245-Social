@@ -19,8 +19,10 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 	public static NetworkManager Instance;
 
 	private bool started = false;
+    private bool actuallyStarted = false;
 
-	List<string> playerNames;
+
+    List<string> playerNames;
 
 	List<List<int>> playerStats;
 
@@ -61,6 +63,7 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 		if (players.Count > 0)
 		{
 			CheckPlayersReady ();
+            ActuallyStartGame();
 		}
 	}
 
@@ -101,6 +104,12 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
         {
             connIdLookup[message.senderNetId] = connectionId;
         }
+
+        //if (players.Count == connIdLookup.Count)
+        //{
+        //    playersReady = true;
+        //}
+        //ActuallyStartGame
 
         Debug.Log("Client connected: " + message.senderNetId + " " + message.companyName);
         //NetworkServer.SendToClient(message.receiverNetId - 1, SendMessageType.Score, message);
@@ -159,7 +168,9 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 
     bool CheckPlayersReady()
 	{
+        // TODO figure out if all players are ready
 		bool playersReady = true;
+
 		foreach (var player in players)
 		{
 			playersReady &= player.ready;
@@ -167,20 +178,38 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 		}
 
 		if (playersReady && !started)
-		{
-			//players[iActivePlayer].StartGame();			rewrite, this is when game starts
-			foreach (NetworkPlayer player in players){
-				player.StartGame();
-				started = true;
-				playerStats.Add(new List<int>());
-				//player.SetupNames();
-				//player.controller.test();
-			}
+        {
+            //players[iActivePlayer].StartGame();			rewrite, this is when game starts
+            started = true;
 			SceneManager.LoadScene("CharacterCreationScene", LoadSceneMode.Single);
 		}
 
 		return playersReady;
 	}
+
+    bool ActuallyStartGame()
+    {
+        bool playersDone = true;
+        foreach (var player in players)
+        {
+            playersDone &= player.done;
+            // add a bool "ready" which is set after a player is done setting up their business
+        }
+
+        if (playersDone && !actuallyStarted) 
+        {
+            foreach (NetworkPlayer player in players)
+            {
+                player.StartGame();
+                actuallyStarted = true;
+                playerStats.Add(new List<int>());
+                //player.SetupNames();
+                //player.controller.test();
+            }
+        }
+
+        return playersDone;
+    }
 
 	public void ReTurn()		// terrible naming
 	{
