@@ -92,8 +92,8 @@ public class NetworkPlayer : NetworkBehaviour
 			time -= Time.deltaTime;
 			if (time <= 0)
 			{
-				TurnEnd();
-				//NetworkManager.Instance.AlterTurns();
+				//TurnEnd();
+				NetworkManager.Instance.AlterTurns();
 				// server starts handling new data
 			}
 		}
@@ -175,6 +175,8 @@ public class NetworkPlayer : NetworkBehaviour
 	[ClientRpc]
 	void RpcTurnEnd()
 	{
+		//CmdTurnEnd(userBase, capital, publicOpinion);
+		controller.EndTurn();
         Debug.Log("Client turn end");
         //CmdTurnEnd(userBase, capital, publicOpinion);
         List<int> tmpValues = new List<int>();
@@ -183,6 +185,7 @@ public class NetworkPlayer : NetworkBehaviour
 		tmpValues.Add(publicOpinion);
 		Debug.Log(tmpValues[0] + tmpValues[1] + tmpValues[2]);
 		NetworkManager.Instance.UpdateValues(tmpValues);
+
 	}
 
 	//[Command]
