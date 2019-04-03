@@ -28,6 +28,8 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 
     public List<uint> playersThatEndedEarly;
 
+	int turnCount = 0;
+
 	int iActivePlayer = 0;
 	public int ActivePlayer
 	{
@@ -228,16 +230,30 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 
 	public void AlterTurns()
 	{
-		Debug.Log ("Alter Turns");
-		foreach(var player in players){
-			player.TurnEnd();
-			player.TurnStart();
-		}
-
+		Debug.Log ("Alter Turns " + turnCount);
+		if(turnCount > 14){
+			foreach(var player in players){
+				player.TurnEnd();
+				StartCoroutine(GameOverDisplay(player));
+			}
+		}else{
+            foreach (var player in players)
+            {
+                player.TurnEnd();
+                player.TurnStart();
+            }
+        }
+		turnCount++;
 
 		//players[iActivePlayer].TurnEnd();
 		//iActivePlayer = (iActivePlayer + 1) % players.Count;
 		//players[iActivePlayer].TurnStart();
+	}
+
+	IEnumerator GameOverDisplay(NetworkPlayer player){
+		yield return new WaitForSeconds(1);
+		player.controller.DisplayCardViewOverlay("Game Over");
+
 	}
 
 	// Doesn't work as intended for our project, goes on a rotating basis and has to be rewritten (but how)
