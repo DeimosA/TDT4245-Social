@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class FeatureElementController : MonoBehaviour
 {
-    public Text title;
-    public Text cost;
+    public TextMeshProUGUI title;
+    public TextMeshProUGUI cost;
     public Image checkmarkImage;
 
     public void SetFeatureElement(BusinessFeature feature)
