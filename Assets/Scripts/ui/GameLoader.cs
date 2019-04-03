@@ -103,6 +103,7 @@ public class GameLoader : MonoBehaviour
         companyStatus.SetCompanyModel(localCompany);
 
         player = GameObject.Find("Player");
+        ownPlayer.OnPlayerDoneCreateCompany();
 
         //// TEST DATA ////////
         //TestData();

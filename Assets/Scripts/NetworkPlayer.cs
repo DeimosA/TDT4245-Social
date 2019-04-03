@@ -65,7 +65,8 @@ public class NetworkPlayer : NetworkBehaviour
 
 	public bool SetupNames;
 
-	public bool done;
+    [SyncVar]
+	public bool done = false;
 
 	public int numberInList;
 
@@ -163,8 +164,12 @@ public class NetworkPlayer : NetworkBehaviour
 	[ClientRpc]
 	void RpcTurnStart()
 	{
-        Debug.Log("Client turn start");
-        controller.TurnStart();
+        Debug.Log("lokalgreiertinginfo: " + isLocalPlayer + controller);
+        if (controller != null)
+        {
+            Debug.Log("Client turn start");
+            controller.OnTurnStart();
+        }
 	}
 
 	[Server]
@@ -178,17 +183,19 @@ public class NetworkPlayer : NetworkBehaviour
 	[ClientRpc]
 	void RpcTurnEnd()
 	{
-		//CmdTurnEnd(userBase, capital, publicOpinion);
-		controller.EndTurn();
-        Debug.Log("Client turn end");
-        //CmdTurnEnd(userBase, capital, publicOpinion);
-        List<int> tmpValues = new List<int>();
-		tmpValues.Add(userbase);
-		tmpValues.Add(capital);
-		tmpValues.Add(publicOpinion);
-		Debug.Log(tmpValues[0] + tmpValues[1] + tmpValues[2]);
-		NetworkManager.Instance.UpdateValues(tmpValues);
-
+        if (controller != null)
+        {
+            //CmdTurnEnd(userBase, capital, publicOpinion);
+            controller.EndTurn();
+            Debug.Log("Client turn end");
+            //CmdTurnEnd(userBase, capital, publicOpinion);
+            List<int> tmpValues = new List<int>();
+            tmpValues.Add(userbase);
+            tmpValues.Add(capital);
+            tmpValues.Add(publicOpinion);
+            Debug.Log(tmpValues[0] + tmpValues[1] + tmpValues[2]);
+            NetworkManager.Instance.UpdateValues(tmpValues);
+        }
 	}
 
 	//[Command]
@@ -304,13 +311,29 @@ public class NetworkPlayer : NetworkBehaviour
 
 		//Update score
 		ready = true;
-		NetworkManager.Instance.UpdateScore(amount);
+		//NetworkManager.Instance.UpdateScore(amount);
 
 	}
-		
+
+    public void OnPlayerDoneCreateCompany ()
+    {
+        CmdOnPlayerDoneCreateCompany();
+    }
+
+    [Command]
+    void CmdOnPlayerDoneCreateCompany()
+    {
+        //Shoot bullets
+
+        //Update score
+        done = true;
+        //NetworkManager.Instance.UpdateScore(amount);
+
+    }
 
 
-	public void UpdateTimeDisplay(float curtime)
+
+    public void UpdateTimeDisplay(float curtime)
 	{
         if (timerDisplayText == null)
         {

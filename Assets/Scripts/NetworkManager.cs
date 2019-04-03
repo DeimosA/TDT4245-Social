@@ -199,6 +199,7 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 
         if (playersDone && !actuallyStarted) 
         {
+            Debug.Log("Player count in player list: " + players.Count);
             foreach (NetworkPlayer player in players)
             {
                 player.StartGame();
