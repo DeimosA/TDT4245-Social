@@ -262,7 +262,7 @@ public class NetworkPlayer : NetworkBehaviour
 	}
 
 	public void OnPlayerAdd(){
-		CmdAddToPlayersList(controller.name);
+		//CmdAddToPlayersList(controller.name);
 	}
 
 
