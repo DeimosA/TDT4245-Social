@@ -251,8 +251,6 @@ public class PlayerController : MonoBehaviour
 
         //Display card view overlay
         DisplayCardViewOverlay("Waiting for other players");
-
-        localNetworkPlayer.EndTurnEarly();
     }
 
     public void FillHand()

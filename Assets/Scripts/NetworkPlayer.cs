@@ -157,7 +157,7 @@ public class NetworkPlayer : NetworkBehaviour
 	{
         Debug.Log("Server turn start");
 		isTurn = true;
-		time = 5;
+		time = 90;
 		RpcTurnStart();
 	}
 

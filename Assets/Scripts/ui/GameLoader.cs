@@ -18,6 +18,7 @@ public class GameLoader : MonoBehaviour
     private List<NetworkPlayer> networkPlayers;
 
     private GameObject player;
+    NetworkPlayer ownNetworkPlayer = null;
 
 
     // Start is called before the first frame update
@@ -70,13 +71,12 @@ public class GameLoader : MonoBehaviour
 
         /* Instantiate other company info cards */
         GameObject companyContainer = GameObject.Find("OtherCompaniesPanel");
-        NetworkPlayer ownPlayer = null;
 
         for (int i = 0; i < networkPlayers.Count; i++)
         {
             if (networkPlayers[i].isLocalPlayer)
             {
-                ownPlayer = networkPlayers[i];
+                ownNetworkPlayer = networkPlayers[i];
             }
         }
 
@@ -85,7 +85,7 @@ public class GameLoader : MonoBehaviour
             if (! networkPlayers[i].isLocalPlayer)
             {
                 CompanyModel company = new CompanyModel(networkPlayers[i]);
-                company.localCompany = ownPlayer;
+                company.localCompany = ownNetworkPlayer;
                 GameObject newInstance = Instantiate(companyPrefab, companyContainer.transform, false);
                 newInstance.transform.SetParent(companyContainer.transform, false);
                 UICompanyController cc = newInstance.GetComponent<UICompanyController>();
@@ -96,14 +96,14 @@ public class GameLoader : MonoBehaviour
 
         /* Put info in own company info panel */
         companyStatus = GameObject.Find("CompanyStatusPanel").GetComponent<UICompanyController>();
-        ownPlayer.companyName = playerData.GetCompanyName();
-        ownPlayer.uiCompanyController = companyStatus;
-        CompanyModel localCompany = new CompanyModel(ownPlayer);
-        localCompany.localCompany = ownPlayer;
+        ownNetworkPlayer.companyName = playerData.GetCompanyName();
+        ownNetworkPlayer.uiCompanyController = companyStatus;
+        CompanyModel localCompany = new CompanyModel(ownNetworkPlayer);
+        localCompany.localCompany = ownNetworkPlayer;
         companyStatus.SetCompanyModel(localCompany);
 
         player = GameObject.Find("Player");
-        ownPlayer.OnPlayerDoneCreateCompany();
+        ownNetworkPlayer.OnPlayerDoneCreateCompany();
 
         //// TEST DATA ////////
         //TestData();
@@ -146,12 +146,7 @@ public class GameLoader : MonoBehaviour
 
     public void NextTurnButtonHandler()
     {
-        // TODO go next turn or go home
-        if (player == null)
-        {
-            player = GameObject.Find("Player");
-        }
-        player.GetComponent<PlayerController>().EndTurn();
+        ownNetworkPlayer.EndTurnEarly();
     }
 
 }
