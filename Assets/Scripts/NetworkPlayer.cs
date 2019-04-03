@@ -168,12 +168,37 @@ public class NetworkPlayer : NetworkBehaviour
 	void RpcTurnStart()
 	{
         Debug.Log("lokalgreiertinginfo: " + isLocalPlayer + controller);
-        if (controller != null)
+        if (controller == null)
         {
-            Debug.Log("Client turn start");
-            controller.OnTurnStart();
+            if (isLocalPlayer)
+            {
+                GameObject player = GameObject.Find("Player");
+
+                if (player == null)
+                {
+                    Debug.Log("SUPERERROR!!!!");
+                    StartCoroutine(DelayTurnStart());
+                }
+
+                controller = player.GetComponent<PlayerController>();
+            }
+            else
+            {
+                return;
+            }
         }
+        Debug.Log("Client turn start");
+        controller.OnTurnStart();
 	}
+
+    IEnumerator DelayTurnStart()
+    {
+        yield return new WaitForSeconds(2f);
+        GameObject player = GameObject.Find("Player");
+        controller = player.GetComponent<PlayerController>();
+        Debug.Log("Client turn start");
+        controller.OnTurnStart();
+    }
 
 	[Server]
 	public void TurnEnd()
