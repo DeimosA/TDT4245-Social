@@ -111,7 +111,7 @@ public class NetworkPlayer : NetworkBehaviour
 			//controller.name = GameObject.Find("PlayerData").GetComponent<PersistentPlayerData>().GetCompanyName();
 			OnPlayerAdd();
 			done = true;
-			time = 10;
+			time = 90;
 		}
 		//Debug.Log(numberInList);
 			//CmdAddToPlayersList(controller.name);
@@ -157,7 +157,7 @@ public class NetworkPlayer : NetworkBehaviour
 	{
         Debug.Log("Server turn start");
 		isTurn = true;
-		time = 90;
+		time = 5;
 		RpcTurnStart();
 	}
 

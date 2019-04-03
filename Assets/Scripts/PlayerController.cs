@@ -268,7 +268,7 @@ public class PlayerController : MonoBehaviour
         Destroy(cardViewOverlay);
     }
 
-    private void DisplayCardViewOverlay(string text)
+    public void DisplayCardViewOverlay(string text)
     {
         if (cardViewOverlay != null)
         {
