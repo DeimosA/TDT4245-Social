@@ -191,16 +191,21 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 		}
 		//players[iActivePlayer].TurnStart();
 	}
-	/*
+
 	public void AlterTurns()
 	{
-		Debug.Log ("turn::"+iActivePlayer);
+		//Debug.Log ("turn::"+iActivePlayer);
+		foreach(var player in players){
+			player.TurnEnd();
+			player.TurnStart();
+		}
 
-		players[iActivePlayer].TurnEnd();
-		iActivePlayer = (iActivePlayer + 1) % players.Count;
-		players[iActivePlayer].TurnStart();
+
+		//players[iActivePlayer].TurnEnd();
+		//iActivePlayer = (iActivePlayer + 1) % players.Count;
+		//players[iActivePlayer].TurnStart();
 	}
-	*/
+
 	// Doesn't work as intended for our project, goes on a rotating basis and has to be rewritten (but how)
 	public void UpdateScore(float score)
 	{
