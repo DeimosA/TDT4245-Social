@@ -146,6 +146,10 @@ public class GameLoader : MonoBehaviour
     public void NextTurnButtonHandler()
     {
         // TODO go next turn or go home
+        if (player == null)
+        {
+            player = GameObject.Find("Player");
+        }
         player.GetComponent<PlayerController>().EndTurn();
         Debug.Log("Next turn plz");
     }
