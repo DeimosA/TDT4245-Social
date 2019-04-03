@@ -146,6 +146,12 @@ public class GameLoader : MonoBehaviour
 
     public void NextTurnButtonHandler()
     {
+        if (player == null)
+        {
+            player = GameObject.Find("Player");
+        }
+        player.GetComponent<PlayerController>().DisplayCardViewOverlay("Waiting for other players");
+
         ownNetworkPlayer.EndTurnEarly();
     }
 
