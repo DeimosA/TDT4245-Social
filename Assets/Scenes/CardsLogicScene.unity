@@ -355,7 +355,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1272761131
 RectTransform:
   m_ObjectHideFlags: 0
@@ -765,11 +765,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 893921649}
     m_Modifications:
-    - target: {fileID: 2297059928697605082, guid: 21511abb5c2df36419e49f500bb04969,
-        type: 3}
-      propertyPath: m_Name
-      value: EndTurnButton
-      objectReference: {fileID: 0}
     - target: {fileID: 2297059928697605061, guid: 21511abb5c2df36419e49f500bb04969,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -874,6 +869,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2297059928697605082, guid: 21511abb5c2df36419e49f500bb04969,
+        type: 3}
+      propertyPath: m_Name
+      value: EndTurnButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 2297059928697605082, guid: 21511abb5c2df36419e49f500bb04969,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2297059928697605060, guid: 21511abb5c2df36419e49f500bb04969,
         type: 3}
@@ -990,6 +995,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BusinessTreeButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 3161056462466031589, guid: 66c3a7e6a17f84e468071f2997bb2b9e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3161056462466031590, guid: 66c3a7e6a17f84e468071f2997bb2b9e,
         type: 3}

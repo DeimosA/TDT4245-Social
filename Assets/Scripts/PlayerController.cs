@@ -51,6 +51,8 @@ public class PlayerController : MonoBehaviour
 
 	public List<string> playerList;
 
+    NetworkPlayer localNetworkPlayer;
+
 	// Use this for initialization
 	void Start()
 	{
@@ -61,6 +63,7 @@ public class PlayerController : MonoBehaviour
             if (player.isLocalPlayer)
             {
                 player.controller = this;
+                localNetworkPlayer = player;
             }
         }
 
@@ -248,6 +251,8 @@ public class PlayerController : MonoBehaviour
 
         //Display card view overlay
         DisplayCardViewOverlay("Waiting for other players");
+
+        localNetworkPlayer.EndTurnEarly();
     }
 
     public void FillHand()

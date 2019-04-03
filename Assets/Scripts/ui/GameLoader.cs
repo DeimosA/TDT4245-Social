@@ -152,7 +152,6 @@ public class GameLoader : MonoBehaviour
             player = GameObject.Find("Player");
         }
         player.GetComponent<PlayerController>().EndTurn();
-        Debug.Log("Next turn plz");
     }
 
 }

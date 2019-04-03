@@ -26,6 +26,8 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 
 	List<List<int>> playerStats;
 
+    public List<uint> playersThatEndedEarly;
+
 	int iActivePlayer = 0;
 	public int ActivePlayer
 	{
@@ -226,7 +228,7 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
 
 	public void AlterTurns()
 	{
-		//Debug.Log ("turn::"+iActivePlayer);
+		Debug.Log ("Alter Turns");
 		foreach(var player in players){
 			player.TurnEnd();
 			player.TurnStart();

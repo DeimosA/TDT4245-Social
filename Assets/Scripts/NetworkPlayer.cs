@@ -198,6 +198,29 @@ public class NetworkPlayer : NetworkBehaviour
         }
 	}
 
+    public void EndTurnEarly()
+    {
+        CmdEndTurnEarly();
+    }
+
+    [Command]
+    void CmdEndTurnEarly()
+    {
+        NetworkManager nm = NetworkManager.Instance;
+        uint netId = this.netId.Value;
+        if (!nm.playersThatEndedEarly.Contains(netId))
+        {
+            nm.playersThatEndedEarly.Add(netId);
+            Debug.Log(netId + " ended early");
+
+            if (nm.playersThatEndedEarly.Count == nm.getPlayerList().Count)
+            {
+                nm.playersThatEndedEarly.Clear();
+                nm.AlterTurns();
+            }
+        }
+    }
+
 	//[Command]
 	//public void CmdSendInstantMessage(int receiverID, string msg){
  //       // send msg to Receiver
