@@ -175,11 +175,15 @@ public class NetworkPlayer : NetworkBehaviour
 	[ClientRpc]
 	void RpcTurnEnd()
 	{
+<<<<<<< HEAD
 		//CmdTurnEnd(userBase, capital, publicOpinion);
 		controller.EndTurn();
+		List<int> tmpValues = new List<int>();
+=======
         Debug.Log("Client turn end");
         //CmdTurnEnd(userBase, capital, publicOpinion);
         List<int> tmpValues = new List<int>();
+>>>>>>> ddf97f5573ed5988e3be42f5349f1e170842295d
 		tmpValues.Add(userbase);
 		tmpValues.Add(capital);
 		tmpValues.Add(publicOpinion);

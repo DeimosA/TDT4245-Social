@@ -102,7 +102,6 @@ GameObject:
   - component: {fileID: 8373390734178644051}
   - component: {fileID: 8373390734178644053}
   - component: {fileID: 8373390734178644052}
-  - component: {fileID: 7336103231272745817}
   m_Layer: 0
   m_Name: NetworkPlayer
   m_TagString: Untagged
@@ -170,38 +169,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f69198e931035418bd11ea5468b965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  otherPlayers: []
   isTurn: 0
   time: 90
-  controller: {fileID: 7336103231272745817}
+  controller: {fileID: 0}
   ready: 0
   playerID: 0
   userbase: 0
   capital: 0
   publicOpinion: 0
+  companyName: connecting
+  uiCompanyController: {fileID: 0}
   playerList: []
---- !u!114 &7336103231272745817
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8373390734178644050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bf6b8fa8d9b0304f81e7155e6828749, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerID: 0
-  turnData: 
-  userbase: 0
-  capital: 0
-  publicOpinion: 0
-  name: testing
-  playerStats: {fileID: 0}
-  playerFeatures: {fileID: 0}
-  choiceHistory:
-    m_keys: []
-    m_values: 
-  currentTurn: 0
-  playerHandController: {fileID: 0}
-  deck: {fileID: 0}
+  SetupNames: 0
+  done: 0
+  numberInList: 0

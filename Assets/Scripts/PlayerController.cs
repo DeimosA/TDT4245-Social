@@ -52,6 +52,16 @@ public class PlayerController : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+        // TODO figure out if local player
+        List<NetworkPlayer> networkPlayers = NetworkManager.Instance.getPlayerList();
+        foreach (NetworkPlayer player in networkPlayers)
+        {
+            if (player.isLocalPlayer)
+            {
+                player.controller = this;
+            }
+        }
+
 		sp = GameObject.Find("Sphere");
 		DontDestroyOnLoad(this);
 
@@ -78,13 +88,13 @@ public class PlayerController : MonoBehaviour
 		//}
 
 		// call whatever methods are needed for inputs
-		Shoot ();
+		//Shoot ();
 	}
 
 	public void SetupLocalPlayer()
 	{
 		//add color to your player
-		isLocalPlayer = true;
+		//isLocalPlayer = true;
 		//instansiate values for each player here as they join
 			// think this might be buggy, having issues with isLocalPlayer for non-host.
 	}

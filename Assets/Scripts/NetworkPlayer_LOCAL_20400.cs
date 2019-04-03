@@ -63,7 +63,7 @@ public class NetworkPlayer : NetworkBehaviour
 
 	public bool SetupNames;
 
-	public bool done;
+	bool done;
 
 	public int numberInList;
 
@@ -74,7 +74,7 @@ public class NetworkPlayer : NetworkBehaviour
 	void Start()		//may need a custom method that runs when game "starts"
 	{
 		//nwm = GameObject.Find("NetworkManager");
-		//controller.OnPlayerInput += OnPlayerInput; // what
+		controller.OnPlayerInput += OnPlayerInput; // what
 		//playerID = gameObject.GetComponent<NetworkInstanceId>().Value;
 		Time.timeScale = 1.0f;
 
@@ -104,7 +104,7 @@ public class NetworkPlayer : NetworkBehaviour
 			return;
 		}
 		if(SetupNames && !done){
-			//controller.name = GameObject.Find("PlayerData").GetComponent<PersistentPlayerData>().GetCompanyName();
+			controller.name = GameObject.Find("PlayerData").GetComponent<PersistentPlayerData>().GetCompanyName();
 			OnPlayerAdd();
 			done = true;
 			time = 10;
@@ -131,7 +131,7 @@ public class NetworkPlayer : NetworkBehaviour
 	public override void OnStartLocalPlayer()
 	{
 		base.OnStartLocalPlayer();
-		//controller.SetupLocalPlayer();
+		controller.SetupLocalPlayer();
 		this.name = "local";
 	}
 
@@ -151,7 +151,6 @@ public class NetworkPlayer : NetworkBehaviour
 	[Server]
 	public void TurnStart()
 	{
-        Debug.Log("Server turn start");
 		isTurn = true;
 		time = 90;
 		RpcTurnStart();
@@ -160,15 +159,13 @@ public class NetworkPlayer : NetworkBehaviour
 	[ClientRpc]
 	void RpcTurnStart()
 	{
-        Debug.Log("Client turn start");
-        controller.TurnStart();
+		controller.TurnStart();
 	}
 
 	[Server]
 	public void TurnEnd()
 	{
-        Debug.Log("Server turn end");
-        isTurn = false;
+		isTurn = false;
 		RpcTurnEnd();
 	}
 
@@ -177,9 +174,7 @@ public class NetworkPlayer : NetworkBehaviour
 	{
 		//CmdTurnEnd(userBase, capital, publicOpinion);
 		controller.EndTurn();
-        Debug.Log("Client turn end");
-        //CmdTurnEnd(userBase, capital, publicOpinion);
-        List<int> tmpValues = new List<int>();
+		List<int> tmpValues = new List<int>();
 		tmpValues.Add(userbase);
 		tmpValues.Add(capital);
 		tmpValues.Add(publicOpinion);
@@ -188,15 +183,15 @@ public class NetworkPlayer : NetworkBehaviour
 
 	}
 
-	//[Command]
-	//public void CmdSendInstantMessage(int receiverID, string msg){
- //       // send msg to Receiver
-	//}
+	[Command]
+	public void CmdSendInstantMessage(int receiverID, string msg){
+        // send msg to Receiver
+	}
 
-	//[ClientRpc]
-	//void RpcReceiveInstantMessage(int senderID, string msg){
- //       Debug.Log("received a message from " + senderID + ": " + msg);
-	//}
+	[ClientRpc]
+	void RpcReceiveInstantMessage(int senderID, string msg){
+        Debug.Log("received a message from " + senderID + ": " + msg);
+	}
 
 	[Command]
 	void CmdRequestCooperation(int receiverID, int cardID){
@@ -285,7 +280,7 @@ public class NetworkPlayer : NetworkBehaviour
 		}
 	}
 
-	public void OnPlayerInput(PlayerAction action, float amount)
+	void OnPlayerInput(PlayerAction action, float amount)
 	{
 		if (action == PlayerAction.SHOOT)
 		{
