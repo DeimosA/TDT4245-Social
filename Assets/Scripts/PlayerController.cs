@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public enum PlayerAction
 {
@@ -42,9 +43,10 @@ public class PlayerController : MonoBehaviour
     public PlayerNewsFeedController playerNewsFeedController;
 
     [Header("Prefabs")]
-    public GameObject newTurnPrefab;
+    public GameObject cardViewOverlayPrefab;
 
     private CardIntDictionary cardsPlayedLastTurn;
+    private GameObject cardViewOverlay;
 	//bool ready = false;
 
 	public List<string> playerList;
@@ -243,6 +245,9 @@ public class PlayerController : MonoBehaviour
 
             Destroy(cardsInPlaySlots[i]);
         }
+
+        //Display card view overlay
+        DisplayCardViewOverlay("Waiting for other players");
     }
 
     public void FillHand()
@@ -255,11 +260,22 @@ public class PlayerController : MonoBehaviour
         return choice.ValidateChoice(playerFeatures.GetPurchasedFeatureTitlesAsHashSet(), playerStats.stats);
     }
 
+
     private IEnumerator DisplayNewTurnText()
     {
-        GameObject g = Instantiate(newTurnPrefab, GameObject.Find("MainCanvas").transform, false);
+        DisplayCardViewOverlay("New turn starting");
         yield return new WaitForSecondsRealtime(2f);
-        Destroy(g);
+        Destroy(cardViewOverlay);
+    }
+
+    private void DisplayCardViewOverlay(string text)
+    {
+        if (cardViewOverlay != null)
+        {
+            Destroy(cardViewOverlay);
+        }
+        cardViewOverlay = Instantiate(cardViewOverlayPrefab, GameObject.Find("MainCanvas").transform, false);
+        cardViewOverlay.GetComponentInChildren<TextMeshProUGUI>().text = text;
     }
 
     // methods needed to change turndata array, these happen based on what cards the player plays during their turn. For example playing a card which gives them x more money will modify the corresponding

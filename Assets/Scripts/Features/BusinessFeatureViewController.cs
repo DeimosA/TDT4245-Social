@@ -5,9 +5,12 @@ using UnityEngine.UI;
 
 public class BusinessFeatureViewController : MonoBehaviour
 {
-    public Transform imageGroupUI;
-    public Transform securityGroupUI;
-    public Transform socialGroupUI;
+    public Transform imageGroupScrollViewContent;
+    public Button imageGroupUpgradeButton;
+    public Transform securityGroupScrollViewContent;
+    public Button securityGroupUpgradeButton;
+    public Transform socialGroupScrollViewContent;
+    public Button socialGroupUpgradeButton;
 
     [Header("Prefabs")]
     public GameObject featureElementPrefab;
@@ -34,9 +37,9 @@ public class BusinessFeatureViewController : MonoBehaviour
 
     private void SetUpgradeButtonsInteractable()
     {
-        imageGroupUI.Find("UpgradeButton").GetComponent<Button>().interactable = playerFeatures.CanPurchaseNextItemInGroup(0);
-        securityGroupUI.Find("UpgradeButton").GetComponent<Button>().interactable = playerFeatures.CanPurchaseNextItemInGroup(1);
-        socialGroupUI.Find("UpgradeButton").GetComponent<Button>().interactable = playerFeatures.CanPurchaseNextItemInGroup(2);
+        imageGroupUpgradeButton.interactable = playerFeatures.CanPurchaseNextItemInGroup(0);
+        securityGroupUpgradeButton.interactable = playerFeatures.CanPurchaseNextItemInGroup(1);
+        socialGroupUpgradeButton.interactable = playerFeatures.CanPurchaseNextItemInGroup(2);
     }
 
     public void BuyFeature(int groupIndex)
@@ -49,17 +52,17 @@ public class BusinessFeatureViewController : MonoBehaviour
 
     private void UpdateGroupLists()
     {
-        for (int i = 2; i < imageGroupUI.childCount; i++)
+        for (int i = 0; i < imageGroupScrollViewContent.childCount; i++)
         {
-            imageGroupUI.GetChild(i).GetComponent<FeatureElementController>().SetFeatureElement(playerFeatures.imageGroup[i-2]);
+            imageGroupScrollViewContent.GetChild(i).GetComponent<FeatureElementController>().SetFeatureElement(playerFeatures.imageGroup[i]);
         }
-        for (int i = 2; i < securityGroupUI.childCount; i++)
+        for (int i = 0; i < securityGroupScrollViewContent.childCount; i++)
         {
-            securityGroupUI.GetChild(i).GetComponent<FeatureElementController>().SetFeatureElement(playerFeatures.securityGroup[i-2]);
+            securityGroupScrollViewContent.GetChild(i).GetComponent<FeatureElementController>().SetFeatureElement(playerFeatures.securityGroup[i]);
         }
-        for (int i = 2; i < socialGroupUI.childCount; i++)
+        for (int i = 0; i < socialGroupScrollViewContent.childCount; i++)
         {
-            socialGroupUI.GetChild(i).GetComponent<FeatureElementController>().SetFeatureElement(playerFeatures.socialGroup[i-2]);
+            socialGroupScrollViewContent.GetChild(i).GetComponent<FeatureElementController>().SetFeatureElement(playerFeatures.socialGroup[i]);
         }
     }
 
@@ -72,7 +75,7 @@ public class BusinessFeatureViewController : MonoBehaviour
         //build group1
         for (int i = 0; i < playerFeatures.imageGroup.Count; i++)
         {
-            GameObject element = Instantiate(featureElementPrefab, imageGroupUI, false);
+            GameObject element = Instantiate(featureElementPrefab, imageGroupScrollViewContent, false);
             //set element title, element cost and checkmark
             element.GetComponent<FeatureElementController>().SetFeatureElement(playerFeatures.imageGroup[i]);
         }
@@ -80,7 +83,7 @@ public class BusinessFeatureViewController : MonoBehaviour
         //build group2
         for (int i = 0; i < playerFeatures.securityGroup.Count; i++)
         {
-            GameObject element = Instantiate(featureElementPrefab, securityGroupUI, false);
+            GameObject element = Instantiate(featureElementPrefab, securityGroupScrollViewContent, false);
             //set element title, element cost and checkmark
             element.GetComponent<FeatureElementController>().SetFeatureElement(playerFeatures.securityGroup[i]);
         }
@@ -88,7 +91,7 @@ public class BusinessFeatureViewController : MonoBehaviour
         //build group3
         for (int i = 0; i < playerFeatures.socialGroup.Count; i++)
         {
-            GameObject element = Instantiate(featureElementPrefab, socialGroupUI, false);
+            GameObject element = Instantiate(featureElementPrefab, socialGroupScrollViewContent, false);
             //set element title, element cost and checkmark
             element.GetComponent<FeatureElementController>().SetFeatureElement(playerFeatures.socialGroup[i]);
         }

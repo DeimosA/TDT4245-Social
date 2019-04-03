@@ -235,7 +235,7 @@ MonoBehaviour:
   deck: {fileID: 0}
   newsCounter: 0
   playerNewsFeedController: {fileID: 6716387239518171772}
-  newTurnPrefab: {fileID: 4911866883658365859, guid: 7add6481a66c9914ab3d72f4f42dbe5f,
+  cardViewOverlayPrefab: {fileID: 4911866883658365859, guid: 7add6481a66c9914ab3d72f4f42dbe5f,
     type: 3}
   playerList: []
 --- !u!114 &6716387239518171772
