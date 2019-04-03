@@ -182,6 +182,7 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
             //players[iActivePlayer].StartGame();			rewrite, this is when game starts
             started = true;
 			SceneManager.LoadScene("CharacterCreationScene", LoadSceneMode.Single);
+            Debug.Log("Load company creation");
 		}
 
 		return playersReady;
@@ -203,6 +204,7 @@ public class NetworkManager : UnityEngine.Networking.NetworkManager
                 player.StartGame();
                 actuallyStarted = true;
                 playerStats.Add(new List<int>());
+                Debug.Log("Actually start game");
                 //player.SetupNames();
                 //player.controller.test();
             }

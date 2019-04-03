@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using TMPro;
+
 
 public class SendMessage : MessageBase
 {
@@ -80,7 +82,6 @@ public class NetworkPlayer : NetworkBehaviour
 
         playerID = gameObject.GetComponent<NetworkIdentity>().netId.Value;
         
-		bool done = false;
 	}
 
 	// Update is called once per frame
@@ -309,8 +310,9 @@ public class NetworkPlayer : NetworkBehaviour
 
 	public void UpdateTimeDisplay(float curtime)
 	{
-		GameObject timerText = GameObject.Find("Timer");
-		Text timer = timerText.GetComponent<Text> ();
+		GameObject timerText = GameObject.Find("EndTurnTimerText");
+        TextMeshProUGUI timer = timerText.GetComponent<TextMeshProUGUI> ();
+        timer.text = 4.ToString();
 		timer.text = Mathf.Round(curtime).ToString();
 	}
 
