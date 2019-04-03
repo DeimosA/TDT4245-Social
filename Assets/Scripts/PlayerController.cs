@@ -251,7 +251,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Display card view overlay
-        DisplayCardViewOverlay("Waiting for other players");
+        //DisplayCardViewOverlay("Waiting for other players");
     }
 
     public void FillHand()
