@@ -69,11 +69,13 @@ public class NetworkPlayer : NetworkBehaviour
 
 	public int numberInList;
 
-	//public int instanceID;
+    //public int instanceID;
+
+    TextMeshProUGUI timerDisplayText;
 
 
-	// Use this for initialization
-	void Start()		//may need a custom method that runs when game "starts"
+    // Use this for initialization
+    void Start()		//may need a custom method that runs when game "starts"
 	{
 		//nwm = GameObject.Find("NetworkManager");
 		//controller.OnPlayerInput += OnPlayerInput; // what
@@ -310,10 +312,13 @@ public class NetworkPlayer : NetworkBehaviour
 
 	public void UpdateTimeDisplay(float curtime)
 	{
-		GameObject timerText = GameObject.Find("EndTurnTimerText");
-        TextMeshProUGUI timer = timerText.GetComponent<TextMeshProUGUI> ();
-        timer.text = 4.ToString();
-		timer.text = Mathf.Round(curtime).ToString();
+        if (timerDisplayText == null)
+        {
+		    GameObject timerObject = GameObject.Find("EndTurnTimerText");
+            if (timerObject == null) return;
+            timerDisplayText = timerObject.GetComponent<TextMeshProUGUI>();
+        }
+        timerDisplayText.text = Mathf.Round(curtime).ToString();
 	}
 
     public void SetCompanyName(string name)
